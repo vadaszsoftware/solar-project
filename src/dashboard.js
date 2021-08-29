@@ -1,4 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link as RouterLink
+} from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,17 +24,17 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
+import {MainListItems} from './listItems'
+import {SecondaryListItems} from './listItems'
+import ProviderSummary from './ProviderSummary';
+import Charts from './Charts';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="https://www.menu.studio/">
+        Menu Studio
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -118,6 +124,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
+  const [navRoute, setNavRoute] = useState("/Dashboard");
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -130,7 +137,11 @@ export default function Dashboard() {
 
   return (
     <div className={classes.root}>
+      
+    <Router>
+
       <CssBaseline />
+
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -143,7 +154,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+            {navRoute.substring(1)}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -152,6 +163,7 @@ export default function Dashboard() {
           </IconButton>
         </Toolbar>
       </AppBar>
+
       <Drawer
         variant="permanent"
         classes={{
@@ -165,38 +177,52 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List><MainListItems navRoute={navRoute} setNavRoute={setNavRoute} /></List>
         <Divider />
-        <List>{secondaryListItems}</List>
+        <List><SecondaryListItems navRoute={navRoute} setNavRoute={setNavRoute} /></List>
       </Drawer>
+
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
+        <Switch>
+
+        <Route path="/Home">
+          <Container maxWidth="lg" className={classes.container}>
+            <Grid container spacing={3}>
+              {/* Chart */}
+              <Grid item xs={12} md={12} lg={12}>
+                <Paper>
+                  <Typography variant='h2'>
+                    Emory University is creating a brighter future through renewable energy.
+                  </Typography>
+                </Paper>
+              </Grid>
             </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
+            <Box pt={4}>
+              <Copyright />
+            </Box>
+          </Container>
+        </Route>
+
+        <Route path="/ProviderSummary">
+          <ProviderSummary />
+        </Route>
+        
+        <Route path="/Charts">
+          <Charts />
+        </Route>
+        
+        <Route path="/Reports">
+          <ProviderSummary />
+        </Route>
+        
+        <Route path="/Integrations">
+          <ProviderSummary />
+        </Route>
+
+        </Switch>
       </main>
+    </Router>
     </div>
   );
 }

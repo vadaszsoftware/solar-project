@@ -1,4 +1,4 @@
-import { responsiveFontSizes } from "@material-ui/core";
+// imports
 
 export function fetchData() {
     let data = "bull";

@@ -1,12 +1,16 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
 import Dashboard from "./dashboard";
-import Home from "./home";
+
+function App() {
+  return (
+    <Dashboard />
+  );
+}
+
+export default App;
+
+
+/*
 
 function App() {
   return (
@@ -36,4 +40,4 @@ function App() {
   );
 }
 
-export default App;
+*/
