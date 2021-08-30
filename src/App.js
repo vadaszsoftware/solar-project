@@ -1,14 +1,19 @@
 import React from "react";
 import Dashboard from "./dashboard";
+import { ThemeProvider } from "@material-ui/core/styles";
+import blue from "@material-ui/core/colors/blue";
+
+const theme = {
+  palette: {
+    primary: blue,
+  },
+};
 
 function App() {
-  return (
-    <Dashboard />
-  );
+  return <Dashboard />;
 }
 
 export default App;
-
 
 /*
 
