@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link as RouterLink,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,25 +11,28 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import NotificationsIcon from "@material-ui/icons/Notifications";
+import ProviderSummary from "./ProviderSummary";
+
+import Charts from "./Charts";
+import Sunlight from "./Sunlight";
+import Power from "./Power";
 import { MainListItems } from "./listItems";
 import { SecondaryListItems } from "./listItems";
-import ProviderSummary from "./ProviderSummary";
-import Charts from "./Charts";
-import csLogo from "./images/cs_logo_lightmode.png";
+
+import csLogoLight from "./images/cs_logo_lightmode.png";
+import csLogoDark from "./images/cs_logo_darkmode.png";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://www.menu.studio/">
+      <Link color="inherit" href="https://www.menu.studio/" target="blank_">
         Menu Studio
       </Link>{" "}
       {new Date().getFullYear()}
@@ -124,9 +122,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
-  const [navRoute, setNavRoute] = useState("/Dashboard");
+export default function Dashboard(props) {
   const classes = useStyles();
+  const [navRoute, setNavRoute] = useState("/Dashboard");
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -144,6 +142,7 @@ export default function Dashboard() {
         <AppBar
           position="absolute"
           className={clsx(classes.appBar, open && classes.appBarShift)}
+          color="transparent"
         >
           <Toolbar className={classes.toolbar}>
             <IconButton
@@ -158,20 +157,21 @@ export default function Dashboard() {
             >
               <MenuIcon />
             </IconButton>
-            <img src={csLogo}></img>
+            <img src={props.theme ? csLogoLight : csLogoDark}></img>
             <Typography
               component="h1"
               variant="h6"
               color="inherit"
               noWrap
               className={classes.title}
+            ></Typography>
+            <IconButton
+              color="inherit"
+              onClick={() => {
+                props.setTheme(!props.theme);
+              }}
             >
-              {/* {navRoute.substring(1)} */}
-            </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
+              {props.darkModeIcon}
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -200,9 +200,9 @@ export default function Dashboard() {
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Switch>
-            <Route path="/Home">
-              <Container maxWidth="lg" className={classes.container}>
+          <Container maxWidth="lg" className={classes.container}>
+            <Switch>
+              <Route path="/Home">
                 <Grid container spacing={3}>
                   {/* Chart */}
                   <Grid item xs={12} md={12} lg={12}>
@@ -214,28 +214,28 @@ export default function Dashboard() {
                     </Paper>
                   </Grid>
                 </Grid>
-                <Box pt={4}>
-                  <Copyright />
-                </Box>
-              </Container>
-            </Route>
+              </Route>
 
-            <Route path="/ProviderSummary">
-              <ProviderSummary />
-            </Route>
+              <Route path="/ProviderSummary">
+                <ProviderSummary />
+              </Route>
 
-            <Route path="/Charts">
-              <Charts />
-            </Route>
+              <Route path="/Sunlight">
+                <Sunlight />
+              </Route>
 
-            <Route path="/Reports">
-              <ProviderSummary />
-            </Route>
+              <Route path="/Power">
+                <Power />
+              </Route>
 
-            <Route path="/Integrations">
-              <ProviderSummary />
-            </Route>
-          </Switch>
+              <Route path="/Charts">
+                <Charts />
+              </Route>
+            </Switch>
+            <Box pt={4}>
+              <Copyright />
+            </Box>
+          </Container>
         </main>
       </Router>
     </div>

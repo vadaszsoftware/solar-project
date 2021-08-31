@@ -1,16 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import Dashboard from "./dashboard";
-import { ThemeProvider } from "@material-ui/core/styles";
-import blue from "@material-ui/core/colors/blue";
+import {
+  responsiveFontSizes,
+  ThemeProvider,
+  createTheme,
+} from "@material-ui/core/styles";
+import yellow from "@material-ui/core/colors/yellow";
+import Brightness7Icon from "@material-ui/icons/Brightness7";
+import Brightness3Icon from "@material-ui/icons/Brightness3";
 
-const theme = {
+let darkTheme = createTheme({
   palette: {
-    primary: blue,
+    type: "dark",
+    primary: yellow,
   },
-};
+});
+let lightTheme = createTheme({
+  palette: {
+    type: "light",
+    primary: yellow,
+  },
+});
+darkTheme = responsiveFontSizes(darkTheme);
+lightTheme = responsiveFontSizes(lightTheme);
 
 function App() {
-  return <Dashboard />;
+  const [theme, setTheme] = useState(true);
+  let darkModeIcon = !theme ? <Brightness7Icon /> : <Brightness3Icon />; // Icons imported from `@material-ui/icons`
+  let appliedTheme = createTheme(theme ? lightTheme : darkTheme);
+  return (
+    <ThemeProvider theme={appliedTheme}>
+      <Dashboard
+        setTheme={setTheme}
+        theme={theme}
+        darkModeIcon={darkModeIcon}
+      />
+    </ThemeProvider>
+  );
 }
 
 export default App;
