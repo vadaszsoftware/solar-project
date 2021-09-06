@@ -4,17 +4,14 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import PeopleIcon from "@material-ui/icons/People";
-import BarChartIcon from "@material-ui/icons/BarChart";
-import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import HomeIcon from "@material-ui/icons/Home";
 import BusinessIcon from "@material-ui/icons/Business";
 import WbSunnyIcon from "@material-ui/icons/WbSunny";
+import FlashOnIcon from "@material-ui/icons/FlashOn";
+import EqualizerIcon from "@material-ui/icons/Equalizer";
 
-import { fetchData } from "./FetchData";
+// import { fetchData } from "./FetchData";
 
 export function MainListItems(props) {
   return (
@@ -70,7 +67,7 @@ export function MainListItems(props) {
         }}
       >
         <ListItemIcon>
-          <LayersIcon />
+          <FlashOnIcon />
         </ListItemIcon>
         <ListItemText primary="Power" />
       </ListItem>
@@ -84,12 +81,12 @@ export function MainListItems(props) {
         }}
       >
         <ListItemIcon>
-          <PeopleIcon />
+          <EqualizerIcon />
         </ListItemIcon>
         <ListItemText primary="Charts" />
       </ListItem>
 
-      <ListItem
+      {/* <ListItem
         button
         onClick={() => {
           console.log(fetchData());
@@ -99,7 +96,7 @@ export function MainListItems(props) {
           <LayersIcon />
         </ListItemIcon>
         <ListItemText primary="Fetch Data" />
-      </ListItem>
+      </ListItem> */}
     </div>
   );
 }
@@ -107,24 +104,24 @@ export function MainListItems(props) {
 export function SecondaryListItems(props) {
   return (
     <div>
-      <ListSubheader inset>Saved reports</ListSubheader>
+      <ListSubheader inset>Admin</ListSubheader>
       <ListItem button>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Current month" />
+        <ListItemText primary="Setting1" />
       </ListItem>
       <ListItem button>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Last quarter" />
+        <ListItemText primary="Setting2" />
       </ListItem>
       <ListItem button>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Year-end sale" />
+        <ListItemText primary="Setting3" />
       </ListItem>
     </div>
   );

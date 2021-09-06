@@ -1,6 +1,5 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Typography } from '@material-ui/core';
+import React from "react";
+import { Paper, Typography } from "@material-ui/core";
 
 // // Generate Order Data
 // function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -19,24 +18,26 @@ import { Paper, Typography } from '@material-ui/core';
 //   event.preventDefault();
 // }
 
-const useStyles = makeStyles((theme) => ({
-  // seeMore: {
-  //   marginTop: theme.spacing(3),
-  // },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   seeMore: {
+//     marginTop: theme.spacing(3),
+//   },
+// }));
 
 export default function ProviderSummary() {
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
     <React.Fragment>
       <Paper>
-        <Typography variant='h4'>Emory's Commitment</Typography>
-        <Typography variant='h2'>100% clean energy by 2035.</Typography>
+        <Typography variant="h4">Emory's Commitment</Typography>
+        <Typography variant="h2">100% clean energy by 2035.</Typography>
       </Paper>
       <br />
       <Paper>
-        <Typography variant='h4'>Emory's Solar Portfolio</Typography>
-        <Typography variant='h3'>5.5MW Solar Capacity &nbsp; 15K Solar Panels &nbsp; 16 Total Sites</Typography>
+        <Typography variant="h4">Emory's Solar Portfolio</Typography>
+        <Typography variant="h3">
+          5.5MW Solar Capacity &nbsp; 15K Solar Panels &nbsp; 16 Total Sites
+        </Typography>
       </Paper>
     </React.Fragment>
   );

@@ -1,8 +1,12 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
 import Box from "@material-ui/core/Box";
 import AppBar from "@material-ui/core/AppBar";
@@ -122,23 +126,65 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const slideNav = [
+  "/Home",
+  "/ProviderSummary",
+  "/Sunlight",
+  "/Power",
+  "/Charts",
+];
+let slideNavCounter = 0;
+
+const SLIDE_CHANGE_TIMER = 5;
+
 export default function Dashboard(props) {
   const classes = useStyles();
   const [navRoute, setNavRoute] = useState("/Dashboard");
   const [open, setOpen] = React.useState(true);
+  const [nextSlide, setNextSlide] = useState("/Home");
+  const [changeSlide, setChangeSlide] = useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  // Presentation Timer Code
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(true);
+  function toggleTimer() {
+    setIsActive(!isActive);
+  }
+  function handleChangeSlide() {
+    slideNavCounter === slideNav.length - 1
+      ? (slideNavCounter = 0)
+      : slideNavCounter++;
+    // console.log("change slide to: ", slideNav[slideNavCounter]);
+    setNextSlide(slideNav[slideNavCounter]);
+    setChangeSlide(true);
+  }
+  useEffect(() => {
+    setChangeSlide(false);
+    let interval = null;
+    if (isActive) {
+      if (seconds > SLIDE_CHANGE_TIMER) {
+        handleChangeSlide();
+        setSeconds(0);
+      }
+      interval = setInterval(() => {
+        setSeconds((seconds) => seconds + 1);
+      }, 1000);
+    } else if (!isActive && seconds !== 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, seconds]);
 
   return (
     <div className={classes.root}>
       <Router>
-        <CssBaseline />
-
         <AppBar
           position="absolute"
           className={clsx(classes.appBar, open && classes.appBarShift)}
@@ -232,7 +278,11 @@ export default function Dashboard(props) {
                 <Charts />
               </Route>
             </Switch>
+            {changeSlide ? <Redirect to={nextSlide} /> : ""}
+
             <Box pt={4}>
+              {seconds}
+              <br />
               <Copyright />
             </Box>
           </Container>
