@@ -21,8 +21,11 @@ import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ProviderSummary from "./ProviderSummary";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import PauseIcon from "@material-ui/icons/Pause";
 
+import Home from "./Home";
+import ProviderSummary from "./ProviderSummary";
 import Charts from "./Charts";
 import Sunlight from "./Sunlight";
 import Power from "./Power";
@@ -31,6 +34,8 @@ import { SecondaryListItems } from "./listItems";
 
 import csLogoLight from "./images/cs_logo_lightmode.png";
 import csLogoDark from "./images/cs_logo_darkmode.png";
+import moonSymbol from "./images/moon_darkmode.png";
+import sunriseSymbol from "./images/sunrise.png";
 
 function Copyright() {
   return (
@@ -112,17 +117,14 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
   },
   paper: {
     padding: theme.spacing(2),
     display: "flex",
     overflow: "auto",
     flexDirection: "column",
-  },
-  fixedHeight: {
-    height: 240,
   },
 }));
 
@@ -149,13 +151,12 @@ export default function Dashboard(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   // Presentation Timer Code
   const [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(true);
-  function toggleTimer() {
-    setIsActive(!isActive);
+  const [slideshowActive, setSlideshowActive] = useState(false);
+  function toggleSlideshow() {
+    setSlideshowActive(!slideshowActive);
   }
   function handleChangeSlide() {
     slideNavCounter === slideNav.length - 1
@@ -168,7 +169,7 @@ export default function Dashboard(props) {
   useEffect(() => {
     setChangeSlide(false);
     let interval = null;
-    if (isActive) {
+    if (slideshowActive) {
       if (seconds > SLIDE_CHANGE_TIMER) {
         handleChangeSlide();
         setSeconds(0);
@@ -176,11 +177,11 @@ export default function Dashboard(props) {
       interval = setInterval(() => {
         setSeconds((seconds) => seconds + 1);
       }, 1000);
-    } else if (!isActive && seconds !== 0) {
+    } else if (!slideshowActive && seconds !== 0) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isActive, seconds]);
+  }, [slideshowActive, seconds]);
 
   return (
     <div className={classes.root}>
@@ -203,7 +204,10 @@ export default function Dashboard(props) {
             >
               <MenuIcon />
             </IconButton>
-            <img src={props.theme ? csLogoLight : csLogoDark}></img>
+            <img
+              alt="Cherry Street Energy logo"
+              src={props.theme ? csLogoLight : csLogoDark}
+            ></img>
             <Typography
               component="h1"
               variant="h6"
@@ -246,20 +250,10 @@ export default function Dashboard(props) {
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Container maxWidth="lg" className={classes.container}>
+          <Container className={classes.container} maxWidth="xl">
             <Switch>
               <Route path="/Home">
-                <Grid container spacing={3}>
-                  {/* Chart */}
-                  <Grid item xs={12} md={12} lg={12}>
-                    <Paper>
-                      <Typography variant="h2">
-                        Emory University is creating a brighter future through
-                        renewable energy.
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                </Grid>
+                <Home />
               </Route>
 
               <Route path="/ProviderSummary">
@@ -280,8 +274,47 @@ export default function Dashboard(props) {
             </Switch>
             {changeSlide ? <Redirect to={nextSlide} /> : ""}
 
+            <Grid container>
+              <Grid item xs={6} md={6} lg={6}>
+                <Typography variant="h5">
+                  {new Date().toLocaleDateString("en-US", {
+                    // weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </Typography>
+                <Typography variant="h5">
+                  {new Date()
+                    .toLocaleTimeString("en-US", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
+                    .toLocaleLowerCase()}
+                </Typography>
+              </Grid>
+              <Grid item xs={6} md={6} lg={6} align="right">
+                <Typography variant="h3">
+                  <img alt="Moon/Sun symbol" src={sunriseSymbol} /> 72&deg;
+                </Typography>
+              </Grid>
+            </Grid>
+
+            <Box
+              onClick={() => {
+                toggleSlideshow();
+              }}
+            >
+              <br />
+              {slideshowActive ? (
+                <PauseIcon fontSize="large" />
+              ) : (
+                <PlayArrowIcon fontSize="large" />
+              )}
+            </Box>
+            <Box>{seconds}</Box>
+
             <Box pt={4}>
-              {seconds}
               <br />
               <Copyright />
             </Box>
