@@ -1,43 +1,49 @@
 import React from "react";
-import { Paper, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Paper, Typography, Grid } from "@material-ui/core";
 
-// // Generate Order Data
-// function createData(id, date, name, shipTo, paymentMethod, amount) {
-//   return { id, date, name, shipTo, paymentMethod, amount };
-// }
+const useStyles = makeStyles((theme) => ({
+  paperContainer: {
+    padding: theme.spacing(4),
+  },
+}));
 
-// const rows = [
-//   createData(0, '16 Mar, 2019', 'Elvis Presley', 'Tupelo, MS', 'VISA ⠀•••• 3719', 312.44),
-//   createData(1, '16 Mar, 2019', 'Paul McCartney', 'London, UK', 'VISA ⠀•••• 2574', 866.99),
-//   createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-//   createData(3, '16 Mar, 2019', 'Michael Jackson', 'Gary, IN', 'AMEX ⠀•••• 2000', 654.39),
-//   createData(4, '15 Mar, 2019', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919', 212.79),
-// ];
+export default function ProviderSummary(props) {
+  const classes = useStyles();
+  props.setAppbarTitle("");
 
-// function preventDefault(event) {
-//   event.preventDefault();
-// }
-
-// const useStyles = makeStyles((theme) => ({
-//   seeMore: {
-//     marginTop: theme.spacing(3),
-//   },
-// }));
-
-export default function ProviderSummary() {
-  // const classes = useStyles();
   return (
     <React.Fragment>
-      <Paper>
-        <Typography variant="h4">Emory's Commitment</Typography>
-        <Typography variant="h2">100% clean energy by 2035.</Typography>
+      <Paper className={classes.paperContainer}>
+        <Typography variant="h4">Emory's Commitment:</Typography>
+        <Typography variant="h1">100% clean energy by 2035.</Typography>
       </Paper>
       <br />
-      <Paper>
-        <Typography variant="h4">Emory's Solar Portfolio</Typography>
-        <Typography variant="h3">
-          5.5MW Solar Capacity &nbsp; 15K Solar Panels &nbsp; 16 Total Sites
-        </Typography>
+      <Paper className={classes.paperContainer}>
+        <Grid container>
+          <Grid item xs={4} md={4} lg={4}>
+            <Typography variant="h4">Emory's Solar Portfolio:</Typography>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item xs={4} md={4} lg={4}>
+            <Typography variant="h2" display="inline">
+              5.5
+            </Typography>
+            <Typography variant="h4" display="inline">
+              MW
+            </Typography>
+            <Typography variant="h4">Solar Capacity</Typography>
+          </Grid>
+          <Grid item xs={4} md={4} lg={4}>
+            <Typography variant="h2">15K</Typography>
+            <Typography variant="h4">Solar Panels</Typography>
+          </Grid>
+          <Grid item xs={4} md={4} lg={4}>
+            <Typography variant="h2">16</Typography>
+            <Typography variant="h4">Total Sites</Typography>
+          </Grid>
+        </Grid>
       </Paper>
     </React.Fragment>
   );

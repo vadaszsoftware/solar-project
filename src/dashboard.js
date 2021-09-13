@@ -126,6 +126,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
     flexDirection: "column",
   },
+  dateFooter: {
+    marginTop: theme.spacing(3),
+    padding: theme.spacing(2),
+  },
 }));
 
 const slideNav = [
@@ -141,10 +145,10 @@ const SLIDE_CHANGE_TIMER = 5;
 
 export default function Dashboard(props) {
   const classes = useStyles();
-  const [navRoute, setNavRoute] = useState("/Dashboard");
   const [open, setOpen] = React.useState(true);
   const [nextSlide, setNextSlide] = useState("/Home");
   const [changeSlide, setChangeSlide] = useState(false);
+  const [appbarTitle, setAppbarTitle] = useState("");
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -209,12 +213,15 @@ export default function Dashboard(props) {
               src={props.theme ? csLogoLight : csLogoDark}
             ></img>
             <Typography
-              component="h1"
-              variant="h6"
+              // component="h1"
+              variant="h3"
               color="inherit"
               noWrap
               className={classes.title}
-            ></Typography>
+              align="center"
+            >
+              {appbarTitle}
+            </Typography>
             <IconButton
               color="inherit"
               onClick={() => {
@@ -240,11 +247,11 @@ export default function Dashboard(props) {
           </div>
           <Divider />
           <List>
-            <MainListItems navRoute={navRoute} setNavRoute={setNavRoute} />
+            <MainListItems />
           </List>
           <Divider />
           <List>
-            <SecondaryListItems navRoute={navRoute} setNavRoute={setNavRoute} />
+            <SecondaryListItems />
           </List>
         </Drawer>
 
@@ -253,52 +260,54 @@ export default function Dashboard(props) {
           <Container className={classes.container} maxWidth="xl">
             <Switch>
               <Route path="/Home">
-                <Home />
+                <Home setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/ProviderSummary">
-                <ProviderSummary />
+                <ProviderSummary setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/Sunlight">
-                <Sunlight />
+                <Sunlight setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/Power">
-                <Power />
+                <Power setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/Charts">
-                <Charts />
+                <Charts setAppbarTitle={setAppbarTitle} />
               </Route>
             </Switch>
             {changeSlide ? <Redirect to={nextSlide} /> : ""}
 
-            <Grid container>
-              <Grid item xs={6} md={6} lg={6}>
-                <Typography variant="h5">
-                  {new Date().toLocaleDateString("en-US", {
-                    // weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </Typography>
-                <Typography variant="h5">
-                  {new Date()
-                    .toLocaleTimeString("en-US", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })
-                    .toLocaleLowerCase()}
-                </Typography>
+            <Paper className={classes.dateFooter}>
+              <Grid container>
+                <Grid item xs={6} md={6} lg={6}>
+                  <Typography variant="h5">
+                    {new Date().toLocaleDateString("en-US", {
+                      // weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </Typography>
+                  <Typography variant="h5">
+                    {new Date()
+                      .toLocaleTimeString("en-US", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })
+                      .toLocaleLowerCase()}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6} md={6} lg={6} align="right">
+                  <Typography variant="h3">
+                    <img alt="Moon/Sun symbol" src={sunriseSymbol} /> 72&deg;
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={6} md={6} lg={6} align="right">
-                <Typography variant="h3">
-                  <img alt="Moon/Sun symbol" src={sunriseSymbol} /> 72&deg;
-                </Typography>
-              </Grid>
-            </Grid>
+            </Paper>
 
             <Box
               onClick={() => {

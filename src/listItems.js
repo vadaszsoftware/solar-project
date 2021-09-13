@@ -16,70 +16,35 @@ import EqualizerIcon from "@material-ui/icons/Equalizer";
 export function MainListItems(props) {
   return (
     <div>
-      <ListItem
-        button
-        component={RouterLink}
-        to="/Home"
-        onClick={() => {
-          props.setNavRoute("/Home");
-        }}
-      >
+      <ListItem button component={RouterLink} to="/Home">
         <ListItemIcon>
           <HomeIcon />
         </ListItemIcon>
         <ListItemText primary="Home" />
       </ListItem>
 
-      <ListItem
-        button
-        component={RouterLink}
-        to="/ProviderSummary"
-        onClick={() => {
-          props.setNavRoute("/ProviderSummary");
-        }}
-      >
+      <ListItem button component={RouterLink} to="/ProviderSummary">
         <ListItemIcon>
           <BusinessIcon />
         </ListItemIcon>
         <ListItemText primary="ProviderSummary" />
       </ListItem>
 
-      <ListItem
-        button
-        component={RouterLink}
-        to="/Sunlight"
-        onClick={() => {
-          props.setNavRoute("/Sunlight");
-        }}
-      >
+      <ListItem button component={RouterLink} to="/Sunlight">
         <ListItemIcon>
           <WbSunnyIcon />
         </ListItemIcon>
         <ListItemText primary="Sunlight" />
       </ListItem>
 
-      <ListItem
-        button
-        component={RouterLink}
-        to="/Power"
-        onClick={() => {
-          props.setNavRoute("/Power");
-        }}
-      >
+      <ListItem button component={RouterLink} to="/Power">
         <ListItemIcon>
           <FlashOnIcon />
         </ListItemIcon>
         <ListItemText primary="Power" />
       </ListItem>
 
-      <ListItem
-        button
-        component={RouterLink}
-        to="/Charts"
-        onClick={() => {
-          props.setNavRoute("/Charts");
-        }}
-      >
+      <ListItem button component={RouterLink} to="/Charts">
         <ListItemIcon>
           <EqualizerIcon />
         </ListItemIcon>

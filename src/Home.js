@@ -1,33 +1,22 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper, Typography } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
+  paperContainer: {
+    padding: theme.spacing(6),
   },
 }));
 
-export default function Home() {
+export default function Home(props) {
   const classes = useStyles();
+  props.setAppbarTitle("");
 
   return (
-    <div className={classes.root}>
-      <Grid container>
-        <Grid item xs={12} md={12} lg={12}>
-          <Paper
-            elevation="1"
-            style={{
-              padding: 60,
-            }}
-          >
-            <Typography variant="h1">
-              Emory University is creating a brighter future through renewable
-              energy.
-            </Typography>
-          </Paper>
-        </Grid>
-      </Grid>
-    </div>
+    <Paper className={classes.paperContainer} elevation="1">
+      <Typography variant="h1">
+        Emory University is creating a brighter future through renewable energy.
+      </Typography>
+    </Paper>
   );
 }
