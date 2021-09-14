@@ -1,9 +1,13 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListSubheader from "@material-ui/core/ListSubheader";
+import {
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
+  IconButton,
+  Divider,
+} from "@material-ui/core";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import HomeIcon from "@material-ui/icons/Home";
 import BusinessIcon from "@material-ui/icons/Business";
@@ -44,11 +48,70 @@ export function MainListItems(props) {
         <ListItemText primary="Power" />
       </ListItem>
 
-      <ListItem button component={RouterLink} to="/Charts">
+      <ListItem button component={RouterLink} to="/Usage">
+        <ListItemIcon>
+          <FlashOnIcon />
+        </ListItemIcon>
+        <ListItemText primary="Usage" />
+      </ListItem>
+
+      <ListItem button component={RouterLink} to="/Past24">
+        <ListItemIcon>
+          <FlashOnIcon />
+        </ListItemIcon>
+        <ListItemText primary="Past24" />
+      </ListItem>
+
+      <ListItem button component={RouterLink} to="/PastWeekBars">
+        <ListItemIcon>
+          <FlashOnIcon />
+        </ListItemIcon>
+        <ListItemText primary="PastWeekBars" />
+      </ListItem>
+
+      <ListItem button component={RouterLink} to="/PastWeekGas">
+        <ListItemIcon>
+          <FlashOnIcon />
+        </ListItemIcon>
+        <ListItemText primary="PastWeekGas" />
+      </ListItem>
+
+      <ListItem button component={RouterLink} to="/PastMonthBars">
+        <ListItemIcon>
+          <FlashOnIcon />
+        </ListItemIcon>
+        <ListItemText primary="PastMonthBars" />
+      </ListItem>
+
+      <ListItem button component={RouterLink} to="/TreesPlanted">
+        <ListItemIcon>
+          <FlashOnIcon />
+        </ListItemIcon>
+        <ListItemText primary="TreesPlanted" />
+      </ListItem>
+
+      {/* <ListItem button component={RouterLink} to="/Charts">
         <ListItemIcon>
           <EqualizerIcon />
         </ListItemIcon>
         <ListItemText primary="Charts" />
+      </ListItem> */}
+
+      <Divider
+        style={{
+          marginTop: 10,
+          marginBottom: 10,
+        }}
+      />
+
+      <ListItem
+        button
+        onClick={() => {
+          props.setTheme(!props.theme);
+        }}
+      >
+        <ListItemIcon>{props.darkModeIcon}</ListItemIcon>
+        <ListItemText primary={props.theme ? "Dark Theme" : "Light Theme"} />
       </ListItem>
 
       {/* <ListItem

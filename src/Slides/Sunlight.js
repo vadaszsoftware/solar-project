@@ -58,7 +58,7 @@ function SunThumb(props) {
 export default function Sunlight(props) {
   const classes = useStyles();
   props.setAppbarTitle("");
-  let data = require("./test_data.json");
+  let data = require("../test_data.json");
   data = data.meteo.cloudCover;
   console.log("Sunlight: ", data);
 

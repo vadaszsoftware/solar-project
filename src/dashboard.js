@@ -7,35 +7,41 @@ import {
 } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import Box from "@material-ui/core/Box";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Link from "@material-ui/core/Link";
-import MenuIcon from "@material-ui/icons/Menu";
+import {
+  Drawer,
+  Box,
+  AppBar,
+  Toolbar,
+  List,
+  Typography,
+  Divider,
+  IconButton,
+  Container,
+  Grid,
+  Link,
+} from "@material-ui/core";
+
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 
-import Home from "./Home";
-import ProviderSummary from "./ProviderSummary";
-import Charts from "./Charts";
-import Sunlight from "./Sunlight";
-import Power from "./Power";
+import Home from "./Slides/Home";
+import ProviderSummary from "./Slides/ProviderSummary";
+import Sunlight from "./Slides/Sunlight";
+import Power from "./Slides/Power";
 import { MainListItems } from "./listItems";
-import { SecondaryListItems } from "./listItems";
 
 import csLogoLight from "./images/cs_logo_lightmode.png";
 import csLogoDark from "./images/cs_logo_darkmode.png";
 import moonSymbol from "./images/moon_darkmode.png";
 import sunriseSymbol from "./images/sunrise.png";
+import lightningSymbol from "./images/lightning_lightmode.png";
+import gasCanSymbol from "./images/gascan.png";
+import sunWholeSymbol from "./images/sun_whole.png";
+import calendarSymbol from "./images/calendar_darkmode.png";
+import Usage from "./Slides/Usage";
+import Past24 from "./Slides/Past24";
 
 function Copyright() {
   return (
@@ -110,6 +116,9 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9),
     },
   },
+  drawerCloseButtonHidden: {
+    display: "none",
+  },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
@@ -137,7 +146,12 @@ const slideNav = [
   "/ProviderSummary",
   "/Sunlight",
   "/Power",
-  "/Charts",
+  "/Usage",
+  "/Past24",
+  "/PastWeekBars",
+  "/PastWeekGas",
+  "/PastMonthBars",
+  "/TreesPlanted",
 ];
 let slideNavCounter = 0;
 
@@ -149,6 +163,8 @@ export default function Dashboard(props) {
   const [nextSlide, setNextSlide] = useState("/Home");
   const [changeSlide, setChangeSlide] = useState(false);
   const [appbarTitle, setAppbarTitle] = useState("");
+  const [appbarIcon, setAppbarIcon] = useState(moonSymbol);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -187,6 +203,17 @@ export default function Dashboard(props) {
     return () => clearInterval(interval);
   }, [slideshowActive, seconds]);
 
+  // function uuidv4() {
+  //   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+  //     /[xy]/g,
+  //     function (c) {
+  //       var r = (Math.random() * 16) | 0,
+  //         v = c == "x" ? r : (r & 0x3) | 0x8;
+  //       return v.toString(16);
+  //     }
+  //   );
+  // }
+
   return (
     <div className={classes.root}>
       <Router>
@@ -194,6 +221,7 @@ export default function Dashboard(props) {
           position="absolute"
           className={clsx(classes.appBar, open && classes.appBarShift)}
           color="transparent"
+          elevation={0}
         >
           <Toolbar className={classes.toolbar}>
             <IconButton
@@ -206,7 +234,7 @@ export default function Dashboard(props) {
                 open && classes.menuButtonHidden
               )}
             >
-              <MenuIcon />
+              <ChevronRightIcon />
             </IconButton>
             <img
               alt="Cherry Street Energy logo"
@@ -222,14 +250,7 @@ export default function Dashboard(props) {
             >
               {appbarTitle}
             </Typography>
-            <IconButton
-              color="inherit"
-              onClick={() => {
-                props.setTheme(!props.theme);
-              }}
-            >
-              {props.darkModeIcon}
-            </IconButton>
+            <img src={appbarIcon} />
           </Toolbar>
         </AppBar>
 
@@ -241,17 +262,20 @@ export default function Dashboard(props) {
           open={open}
         >
           <div className={classes.toolbarIcon}>
-            <IconButton onClick={handleDrawerClose}>
+            <IconButton
+              onClick={handleDrawerClose}
+              className={clsx(!open && classes.drawerCloseButtonHidden)}
+            >
               <ChevronLeftIcon />
             </IconButton>
           </div>
           <Divider />
           <List>
-            <MainListItems />
-          </List>
-          <Divider />
-          <List>
-            <SecondaryListItems />
+            <MainListItems
+              setTheme={props.setTheme}
+              theme={props.theme}
+              darkModeIcon={props.darkModeIcon}
+            />
           </List>
         </Drawer>
 
@@ -264,27 +288,77 @@ export default function Dashboard(props) {
               </Route>
 
               <Route path="/ProviderSummary">
-                <ProviderSummary setAppbarTitle={setAppbarTitle} />
+                <ProviderSummary
+                  setAppbarTitle={setAppbarTitle}
+                  setAppbarIcon={setAppbarIcon}
+                />
               </Route>
 
               <Route path="/Sunlight">
-                <Sunlight setAppbarTitle={setAppbarTitle} />
+                <Sunlight
+                  setAppbarTitle={setAppbarTitle}
+                  setAppbarIcon={setAppbarIcon}
+                />
               </Route>
 
               <Route path="/Power">
-                <Power setAppbarTitle={setAppbarTitle} />
+                <Power
+                  setAppbarTitle={setAppbarTitle}
+                  setAppbarIcon={setAppbarIcon}
+                />
               </Route>
 
-              <Route path="/Charts">
-                <Charts setAppbarTitle={setAppbarTitle} />
+              <Route path="/Usage">
+                <Usage
+                  setAppbarTitle={setAppbarTitle}
+                  setAppbarIcon={setAppbarIcon}
+                />
+              </Route>
+
+              <Route path="/Past24">
+                <Past24
+                  setAppbarTitle={setAppbarTitle}
+                  setAppbarIcon={setAppbarIcon}
+                />
+              </Route>
+
+              <Route path="/PastWeekBars">
+                <Power
+                  setAppbarTitle={setAppbarTitle}
+                  setAppbarIcon={setAppbarIcon}
+                />
+              </Route>
+
+              <Route path="/PastWeekGas">
+                <Power
+                  setAppbarTitle={setAppbarTitle}
+                  setAppbarIcon={setAppbarIcon}
+                />
+              </Route>
+
+              <Route path="/PastMonthBars">
+                <Power
+                  setAppbarTitle={setAppbarTitle}
+                  setAppbarIcon={setAppbarIcon}
+                />
+              </Route>
+
+              <Route path="/TreesPlanted">
+                <Power
+                  setAppbarTitle={setAppbarTitle}
+                  setAppbarIcon={setAppbarIcon}
+                />
               </Route>
             </Switch>
             {changeSlide ? <Redirect to={nextSlide} /> : ""}
 
-            <Paper className={classes.dateFooter}>
+            <div className={classes.dateFooter}>
               <Grid container>
                 <Grid item xs={6} md={6} lg={6}>
-                  <Typography variant="h5">
+                  <Typography
+                    variant="h5"
+                    style={{ fontFamily: "Theinhardt, Roboto" }}
+                  >
                     {new Date().toLocaleDateString("en-US", {
                       // weekday: "long",
                       year: "numeric",
@@ -292,7 +366,10 @@ export default function Dashboard(props) {
                       day: "numeric",
                     })}
                   </Typography>
-                  <Typography variant="h5">
+                  <Typography
+                    variant="h5"
+                    style={{ fontFamily: "Theinhardt, Roboto" }}
+                  >
                     {new Date()
                       .toLocaleTimeString("en-US", {
                         hour: "2-digit",
@@ -302,12 +379,15 @@ export default function Dashboard(props) {
                   </Typography>
                 </Grid>
                 <Grid item xs={6} md={6} lg={6} align="right">
-                  <Typography variant="h3">
+                  <Typography
+                    variant="h3"
+                    style={{ fontFamily: "Theinhardt, Roboto" }}
+                  >
                     <img alt="Moon/Sun symbol" src={sunriseSymbol} /> 72&deg;
                   </Typography>
                 </Grid>
               </Grid>
-            </Paper>
+            </div>
 
             <Box
               onClick={() => {

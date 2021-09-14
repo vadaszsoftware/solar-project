@@ -3,17 +3,20 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
 import { RadialBarChart, RadialBar, Legend, Tooltip } from "recharts";
 
+import lightningSymbol from "../images/lightning_lightmode.png";
+
 const useStyles = makeStyles((theme) => ({
   paperContainer: {
     padding: theme.spacing(2),
   },
 }));
 
-export default function Power(props) {
+export default function Past24(props) {
   const classes = useStyles();
   const theme = useTheme();
-  props.setAppbarTitle("Current Power Production");
-  let data = require("./test_data.json");
+  props.setAppbarTitle("24hr solar generation");
+  props.setAppbarIcon(lightningSymbol);
+  let data = require("../test_data.json");
   data = data.power.production;
   data.name = "Power Generated";
   console.log("Power Production: ", data);

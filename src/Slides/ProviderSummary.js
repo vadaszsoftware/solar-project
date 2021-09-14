@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Typography, Grid } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  paperContainer: {
+  slideContainer: {
     padding: theme.spacing(4),
   },
 }));
@@ -14,12 +14,12 @@ export default function ProviderSummary(props) {
 
   return (
     <React.Fragment>
-      <Paper className={classes.paperContainer}>
+      <div className={classes.slideContainer}>
         <Typography variant="h4">Emory's Commitment:</Typography>
         <Typography variant="h1">100% clean energy by 2035.</Typography>
-      </Paper>
+      </div>
       <br />
-      <Paper className={classes.paperContainer}>
+      <div className={classes.slideContainer}>
         <Grid container>
           <Grid item xs={4} md={4} lg={4}>
             <Typography variant="h4">Emory's Solar Portfolio:</Typography>
@@ -44,7 +44,7 @@ export default function ProviderSummary(props) {
             <Typography variant="h4">Total Sites</Typography>
           </Grid>
         </Grid>
-      </Paper>
+      </div>
     </React.Fragment>
   );
 }
