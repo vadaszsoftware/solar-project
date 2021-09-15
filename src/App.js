@@ -10,7 +10,7 @@ import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness3Icon from "@material-ui/icons/Brightness3";
 import sentinelLight from "./fonts/Sentinel-Light.ttf";
 import theinhardtLight from "./fonts/Sentinel-Light.ttf";
-import { amber, yellow } from "@material-ui/core/colors";
+import { amber } from "@material-ui/core/colors";
 
 const sentinel = {
   fontFamily: "Sentinel",

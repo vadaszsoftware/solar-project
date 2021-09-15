@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { Paper, Typography, Slider } from "@material-ui/core";
+import { Typography, Slider } from "@material-ui/core";
 
 import WbSunnyIcon from "@material-ui/icons/WbSunny";
 
+import blankImg from "../images/blank.png";
+
 const useStyles = makeStyles((theme) => ({
-  paperContainer: {
+  slideContainer: {
     padding: theme.spacing(4),
   },
 }));
@@ -57,20 +59,26 @@ function SunThumb(props) {
 
 export default function Sunlight(props) {
   const classes = useStyles();
-  props.setAppbarTitle("");
+  useEffect(() => {
+    props.setAppbarTitle({
+      title: "",
+      subtitle: "",
+      icon: blankImg,
+    });
+  });
   let data = require("../test_data.json");
   data = data.meteo.cloudCover;
   console.log("Sunlight: ", data);
 
   return (
     <React.Fragment>
-      <Paper className={classes.paperContainer}>
+      <div className={classes.slideContainer}>
         <Typography variant="h1">It's a good time for solar.</Typography>
-      </Paper>
+      </div>
       <br />
-      <Paper className={classes.paperContainer}>
+      <div className={classes.slideContainer}>
         <SunlightSlider ThumbComponent={SunThumb} defaultValue={50} />
-      </Paper>
+      </div>
     </React.Fragment>
   );
 }

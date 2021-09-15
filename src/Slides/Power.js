@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Paper } from "@material-ui/core";
 import { RadialBarChart, RadialBar, Legend, Tooltip } from "recharts";
 
 import lightningSymbol from "../images/lightning_lightmode.png";
 
 const useStyles = makeStyles((theme) => ({
-  paperContainer: {
+  slideContainer: {
     padding: theme.spacing(2),
   },
 }));
@@ -14,8 +13,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Power(props) {
   const classes = useStyles();
   const theme = useTheme();
-  props.setAppbarTitle("Current Power Production");
-  props.setAppbarIcon(lightningSymbol);
+  useEffect(() => {
+    props.setAppbarTitle({
+      title: "Current Power Production",
+      subtitle: "",
+      icon: lightningSymbol,
+    });
+  });
   let data = require("../test_data.json");
   data = data.power.production;
   data.name = "Power Generated";
@@ -23,7 +27,7 @@ export default function Power(props) {
 
   return (
     <React.Fragment>
-      <Paper className={classes.paperContainer}>
+      <div className={classes.slideContainer}>
         <RadialBarChart
           width={730}
           height={500}
@@ -52,7 +56,7 @@ export default function Power(props) {
           />
           <Tooltip />
         </RadialBarChart>
-      </Paper>
+      </div>
     </React.Fragment>
   );
 }

@@ -5,7 +5,6 @@ import {
   ListItemIcon,
   ListItemText,
   ListSubheader,
-  IconButton,
   Divider,
 } from "@material-ui/core";
 import AssignmentIcon from "@material-ui/icons/Assignment";
@@ -13,6 +12,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import BusinessIcon from "@material-ui/icons/Business";
 import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import FlashOnIcon from "@material-ui/icons/FlashOn";
+import Brightness6Icon from "@material-ui/icons/Brightness6";
+import HistoryIcon from "@material-ui/icons/History";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 
 // import { fetchData } from "./FetchData";
@@ -50,21 +51,21 @@ export function MainListItems(props) {
 
       <ListItem button component={RouterLink} to="/Usage">
         <ListItemIcon>
-          <FlashOnIcon />
+          <Brightness6Icon />
         </ListItemIcon>
         <ListItemText primary="Usage" />
       </ListItem>
 
       <ListItem button component={RouterLink} to="/Past24">
         <ListItemIcon>
-          <FlashOnIcon />
+          <HistoryIcon />
         </ListItemIcon>
         <ListItemText primary="Past24" />
       </ListItem>
 
       <ListItem button component={RouterLink} to="/PastWeekBars">
         <ListItemIcon>
-          <FlashOnIcon />
+          <EqualizerIcon />
         </ListItemIcon>
         <ListItemText primary="PastWeekBars" />
       </ListItem>

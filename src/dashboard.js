@@ -26,22 +26,24 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 
+import { MainListItems } from "./listItems";
 import Home from "./Slides/Home";
 import ProviderSummary from "./Slides/ProviderSummary";
 import Sunlight from "./Slides/Sunlight";
 import Power from "./Slides/Power";
-import { MainListItems } from "./listItems";
+import Usage from "./Slides/Usage";
+import Past24 from "./Slides/Past24";
+import PastWeekBars from "./Slides/PastWeekBars";
 
 import csLogoLight from "./images/cs_logo_lightmode.png";
 import csLogoDark from "./images/cs_logo_darkmode.png";
-import moonSymbol from "./images/moon_darkmode.png";
 import sunriseSymbol from "./images/sunrise.png";
-import lightningSymbol from "./images/lightning_lightmode.png";
-import gasCanSymbol from "./images/gascan.png";
-import sunWholeSymbol from "./images/sun_whole.png";
-import calendarSymbol from "./images/calendar_darkmode.png";
-import Usage from "./Slides/Usage";
-import Past24 from "./Slides/Past24";
+// import moonSymbol from "./images/moon_darkmode.png";
+// import lightningSymbol from "./images/lightning_lightmode.png";
+// import gasCanSymbol from "./images/gascan.png";
+// import sunWholeSymbol from "./images/sun_whole.png";
+// import calendarSymbol from "./images/calendar_darkmode.png";
+import blankImg from "./images/blank.png";
 
 function Copyright() {
   return (
@@ -162,8 +164,11 @@ export default function Dashboard(props) {
   const [open, setOpen] = React.useState(true);
   const [nextSlide, setNextSlide] = useState("/Home");
   const [changeSlide, setChangeSlide] = useState(false);
-  const [appbarTitle, setAppbarTitle] = useState("");
-  const [appbarIcon, setAppbarIcon] = useState(moonSymbol);
+  const [appbarTitle, setAppbarTitle] = useState({
+    title: "",
+    subtitle: "",
+    icon: blankImg,
+  });
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -218,7 +223,7 @@ export default function Dashboard(props) {
     <div className={classes.root}>
       <Router>
         <AppBar
-          position="absolute"
+          // position="absolute"
           className={clsx(classes.appBar, open && classes.appBarShift)}
           color="transparent"
           elevation={0}
@@ -242,15 +247,18 @@ export default function Dashboard(props) {
             ></img>
             <Typography
               // component="h1"
-              variant="h3"
+              variant="h2"
               color="inherit"
               noWrap
               className={classes.title}
               align="center"
             >
-              {appbarTitle}
+              {appbarTitle.title}
+              <Typography variant="h5" noWrap>
+                {appbarTitle.subtitle}
+              </Typography>
             </Typography>
-            <img src={appbarIcon} />
+            <img alt="App Bar Icon" src={appbarTitle.icon} />
           </Toolbar>
         </AppBar>
 
@@ -288,66 +296,39 @@ export default function Dashboard(props) {
               </Route>
 
               <Route path="/ProviderSummary">
-                <ProviderSummary
-                  setAppbarTitle={setAppbarTitle}
-                  setAppbarIcon={setAppbarIcon}
-                />
+                <ProviderSummary setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/Sunlight">
-                <Sunlight
-                  setAppbarTitle={setAppbarTitle}
-                  setAppbarIcon={setAppbarIcon}
-                />
+                <Sunlight setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/Power">
-                <Power
-                  setAppbarTitle={setAppbarTitle}
-                  setAppbarIcon={setAppbarIcon}
-                />
+                <Power setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/Usage">
-                <Usage
-                  setAppbarTitle={setAppbarTitle}
-                  setAppbarIcon={setAppbarIcon}
-                />
+                <Usage setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/Past24">
-                <Past24
-                  setAppbarTitle={setAppbarTitle}
-                  setAppbarIcon={setAppbarIcon}
-                />
+                <Past24 setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/PastWeekBars">
-                <Power
-                  setAppbarTitle={setAppbarTitle}
-                  setAppbarIcon={setAppbarIcon}
-                />
+                <PastWeekBars setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/PastWeekGas">
-                <Power
-                  setAppbarTitle={setAppbarTitle}
-                  setAppbarIcon={setAppbarIcon}
-                />
+                <Power setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/PastMonthBars">
-                <Power
-                  setAppbarTitle={setAppbarTitle}
-                  setAppbarIcon={setAppbarIcon}
-                />
+                <Power setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/TreesPlanted">
-                <Power
-                  setAppbarTitle={setAppbarTitle}
-                  setAppbarIcon={setAppbarIcon}
-                />
+                <Power setAppbarTitle={setAppbarTitle} />
               </Route>
             </Switch>
             {changeSlide ? <Redirect to={nextSlide} /> : ""}

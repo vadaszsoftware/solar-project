@@ -1,58 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Paper } from "@material-ui/core";
-import { RadialBarChart, RadialBar, Legend, Tooltip } from "recharts";
+import { Box, Typography } from "@material-ui/core";
 
 import lightningSymbol from "../images/lightning_lightmode.png";
 
 const useStyles = makeStyles((theme) => ({
-  paperContainer: {
+  slideContainer: {
     padding: theme.spacing(2),
+    marginTop: theme.spacing(4),
   },
 }));
 
 export default function Past24(props) {
   const classes = useStyles();
   const theme = useTheme();
-  props.setAppbarTitle("24hr solar generation");
-  props.setAppbarIcon(lightningSymbol);
+  useEffect(() => {
+    props.setAppbarTitle({
+      title: "24hr solar generation",
+      subtitle: "",
+      icon: lightningSymbol,
+    });
+  });
+
   let data = require("../test_data.json");
   data = data.power.production;
   data.name = "Power Generated";
   console.log("Power Production: ", data);
 
   return (
-    <React.Fragment>
-      <Paper className={classes.paperContainer}>
-        <RadialBarChart
-          width={730}
-          height={500}
-          innerRadius="40%"
-          outerRadius="60%"
-          data={[data]}
-        >
-          <RadialBar
-            minAngle={15}
-            label={{
-              fill: "Black",
-              position: "insideStart",
-            }}
-            background
-            clockWise={true}
-            dataKey="value"
-            fill={theme.palette.primary.main}
-          />
-          <Legend
-            iconSize={10}
-            width={120}
-            height={140}
-            layout="vertical"
-            verticalAlign="middle"
-            align="right"
-          />
-          <Tooltip />
-        </RadialBarChart>
-      </Paper>
-    </React.Fragment>
+    <div className={classes.slideContainer} align="center">
+      <Box
+        borderColor={theme.palette.primary.main}
+        border={7}
+        display="block"
+        height={500}
+        width={500}
+        lineHeight={500}
+        borderRadius="50%"
+        paddingTop={15}
+      >
+        <Typography variant="h1">649 kWh</Typography>
+        <Typography variant="h4">
+          In the last 24 hours we <br />
+          have generated 649 kWh
+        </Typography>
+      </Box>
+    </div>
   );
 }

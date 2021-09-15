@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+
+import blankImg from "../images/blank.png";
 
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
@@ -10,7 +12,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home(props) {
   const classes = useStyles();
-  props.setAppbarTitle("");
+  useEffect(() => {
+    props.setAppbarTitle({
+      title: "",
+      subtitle: "",
+      icon: blankImg,
+    });
+  });
 
   return (
     <div className={classes.slideContainer}>

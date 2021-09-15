@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Typography, Grid } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
+
+import blankImg from "../images/blank.png";
 
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(4),
   },
+  portfolioText: {
+    fontFamily: "Theinhardt, Roboto",
+    display: "inline",
+  },
 }));
 
 export default function ProviderSummary(props) {
   const classes = useStyles();
-  props.setAppbarTitle("");
+  useEffect(() => {
+    props.setAppbarTitle({
+      title: "",
+      subtitle: "",
+      icon: blankImg,
+    });
+  });
 
   return (
     <React.Fragment>
@@ -27,21 +39,34 @@ export default function ProviderSummary(props) {
         </Grid>
         <Grid container>
           <Grid item xs={4} md={4} lg={4}>
-            <Typography variant="h2" display="inline">
+            <Typography variant="h1" className={classes.portfolioText}>
               5.5
             </Typography>
-            <Typography variant="h4" display="inline">
+            <Typography variant="h3" className={classes.portfolioText}>
               MW
             </Typography>
-            <Typography variant="h4">Solar Capacity</Typography>
+            <br />
+            <Typography variant="h4" className={classes.portfolioText}>
+              Solar Capacity
+            </Typography>
           </Grid>
           <Grid item xs={4} md={4} lg={4}>
-            <Typography variant="h2">15K</Typography>
-            <Typography variant="h4">Solar Panels</Typography>
+            <Typography variant="h1" className={classes.portfolioText}>
+              15K
+            </Typography>
+            <br />
+            <Typography variant="h4" className={classes.portfolioText}>
+              Solar Panels
+            </Typography>
           </Grid>
           <Grid item xs={4} md={4} lg={4}>
-            <Typography variant="h2">16</Typography>
-            <Typography variant="h4">Total Sites</Typography>
+            <Typography variant="h1" className={classes.portfolioText}>
+              16
+            </Typography>
+            <br />
+            <Typography variant="h4" className={classes.portfolioText}>
+              Total Sites
+            </Typography>
           </Grid>
         </Grid>
       </div>
