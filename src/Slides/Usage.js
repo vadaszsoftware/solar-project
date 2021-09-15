@@ -19,7 +19,7 @@ export default function Usage(props) {
       subtitle: "",
       icon: blankImg,
     });
-  });
+  }, []);
   let data = require("../test_data.json");
   data = data.power.production;
   data.name = "Power Generated";

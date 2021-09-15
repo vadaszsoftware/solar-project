@@ -24,7 +24,7 @@ data = data.energy.production.daily.values;
 data.name = "Power Generated";
 console.log("Power Production: ", data);
 
-export default function PastWeekBars(props) {
+export default function PastMonthBars(props) {
   const classes = useStyles();
   const theme = useTheme();
   let data;

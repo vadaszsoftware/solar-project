@@ -44,6 +44,9 @@ import sunriseSymbol from "./images/sunrise.png";
 // import sunWholeSymbol from "./images/sun_whole.png";
 // import calendarSymbol from "./images/calendar_darkmode.png";
 import blankImg from "./images/blank.png";
+import PastWeekGas from "./Slides/PastWeekGas";
+import TreesPlanted from "./Slides/TreesPlanted";
+import PastMonthBars from "./Slides/PastMonthBars";
 
 function Copyright() {
   return (
@@ -320,15 +323,15 @@ export default function Dashboard(props) {
               </Route>
 
               <Route path="/PastWeekGas">
-                <Power setAppbarTitle={setAppbarTitle} />
+                <PastWeekGas setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/PastMonthBars">
-                <Power setAppbarTitle={setAppbarTitle} />
+                <PastMonthBars setAppbarTitle={setAppbarTitle} />
               </Route>
 
               <Route path="/TreesPlanted">
-                <Power setAppbarTitle={setAppbarTitle} />
+                <TreesPlanted setAppbarTitle={setAppbarTitle} />
               </Route>
             </Switch>
             {changeSlide ? <Redirect to={nextSlide} /> : ""}

@@ -22,7 +22,7 @@ export default function ProviderSummary(props) {
       subtitle: "",
       icon: blankImg,
     });
-  });
+  }, []);
 
   return (
     <React.Fragment>

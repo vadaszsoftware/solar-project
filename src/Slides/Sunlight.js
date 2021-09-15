@@ -65,7 +65,7 @@ export default function Sunlight(props) {
       subtitle: "",
       icon: blankImg,
     });
-  });
+  }, []);
   let data = require("../test_data.json");
   data = data.meteo.cloudCover;
   console.log("Sunlight: ", data);

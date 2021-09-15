@@ -15,6 +15,8 @@ import FlashOnIcon from "@material-ui/icons/FlashOn";
 import Brightness6Icon from "@material-ui/icons/Brightness6";
 import HistoryIcon from "@material-ui/icons/History";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
+import LocalGasStationIcon from "@material-ui/icons/LocalGasStation";
+import NatureIcon from "@material-ui/icons/Nature";
 
 // import { fetchData } from "./FetchData";
 
@@ -72,21 +74,21 @@ export function MainListItems(props) {
 
       <ListItem button component={RouterLink} to="/PastWeekGas">
         <ListItemIcon>
-          <FlashOnIcon />
+          <LocalGasStationIcon />
         </ListItemIcon>
         <ListItemText primary="PastWeekGas" />
       </ListItem>
 
       <ListItem button component={RouterLink} to="/PastMonthBars">
         <ListItemIcon>
-          <FlashOnIcon />
+          <EqualizerIcon />
         </ListItemIcon>
         <ListItemText primary="PastMonthBars" />
       </ListItem>
 
       <ListItem button component={RouterLink} to="/TreesPlanted">
         <ListItemIcon>
-          <FlashOnIcon />
+          <NatureIcon />
         </ListItemIcon>
         <ListItemText primary="TreesPlanted" />
       </ListItem>

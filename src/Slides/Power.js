@@ -19,7 +19,7 @@ export default function Power(props) {
       subtitle: "",
       icon: lightningSymbol,
     });
-  });
+  }, []);
   let data = require("../test_data.json");
   data = data.power.production;
   data.name = "Power Generated";
