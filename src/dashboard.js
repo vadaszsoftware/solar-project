@@ -166,8 +166,12 @@ const SLIDE_CHANGE_TIMER = 5;
 
 export default function Dashboard(props) {
   const classes = useStyles();
-  const [info, setInfo] = useState(fetchInfo("DhHCwgUy"));
-  const [data, setData] = useState(fetchData("DhHCwgUy"));
+  const [info, setInfo] = useState(
+    fetchInfo("DhHCwgUy").then((result) => result)
+  );
+  const [data, setData] = useState(
+    fetchData("DhHCwgUy").then((result) => result)
+  );
   const [open, setOpen] = React.useState(true);
   const [nextSlide, setNextSlide] = useState("/Home");
   const [changeSlide, setChangeSlide] = useState(false);

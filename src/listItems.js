@@ -27,7 +27,7 @@ import leafIcon from "./images/leaf.png";
 import { fetchData, fetchInfo } from "./fetchData";
 
 export function MainListItems(props) {
-  const [siteIdInput, setSiteIdInput] = useState("");
+  const [siteIdInput, setSiteIdInput] = useState("DhHCwgUy");
   return (
     <div>
       <ListItem
