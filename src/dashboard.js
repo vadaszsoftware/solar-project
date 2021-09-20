@@ -35,6 +35,8 @@ import Usage from "./Slides/Usage";
 import Past24 from "./Slides/Past24";
 import PastWeekBars from "./Slides/PastWeekBars";
 
+import { fetchData, fetchInfo } from "./fetchData";
+
 import csLogoLight from "./images/cs_logo_lightmode.png";
 import csLogoDark from "./images/cs_logo_darkmode.png";
 import sunriseSymbol from "./images/sunrise.png";
@@ -164,7 +166,8 @@ const SLIDE_CHANGE_TIMER = 5;
 
 export default function Dashboard(props) {
   const classes = useStyles();
-  const [info, setInfo] = useState();
+  const [info, setInfo] = useState(fetchInfo("DhHCwgUy"));
+  const [data, setData] = useState(fetchData("DhHCwgUy"));
   const [open, setOpen] = React.useState(true);
   const [nextSlide, setNextSlide] = useState("/Home");
   const [changeSlide, setChangeSlide] = useState(false);
@@ -289,6 +292,7 @@ export default function Dashboard(props) {
               darkModeIcon={props.darkModeIcon}
               setAppbarTitle={setAppbarTitle}
               setInfo={setInfo}
+              setData={setData}
             />
           </List>
         </Drawer>
@@ -306,7 +310,7 @@ export default function Dashboard(props) {
               </Route>
 
               <Route path="/Sunlight">
-                <Sunlight />
+                <Sunlight data={data} />
               </Route>
 
               <Route path="/Power">

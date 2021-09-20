@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 
@@ -10,13 +10,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Usage(props) {
   const classes = useStyles();
-  let data;
-  useEffect(() => {
-    data = require("../test_data.json");
-    data = data.power.production;
-    data.name = "Power Generated";
-    console.log("Power Production: ", data);
-  }, []);
 
   return (
     <div className={classes.slideContainer}>

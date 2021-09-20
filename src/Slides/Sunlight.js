@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Typography, Slider } from "@material-ui/core";
 
@@ -45,12 +45,6 @@ function SunThumb(props) {
 
 export default function Sunlight(props) {
   const classes = useStyles();
-  let data;
-  useEffect(() => {
-    data = require("../test_data.json");
-    data = Math.round(data.meteo.cloudCover.value * 100);
-    console.log("Sunlight: ", data);
-  });
 
   return (
     <React.Fragment>
@@ -62,7 +56,7 @@ export default function Sunlight(props) {
         <SunlightSlider
           ThumbComponent={SunThumb}
           defaultValue={50}
-          value={data}
+          value={[]}
           valueLabelDisplay="on"
         />
       </div>

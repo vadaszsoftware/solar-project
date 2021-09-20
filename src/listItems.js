@@ -24,13 +24,10 @@ import calIcon from "./images/calendar_darkmode.png";
 import gascanIcon from "./images/gascan.png";
 import leafIcon from "./images/leaf.png";
 
-import { fetchInfo } from "./fetchData";
+import { fetchData, fetchInfo } from "./fetchData";
 
 export function MainListItems(props) {
   const [siteIdInput, setSiteIdInput] = useState("");
-  const handleSubmit = () => {
-    console.log("Submitting: ", siteIdInput);
-  };
   return (
     <div>
       <ListItem
@@ -243,6 +240,10 @@ export function MainListItems(props) {
           fetchInfo(siteIdInput).then((result) => {
             console.log("fetchInfo: ", result);
             props.setInfo(result);
+          });
+          fetchData(siteIdInput).then((result) => {
+            console.log("fetchData: ", result);
+            props.setData(result);
           });
         }}
       >

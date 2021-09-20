@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { RadialBarChart, RadialBar, Legend, Tooltip } from "recharts";
 
@@ -11,13 +11,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Power(props) {
   const classes = useStyles();
   const theme = useTheme();
-  let data;
-  useEffect(() => {
-    data = require("../test_data.json");
-    data = data.power.production;
-    data.name = "Power Generated";
-    console.log("Power Production: ", data);
-  }, []);
 
   return (
     <React.Fragment>
@@ -27,7 +20,7 @@ export default function Power(props) {
           height={500}
           innerRadius="40%"
           outerRadius="60%"
-          data={[data]}
+          data={[]}
         >
           <RadialBar
             minAngle={15}

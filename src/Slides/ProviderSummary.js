@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid } from "@material-ui/core";
-import { fetchData } from "../fetchData";
 
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
@@ -16,13 +15,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ProviderSummary(props) {
   const classes = useStyles();
   const info = props.info;
-  const [data, setData] = useState();
-  useEffect(() => {
-    fetchData().then((result) => {
-      console.log("data: ", result);
-      setData(result.energy.production.allTime.value);
-    });
-  }, []);
 
   return (
     <React.Fragment>

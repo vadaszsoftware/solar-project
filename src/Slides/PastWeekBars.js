@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
 import {
@@ -20,18 +20,11 @@ const useStyles = makeStyles((theme) => ({
 export default function PastWeekBars(props) {
   const classes = useStyles();
   const theme = useTheme();
-  let data;
-  useEffect(() => {
-    data = require("../test_data.json");
-    data = data.energy.production.daily.values;
-    data.name = "Power Generated";
-    console.log("Power Production: ", data);
-  }, []);
 
   return (
     <div className={classes.slideContainer}>
       <Box textAlign="center">
-        <BarChart width={730} height={250} data={data}>
+        <BarChart width={730} height={250} data={[]}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />

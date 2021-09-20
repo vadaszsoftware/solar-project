@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Box, Typography } from "@material-ui/core";
 
@@ -12,13 +12,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Past24(props) {
   const classes = useStyles();
   const theme = useTheme();
-  let [data, setData] = useState(0);
-  useEffect(() => {
-    data = require("../test_data.json");
-    data = data.power.production.value;
-    console.log("Power Production: ", data);
-    setData(data);
-  });
 
   return (
     <div className={classes.slideContainer} align="center">
@@ -32,7 +25,7 @@ export default function Past24(props) {
         borderRadius="50%"
         paddingTop={15}
       >
-        <Typography variant="h1">{data} kWh</Typography>
+        <Typography variant="h1">data kWh</Typography>
         <Typography
           variant="h4"
           style={{
@@ -41,7 +34,7 @@ export default function Past24(props) {
           }}
         >
           In the last 24 hours we <br />
-          have generated {data} kWh
+          have generated data kWh
         </Typography>
       </Box>
     </div>
