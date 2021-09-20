@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Typography, Box } from "@material-ui/core";
 
-import leafIcon from "../images/leaf.png";
-
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(4),
@@ -27,11 +25,7 @@ export default function TreesPlanted(props) {
   const classes = useStyles();
   const theme = useTheme();
   useEffect(() => {
-    props.setAppbarTitle({
-      title: "Equivalent Trees Planted",
-      subtitle: "",
-      icon: leafIcon,
-    });
+    console.log("fetch data");
   }, []);
 
   return (

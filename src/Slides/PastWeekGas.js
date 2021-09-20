@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid } from "@material-ui/core";
-
-import gascanIcon from "../images/gascan.png";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
@@ -17,11 +15,7 @@ const useStyles = makeStyles((theme) => ({
 export default function PastWeekGas(props) {
   const classes = useStyles();
   useEffect(() => {
-    props.setAppbarTitle({
-      title: "",
-      subtitle: "",
-      icon: gascanIcon,
-    });
+    console.log("fetch data");
   }, []);
 
   return (

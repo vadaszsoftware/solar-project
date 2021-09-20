@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Box, Typography } from "@material-ui/core";
-
-import lightningSymbol from "../images/lightning_lightmode.png";
 
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
@@ -14,18 +12,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Past24(props) {
   const classes = useStyles();
   const theme = useTheme();
+  let [data, setData] = useState(0);
   useEffect(() => {
-    props.setAppbarTitle({
-      title: "24hr solar generation",
-      subtitle: "",
-      icon: lightningSymbol,
-    });
-  }, []);
-
-  let data = require("../test_data.json");
-  data = data.power.production;
-  data.name = "Power Generated";
-  console.log("Power Production: ", data);
+    data = require("../test_data.json");
+    data = data.power.production.value;
+    console.log("Power Production: ", data);
+    setData(data);
+  });
 
   return (
     <div className={classes.slideContainer} align="center">
@@ -39,10 +32,16 @@ export default function Past24(props) {
         borderRadius="50%"
         paddingTop={15}
       >
-        <Typography variant="h1">649 kWh</Typography>
-        <Typography variant="h4">
+        <Typography variant="h1">{data} kWh</Typography>
+        <Typography
+          variant="h4"
+          style={{
+            fontFamily: "Theinhardt, Roboto",
+            marginTop: 16,
+          }}
+        >
           In the last 24 hours we <br />
-          have generated 649 kWh
+          have generated {data} kWh
         </Typography>
       </Box>
     </div>

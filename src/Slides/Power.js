@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { RadialBarChart, RadialBar, Legend, Tooltip } from "recharts";
 
-import lightningSymbol from "../images/lightning_lightmode.png";
-
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(2),
@@ -13,17 +11,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Power(props) {
   const classes = useStyles();
   const theme = useTheme();
+  let data;
   useEffect(() => {
-    props.setAppbarTitle({
-      title: "Current Power Production",
-      subtitle: "",
-      icon: lightningSymbol,
-    });
+    data = require("../test_data.json");
+    data = data.power.production;
+    data.name = "Power Generated";
+    console.log("Power Production: ", data);
   }, []);
-  let data = require("../test_data.json");
-  data = data.power.production;
-  data.name = "Power Generated";
-  console.log("Power Production: ", data);
 
   return (
     <React.Fragment>

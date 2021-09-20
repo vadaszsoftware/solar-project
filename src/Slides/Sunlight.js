@@ -4,8 +4,6 @@ import { Typography, Slider } from "@material-ui/core";
 
 import WbSunnyIcon from "@material-ui/icons/WbSunny";
 
-import blankImg from "../images/blank.png";
-
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(4),
@@ -16,18 +14,6 @@ const SunlightSlider = withStyles({
   root: {
     height: 8,
   },
-  thumb: {
-    // height: 35,
-    // width: 35,
-    // backgroundColor: "#fff",
-    // border: "2px solid currentColor",
-    // marginTop: -8,
-    // marginLeft: -12,
-    // "&:focus, &:hover, &$active": {
-    //   boxShadow: "inherit",
-    // },
-  },
-  active: {},
   valueLabel: {
     left: "calc(-50% + 4px)",
   },
@@ -59,16 +45,12 @@ function SunThumb(props) {
 
 export default function Sunlight(props) {
   const classes = useStyles();
+  let data;
   useEffect(() => {
-    props.setAppbarTitle({
-      title: "",
-      subtitle: "",
-      icon: blankImg,
-    });
-  }, []);
-  let data = require("../test_data.json");
-  data = data.meteo.cloudCover;
-  console.log("Sunlight: ", data);
+    data = require("../test_data.json");
+    data = Math.round(data.meteo.cloudCover.value * 100);
+    console.log("Sunlight: ", data);
+  });
 
   return (
     <React.Fragment>
@@ -77,7 +59,12 @@ export default function Sunlight(props) {
       </div>
       <br />
       <div className={classes.slideContainer}>
-        <SunlightSlider ThumbComponent={SunThumb} defaultValue={50} />
+        <SunlightSlider
+          ThumbComponent={SunThumb}
+          defaultValue={50}
+          value={data}
+          valueLabelDisplay="on"
+        />
       </div>
     </React.Fragment>
   );

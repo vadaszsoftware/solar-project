@@ -1,19 +1,38 @@
-// imports
+// site IDs to test with
+// DhHCwgUy
+// 1swwe8FB
+// 5xoDk1WR
 
-export function fetchData() {
-    let data = "bull";
+export async function fetchData() {
+  let siteId = "5xoDk1WR";
+  let retVal;
 
-    fetch("https://swapi.dev/api/people/1/")
-    .then(response => {
-        console.log("1: ", response);
-        // console.log("2: ", response.json());
-        return response.json();
+  await fetch(`https://kiosk.staging.wattch.io/api/${siteId}/data`)
+    .then((response) => {
+      //   console.log("1: ", response);
+      // console.log("2: ", response.json());
+      return response.json();
     })
-    .then(async data => {
-        await console.log(data);
+    .then((result) => {
+      // console.log("result: ", result);
+      retVal = result;
+    });
+  return retVal;
+}
+
+export async function fetchInfo(siteId) {
+  let retVal;
+  console.log("site id: ", siteId);
+
+  await fetch(`https://kiosk.staging.wattch.io/api/${siteId}/info`)
+    .then((response) => {
+      //   console.log("1: ", response);
+      // console.log("2: ", response.json());
+      return response.json();
     })
-
-
-
-    return data;
+    .then((result) => {
+      // console.log("result: ", result);
+      retVal = result;
+    });
+  return retVal;
 }

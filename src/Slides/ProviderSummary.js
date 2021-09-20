@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid } from "@material-ui/core";
-
-import blankImg from "../images/blank.png";
+import { fetchData } from "../fetchData";
 
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
@@ -16,34 +15,35 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProviderSummary(props) {
   const classes = useStyles();
+  const info = props.info;
+  const [data, setData] = useState();
   useEffect(() => {
-    props.setAppbarTitle({
-      title: "",
-      subtitle: "",
-      icon: blankImg,
+    fetchData().then((result) => {
+      console.log("data: ", result);
+      setData(result.energy.production.allTime.value);
     });
   }, []);
 
   return (
     <React.Fragment>
       <div className={classes.slideContainer}>
-        <Typography variant="h4">Emory's Commitment:</Typography>
+        <Typography variant="h4">{info.name}'s Commitment:</Typography>
         <Typography variant="h1">100% clean energy by 2035.</Typography>
       </div>
       <br />
       <div className={classes.slideContainer}>
         <Grid container>
-          <Grid item xs={4} md={4} lg={4}>
-            <Typography variant="h4">Emory's Solar Portfolio:</Typography>
+          <Grid item xs={12} md={12} lg={12}>
+            <Typography variant="h4">{info.name}'s Solar Portfolio:</Typography>
           </Grid>
         </Grid>
         <Grid container>
           <Grid item xs={4} md={4} lg={4}>
             <Typography variant="h1" className={classes.portfolioText}>
-              5.5
+              {info.capacity / 1000}
             </Typography>
             <Typography variant="h3" className={classes.portfolioText}>
-              MW
+              kW
             </Typography>
             <br />
             <Typography variant="h4" className={classes.portfolioText}>

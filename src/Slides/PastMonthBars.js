@@ -11,8 +11,6 @@ import {
   Tooltip,
 } from "recharts";
 
-import calIcon from "../images/calendar_darkmode.png";
-
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(2),
@@ -29,11 +27,7 @@ export default function PastMonthBars(props) {
   const theme = useTheme();
   let data;
   useEffect(() => {
-    props.setAppbarTitle({
-      title: "Solar Energy Produced",
-      subtitle: "We offset 124 gallons of gasoline over the last 7 days",
-      icon: calIcon,
-    });
+    console.log("fetch data");
   }, []);
 
   return (

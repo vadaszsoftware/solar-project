@@ -164,6 +164,7 @@ const SLIDE_CHANGE_TIMER = 5;
 
 export default function Dashboard(props) {
   const classes = useStyles();
+  const [info, setInfo] = useState();
   const [open, setOpen] = React.useState(true);
   const [nextSlide, setNextSlide] = useState("/Home");
   const [changeSlide, setChangeSlide] = useState(false);
@@ -286,6 +287,8 @@ export default function Dashboard(props) {
               setTheme={props.setTheme}
               theme={props.theme}
               darkModeIcon={props.darkModeIcon}
+              setAppbarTitle={setAppbarTitle}
+              setInfo={setInfo}
             />
           </List>
         </Drawer>
@@ -295,43 +298,43 @@ export default function Dashboard(props) {
           <Container className={classes.container} maxWidth="xl">
             <Switch>
               <Route path="/Home">
-                <Home setAppbarTitle={setAppbarTitle} />
+                <Home info={info} />
               </Route>
 
               <Route path="/ProviderSummary">
-                <ProviderSummary setAppbarTitle={setAppbarTitle} />
+                <ProviderSummary info={info} />
               </Route>
 
               <Route path="/Sunlight">
-                <Sunlight setAppbarTitle={setAppbarTitle} />
+                <Sunlight />
               </Route>
 
               <Route path="/Power">
-                <Power setAppbarTitle={setAppbarTitle} />
+                <Power />
               </Route>
 
               <Route path="/Usage">
-                <Usage setAppbarTitle={setAppbarTitle} />
+                <Usage />
               </Route>
 
               <Route path="/Past24">
-                <Past24 setAppbarTitle={setAppbarTitle} />
+                <Past24 />
               </Route>
 
               <Route path="/PastWeekBars">
-                <PastWeekBars setAppbarTitle={setAppbarTitle} />
+                <PastWeekBars />
               </Route>
 
               <Route path="/PastWeekGas">
-                <PastWeekGas setAppbarTitle={setAppbarTitle} />
+                <PastWeekGas />
               </Route>
 
               <Route path="/PastMonthBars">
-                <PastMonthBars setAppbarTitle={setAppbarTitle} />
+                <PastMonthBars />
               </Route>
 
               <Route path="/TreesPlanted">
-                <TreesPlanted setAppbarTitle={setAppbarTitle} />
+                <TreesPlanted />
               </Route>
             </Switch>
             {changeSlide ? <Redirect to={nextSlide} /> : ""}
