@@ -13,7 +13,7 @@ export async function fetchData(siteId) {
       return response.json();
     })
     .then((result) => {
-      // console.log("result: ", result);
+      console.log("result: ", result);
       retVal = result;
     });
   return retVal;
@@ -21,7 +21,7 @@ export async function fetchData(siteId) {
 
 export async function fetchInfo(siteId) {
   let retVal;
-  console.log("site id: ", siteId);
+  // console.log("site id: ", siteId);
 
   await fetch(`https://kiosk.staging.wattch.io/api/${siteId}/info`)
     .then((response) => {
@@ -30,7 +30,7 @@ export async function fetchInfo(siteId) {
       return response.json();
     })
     .then((result) => {
-      // console.log("result: ", result);
+      console.log("result: ", result);
       retVal = result;
     });
   return retVal;

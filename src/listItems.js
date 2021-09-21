@@ -238,11 +238,11 @@ export function MainListItems(props) {
         button
         onClick={() => {
           fetchInfo(siteIdInput).then((result) => {
-            console.log("fetchInfo: ", result);
+            // console.log("fetchInfo: ", result);
             props.setInfo(result);
           });
           fetchData(siteIdInput).then((result) => {
-            console.log("fetchData: ", result);
+            // console.log("fetchData: ", result);
             props.setData(result);
           });
         }}

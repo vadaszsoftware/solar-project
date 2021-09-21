@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Typography, Slider } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
 
 import WbSunnyIcon from "@material-ui/icons/WbSunny";
 
@@ -18,12 +19,12 @@ const SunlightSlider = withStyles({
     left: "calc(-50% + 4px)",
   },
   track: {
-    color: "Black",
+    color: grey[500],
     height: 18,
     borderRadius: 4,
   },
   rail: {
-    color: "Gray",
+    color: grey[400],
     height: 18,
     borderRadius: 4,
   },
@@ -43,20 +44,38 @@ function SunThumb(props) {
   );
 }
 
+// possible weather
+// [ clear-day, clear-night, rain, snow, sleet, wind, fog, cloudy, partly-cloudy-day, partly-cloudy-night ]
+
 export default function Sunlight(props) {
   const classes = useStyles();
+  let solarMessage = "";
+  if (props.data.meteo) {
+    if (props.data.meteo.cloudCover.value > 0.75) {
+      solarMessage = (
+        <Typography variant="h1">It's not looking bright today.</Typography>
+      );
+    } else if (props.data.meteo.cloudCover.value > 0.25) {
+      solarMessage = (
+        <Typography variant="h1">The sun is being shady.</Typography>
+      );
+    } else {
+      solarMessage = (
+        <Typography variant="h1">It's a good time for solar.</Typography>
+      );
+    }
+  }
 
   return (
     <React.Fragment>
-      <div className={classes.slideContainer}>
-        <Typography variant="h1">It's a good time for solar.</Typography>
-      </div>
+      <div className={classes.slideContainer}>{solarMessage}</div>
       <br />
       <div className={classes.slideContainer}>
         <SunlightSlider
           ThumbComponent={SunThumb}
-          defaultValue={50}
-          value={[]}
+          value={
+            props.data.meteo ? 100 - props.data.meteo.cloudCover.value * 100 : 0
+          }
           valueLabelDisplay="on"
         />
       </div>
