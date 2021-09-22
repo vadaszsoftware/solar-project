@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Custom Slider bar
 const SunlightSlider = withStyles({
   root: {
     height: 8,
@@ -20,24 +21,25 @@ const SunlightSlider = withStyles({
   },
   track: {
     color: grey[500],
-    height: 18,
-    borderRadius: 4,
+    height: 30,
+    borderRadius: 15,
   },
   rail: {
     color: grey[400],
-    height: 18,
-    borderRadius: 4,
+    height: 30,
+    borderRadius: 15,
   },
 })(Slider);
 
+// Custom Thumb on Slider
 function SunThumb(props) {
   return (
     <span {...props}>
       <WbSunnyIcon
         style={{
-          height: 50,
-          width: 50,
-          marginTop: 16,
+          height: 100,
+          width: 100,
+          marginTop: 30,
         }}
       />
     </span>
