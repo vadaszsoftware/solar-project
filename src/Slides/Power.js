@@ -1,8 +1,17 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { amber, grey } from "@material-ui/core/colors";
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
-import { useTheme } from "@material-ui/styles";
+import { Typography } from "@material-ui/core";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { grey } from "@material-ui/core/colors";
+import {
+  ResponsiveContainer,
+  Legend,
+  RadialBar,
+  RadialBarChart,
+  Cell,
+  LabelList,
+} from "recharts";
+
+import lightningSymbol from "../images/lightning_lightmode.png";
 
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
@@ -10,12 +19,134 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// Colors of pie chart pieces
-const COLORS = [amber[500], grey[500]];
+const customLegend = (props) => {
+  const { payload } = props;
+  // console.log("beep boop: ", payload);
+  return (
+    <div align="center">
+      {payload.map((entry, index) => {
+        if (entry.value === "Power") {
+          return (
+            <Typography
+              key={index}
+              variant="h3"
+              style={{ fontFamily: "Theinhardt, Roboto", color: grey[500] }}
+            >
+              <img
+                alt="lightning bolt"
+                src={lightningSymbol}
+                width="18"
+                height="36"
+              />{" "}
+              {entry.payload.value} w
+            </Typography>
+          );
+        }
+      })}
+    </div>
+  );
+};
 
 export default function Power(props) {
   const classes = useStyles();
   const theme = useTheme();
+
+  // Custom label for Radial Bar Chart
+  const customLabelList = (props) => {
+    // console.log("custom label list data: ", data);
+    const { cx, cy, value, name } = props;
+
+    if (name === "Power") {
+      return (
+        <g>
+          <text
+            x={cx - 90}
+            y={cy + 20}
+            fill={theme.palette.primary.main}
+            style={{
+              fontFamily: "Theinhardt, Roboto",
+              fontSize: 95,
+              fontWeight: 400,
+            }}
+          >
+            {(value / data.find((i) => i.name === "Total Potential").value) *
+              100}
+            %
+          </text>
+          <text
+            x={cx - 75}
+            y={cy + 55}
+            fill={theme.palette.text.primary}
+            style={{
+              fontFamily: "Theinhardt, Roboto",
+              fontSize: 30,
+            }}
+          >
+            of peak power
+          </text>
+        </g>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  // default data
+  let data = [
+    { name: "Total Potential", value: 10000 },
+    { name: "Power", value: 8000 },
+  ];
+  // data from API
+  if (props.data.power) {
+    data = [
+      {
+        name: "Total Potential",
+        value: props.info.capacity - props.data.power.production.value,
+      },
+      { name: "Power", value: props.data.power.production.value },
+    ];
+  }
+
+  // Radial Bar Chart
+  return (
+    <React.Fragment>
+      <div className={classes.slideContainer}>
+        <ResponsiveContainer width="100%" height={600}>
+          <RadialBarChart
+            data={data}
+            innerRadius={110}
+            outerRadius={260}
+            startAngle={90}
+            endAngle={450}
+          >
+            <RadialBar dataKey="value" cornerRadius="50%" background>
+              {data.map((entry, index) => {
+                // console.log(entry);
+                if (entry.name === "Power") {
+                  return <Cell fill={theme.palette.primary.main} />;
+                } else {
+                  return <Cell fill="rgba(0, 0, 0, 0)" background={false} />;
+                }
+              })}
+              <LabelList content={customLabelList} />
+            </RadialBar>
+            <Legend verticalAlign="top" content={customLegend} />
+          </RadialBarChart>
+        </ResponsiveContainer>
+      </div>
+    </React.Fragment>
+  );
+}
+
+/*
+
+// formatter
+const renderColorfulLegendText = (value: string, entry: any) => {
+  const { color } = entry;
+
+  return <span style={{ color }}>{value}</span>;
+};
+
 
   // Custom label for Pie chart pieces
   const customLabel = ({ x, y, name, value }) => {
@@ -35,34 +166,25 @@ export default function Power(props) {
     );
   };
 
-  let data = [
-    { name: "Power", value: 8000 },
-    { name: "Remaining Potential", value: 10000 - 8000 },
-  ];
-  if (props.data.power) {
-    data = [
-      { name: "Power", value: props.data.power.production.value },
-      {
-        name: "Remaining Potential",
-        value: props.info.capacity - props.data.power.production.value,
-      },
-    ];
-  }
 
+  
+  // Pie Chart
   return (
     <React.Fragment>
       <div className={classes.slideContainer}>
-        <ResponsiveContainer width="100%" height={600}>
+        <ResponsiveContainer width="100%" height={500}>
           <PieChart>
             <Pie
               data={data}
+              dataKey="value"
               cx={"50%"}
               cy={"50%"}
-              innerRadius={150}
+              innerRadius={135}
               outerRadius={200}
-              fill="#8884d8"
-              paddingAngle={1}
-              dataKey="value"
+              // fill="#8884d8"
+              startAngle={90}
+              endAngle={450}
+              // paddingAngle={1}
               // label={customLabel}
               // labelLine={false}
             >
@@ -70,52 +192,13 @@ export default function Power(props) {
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
+                  cornerRadius={entry.name === "Power" ? "50%" : "0%"}
                 />
               ))}
             </Pie>
-            <Legend verticalAlign="top" />
+            <Legend verticalAlign="top" content={customLegend} />
           </PieChart>
         </ResponsiveContainer>
-      </div>
-    </React.Fragment>
-  );
-}
-
-/*
-
-
-  return (
-    <React.Fragment>
-      <div className={classes.slideContainer}>
-        <RadialBarChart
-          width={730}
-          height={500}
-          innerRadius="40%"
-          outerRadius="60%"
-          // data={props.data ? props.data.power.production.value : 0}
-          data={50}
-        >
-          <RadialBar
-            minAngle={15}
-            label={{
-              fill: "Black",
-              position: "insideStart",
-            }}
-            background
-            clockWise={true}
-            dataKey="value"
-            fill={theme.palette.primary.main}
-          />
-          <Legend
-            iconSize={10}
-            width={120}
-            height={140}
-            layout="vertical"
-            verticalAlign="middle"
-            align="right"
-          />
-          <Tooltip />
-        </RadialBarChart>
       </div>
     </React.Fragment>
   );

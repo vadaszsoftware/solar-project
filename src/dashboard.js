@@ -147,7 +147,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const slideNav = [
-  "/Home",
+  "/",
   "/ProviderSummary",
   "/Sunlight",
   "/Power",
@@ -299,10 +299,6 @@ export default function Dashboard(props) {
           <div className={classes.appBarSpacer} />
           <Container className={classes.container} maxWidth="xl">
             <Switch>
-              <Route path="/Home">
-                <Home info={info} />
-              </Route>
-
               <Route path="/ProviderSummary">
                 <ProviderSummary info={info} />
               </Route>
@@ -337,6 +333,10 @@ export default function Dashboard(props) {
 
               <Route path="/TreesPlanted">
                 <TreesPlanted />
+              </Route>
+
+              <Route path="/">
+                <Home info={info} />
               </Route>
             </Switch>
             {changeSlide ? <Redirect to={nextSlide} /> : ""}
