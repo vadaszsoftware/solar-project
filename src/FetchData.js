@@ -13,7 +13,7 @@ export async function fetchData(siteId) {
       return response.json();
     })
     .then((result) => {
-      console.log("result: ", result);
+      console.log("data: ", result);
       retVal = result;
     });
   return retVal;
@@ -30,7 +30,7 @@ export async function fetchInfo(siteId) {
       return response.json();
     })
     .then((result) => {
-      console.log("result: ", result);
+      console.log("info: ", result);
       retVal = result;
     });
   return retVal;

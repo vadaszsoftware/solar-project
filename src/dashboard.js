@@ -34,19 +34,27 @@ import Power from "./Slides/Power";
 import Usage from "./Slides/Usage";
 import Past24 from "./Slides/Past24";
 import PastWeekBars from "./Slides/PastWeekBars";
+import PastWeekGas from "./Slides/PastWeekGas";
+import PastMonthBars from "./Slides/PastMonthBars";
+import TreesPlanted from "./Slides/TreesPlanted";
 
+import blankImg from "./images/blank.png";
 import csLogoLight from "./images/cs_logo_lightmode.png";
 import csLogoDark from "./images/cs_logo_darkmode.png";
-import sunriseSymbol from "./images/sunrise.png";
-// import moonSymbol from "./images/moon_darkmode.png";
-// import lightningSymbol from "./images/lightning_lightmode.png";
-// import gasCanSymbol from "./images/gascan.png";
-// import sunWholeSymbol from "./images/sun_whole.png";
-// import calendarSymbol from "./images/calendar_darkmode.png";
-import blankImg from "./images/blank.png";
-import PastWeekGas from "./Slides/PastWeekGas";
-import TreesPlanted from "./Slides/TreesPlanted";
-import PastMonthBars from "./Slides/PastMonthBars";
+// the weather icons
+import clearDayLight from "./images/weather_icons/light_clear-day.png";
+import clearDayDark from "./images/weather_icons/dark_clear-day.png";
+
+// Energy conversion constants
+// https://www.epa.gov/energy/greenhouse-gases-equivalencies-calculator-calculations-and-references
+const energyConv = {
+  // metric tons of CO2 offset per kilowatt-hour
+  CO2_OFFSET_PER_KWH: 0.000709,
+  // metric tons of CO2 offset per urban tree planted
+  CO2_OFFSET_PER_TREE: 0.06,
+  // metric tons of CO2 added per gallon of gasoline
+  CO2_ADDED_PER_GASOLINE_GAL: 0.008887,
+};
 
 function Copyright() {
   return (
@@ -312,11 +320,11 @@ export default function Dashboard(props) {
               </Route>
 
               <Route path="/Usage">
-                <Usage />
+                <Usage data={data} />
               </Route>
 
               <Route path="/Past24">
-                <Past24 />
+                <Past24 data={data} />
               </Route>
 
               <Route path="/PastWeekBars">
@@ -324,7 +332,7 @@ export default function Dashboard(props) {
               </Route>
 
               <Route path="/PastWeekGas">
-                <PastWeekGas />
+                <PastWeekGas energyConv={energyConv} data={data} />
               </Route>
 
               <Route path="/PastMonthBars">
@@ -332,7 +340,7 @@ export default function Dashboard(props) {
               </Route>
 
               <Route path="/TreesPlanted">
-                <TreesPlanted />
+                <TreesPlanted energyConv={energyConv} data={data} />
               </Route>
 
               <Route path="/">
@@ -372,7 +380,14 @@ export default function Dashboard(props) {
                     variant="h3"
                     style={{ fontFamily: "Theinhardt, Roboto" }}
                   >
-                    <img alt="Moon/Sun symbol" src={sunriseSymbol} /> 72&deg;
+                    <img
+                      alt="Weather Icon"
+                      src={props.theme ? clearDayLight : clearDayDark}
+                    />{" "}
+                    {data.meteo
+                      ? Math.round((data.meteo.temperature.value * 9) / 5 + 32)
+                      : ""}
+                    &deg;
                   </Typography>
                 </Grid>
               </Grid>

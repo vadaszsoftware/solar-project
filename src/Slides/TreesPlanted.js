@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Typography, Box } from "@material-ui/core";
 
@@ -24,9 +24,39 @@ const useStyles = makeStyles((theme) => ({
 export default function TreesPlanted(props) {
   const classes = useStyles();
   const theme = useTheme();
-  useEffect(() => {
-    console.log("fetch data");
-  }, []);
+
+  const treeCalc = (timeFrame) => {
+    if (props.data.energy) {
+      let dataArray = props.data.energy.production.daily.values;
+      let totalkwh;
+      if (timeFrame === "week") {
+        totalkwh = dataArray.slice(dataArray.length - 8, dataArray.length - 1);
+      } else if (timeFrame === "month") {
+        totalkwh = dataArray;
+      } else if (timeFrame === "allTime") {
+        totalkwh = props.data.energy.production.allTime.value;
+        return (
+          (props.energyConv.CO2_OFFSET_PER_KWH * totalkwh) /
+          props.energyConv.CO2_OFFSET_PER_TREE /
+          1000
+        ).toFixed(1);
+      } else {
+        return 0;
+      }
+
+      totalkwh = totalkwh
+        .map((day) => {
+          return day.value / 1000;
+        })
+        .reduce((prevDay, currentDay) => {
+          return prevDay + currentDay;
+        });
+      return (
+        (props.energyConv.CO2_OFFSET_PER_KWH * totalkwh) /
+        props.energyConv.CO2_OFFSET_PER_TREE
+      ).toFixed(1);
+    }
+  };
 
   return (
     <div className={classes.slideContainer} align="center">
@@ -43,7 +73,7 @@ export default function TreesPlanted(props) {
         marginRight={3}
       >
         <Typography variant="h1" className={classes.portfolioText}>
-          132
+          {treeCalc("week")}
         </Typography>
         <Typography variant="h5" className={classes.portfolioText}>
           Last 7 days
@@ -63,7 +93,7 @@ export default function TreesPlanted(props) {
         marginRight={3}
       >
         <Typography variant="h1" className={classes.portfolioText}>
-          1,401
+          {treeCalc("month")}
         </Typography>
         <Typography variant="h5" className={classes.portfolioText}>
           Last 30 days
@@ -83,7 +113,7 @@ export default function TreesPlanted(props) {
         marginRight={3}
       >
         <Typography variant="h1" className={classes.portfolioText}>
-          12.6 k
+          {treeCalc("allTime")} k
         </Typography>
         <Typography variant="h5" className={classes.portfolioText}>
           All Time

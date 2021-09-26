@@ -28,11 +28,12 @@ const customLegend = (props) => {
         if (entry.value === "Power") {
           return (
             <Typography
-              key={index}
+              key={`text-${index}`}
               variant="h3"
               style={{ fontFamily: "Theinhardt, Roboto", color: grey[500] }}
             >
               <img
+                key={`img-${index}`}
                 alt="lightning bolt"
                 src={lightningSymbol}
                 width="18"
@@ -41,6 +42,8 @@ const customLegend = (props) => {
               {entry.payload.value} w
             </Typography>
           );
+        } else {
+          return null;
         }
       })}
     </div>
@@ -69,8 +72,10 @@ export default function Power(props) {
               fontWeight: 400,
             }}
           >
-            {(value / data.find((i) => i.name === "Total Potential").value) *
-              100}
+            {Math.round(
+              (value / data.find((i) => i.name === "Total Potential").value) *
+                100
+            )}
             %
           </text>
           <text
@@ -111,7 +116,7 @@ export default function Power(props) {
   return (
     <React.Fragment>
       <div className={classes.slideContainer}>
-        <ResponsiveContainer width="100%" height={600}>
+        <ResponsiveContainer width="100%" height={580}>
           <RadialBarChart
             data={data}
             innerRadius={110}
@@ -123,9 +128,20 @@ export default function Power(props) {
               {data.map((entry, index) => {
                 // console.log(entry);
                 if (entry.name === "Power") {
-                  return <Cell fill={theme.palette.primary.main} />;
+                  return (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={theme.palette.primary.main}
+                    />
+                  );
                 } else {
-                  return <Cell fill="rgba(0, 0, 0, 0)" background={false} />;
+                  return (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill="rgba(0, 0, 0, 0)"
+                      background={false}
+                    />
+                  );
                 }
               })}
               <LabelList content={customLabelList} />

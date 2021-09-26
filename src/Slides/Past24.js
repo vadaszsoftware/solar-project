@@ -13,6 +13,11 @@ export default function Past24(props) {
   const classes = useStyles();
   const theme = useTheme();
 
+  let dataArray = props.data.energy.production.daily.values;
+  let yesterday = (dataArray[dataArray.length - 2].value / 1000).toFixed(2);
+  // console.log("Data array: ", dataArray);
+  // console.log("yesterday: ", yesterday);
+
   return (
     <div className={classes.slideContainer} align="center">
       <Box
@@ -25,7 +30,7 @@ export default function Past24(props) {
         borderRadius="50%"
         paddingTop={15}
       >
-        <Typography variant="h1">data kWh</Typography>
+        <Typography variant="h1">{yesterday} kWh</Typography>
         <Typography
           variant="h4"
           style={{
@@ -34,7 +39,7 @@ export default function Past24(props) {
           }}
         >
           In the last 24 hours we <br />
-          have generated data kWh
+          have generated {yesterday} kWh
         </Typography>
       </Box>
     </div>
