@@ -181,6 +181,7 @@ export default function Dashboard(props) {
     title: "",
     subtitle: "",
     icon: blankImg,
+    calDays: null,
   });
 
   const handleDrawerOpen = () => {
@@ -271,7 +272,25 @@ export default function Dashboard(props) {
                 {appbarTitle.subtitle}
               </Typography>
             </Typography>
-            <img alt="App Bar Icon" src={appbarTitle.icon} />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundImage: `url(${appbarTitle.icon})`,
+                backgroundRepeat: "no-repeat",
+                width: 68,
+                height: 68,
+                paddingTop: 12,
+                paddingRight: 6,
+                fontSize: 32,
+                fontWeight: "bold",
+                fontFamily: "Theinhardt, Roboto",
+              }}
+            >
+              {appbarTitle.calDays}
+            </div>
+            {/* <img alt="App Bar Icon" src={appbarTitle.icon} /> */}
           </Toolbar>
         </AppBar>
 
@@ -328,7 +347,7 @@ export default function Dashboard(props) {
               </Route>
 
               <Route path="/PastWeekBars">
-                <PastWeekBars />
+                <PastWeekBars energyConv={energyConv} data={data} />
               </Route>
 
               <Route path="/PastWeekGas">
@@ -336,7 +355,7 @@ export default function Dashboard(props) {
               </Route>
 
               <Route path="/PastMonthBars">
-                <PastMonthBars />
+                <PastMonthBars energyConv={energyConv} data={data} />
               </Route>
 
               <Route path="/TreesPlanted">

@@ -39,6 +39,7 @@ export function MainListItems(props) {
             title: "",
             subtitle: "",
             icon: blankImg,
+            calDays: null,
           });
         }}
       >
@@ -57,6 +58,7 @@ export function MainListItems(props) {
             title: "",
             subtitle: "",
             icon: blankImg,
+            calDays: null,
           });
         }}
       >
@@ -75,6 +77,7 @@ export function MainListItems(props) {
             title: "",
             subtitle: "",
             icon: blankImg,
+            calDays: null,
           });
         }}
       >
@@ -93,6 +96,7 @@ export function MainListItems(props) {
             title: "Current Power Production",
             subtitle: "",
             icon: lightningSymbol,
+            calDays: null,
           });
         }}
       >
@@ -111,6 +115,7 @@ export function MainListItems(props) {
             title: "",
             subtitle: "",
             icon: blankImg,
+            calDays: null,
           });
         }}
       >
@@ -126,9 +131,10 @@ export function MainListItems(props) {
         to="/Past24"
         onClick={() => {
           props.setAppbarTitle({
-            title: "",
+            title: "24hr solar generation",
             subtitle: "",
-            icon: blankImg,
+            icon: lightningSymbol,
+            calDays: null,
           });
         }}
       >
@@ -147,6 +153,7 @@ export function MainListItems(props) {
             title: "Solar Energy Produced",
             subtitle: "We offset 124 gallons of gasoline over the last 7 days",
             icon: calIcon,
+            calDays: 7,
           });
         }}
       >
@@ -165,6 +172,7 @@ export function MainListItems(props) {
             title: "",
             subtitle: "",
             icon: gascanIcon,
+            calDays: null,
           });
         }}
       >
@@ -183,6 +191,7 @@ export function MainListItems(props) {
             title: "Solar Energy Produced",
             subtitle: "We offset 124 gallons of gasoline over the last 7 days",
             icon: calIcon,
+            calDays: 30,
           });
         }}
       >
@@ -201,6 +210,7 @@ export function MainListItems(props) {
             title: "Equivalent Trees Planted",
             subtitle: "",
             icon: leafIcon,
+            calDays: null,
           });
         }}
       >
