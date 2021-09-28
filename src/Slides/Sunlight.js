@@ -20,12 +20,14 @@ const SunlightSlider = withStyles({
     left: "calc(-50% + 4px)",
   },
   track: {
-    color: grey[500],
+    // color: grey[500],
+    backgroundImage: `linear-gradient(.25turn, ${grey[500]}, ${grey[100]})`,
     height: 30,
     borderRadius: 15,
   },
   rail: {
-    color: grey[400],
+    // color: grey[400],
+    backgroundImage: `linear-gradient(.25turn, ${grey[400]}, ${grey[100]})`,
     height: 30,
     borderRadius: 15,
   },

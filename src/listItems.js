@@ -6,6 +6,7 @@ import {
   ListItemText,
   Divider,
   TextField,
+  Button,
 } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import BusinessIcon from "@material-ui/icons/Business";
@@ -16,7 +17,6 @@ import HistoryIcon from "@material-ui/icons/History";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import LocalGasStationIcon from "@material-ui/icons/LocalGasStation";
 import NatureIcon from "@material-ui/icons/Nature";
-import DomainIcon from "@material-ui/icons/Domain";
 
 import blankImg from "./images/blank.png";
 import lightningSymbol from "./images/lightning_lightmode.png";
@@ -244,25 +244,6 @@ export function MainListItems(props) {
         <ListItemText primary={props.theme ? "Dark Theme" : "Light Theme"} />
       </ListItem>
 
-      <ListItem
-        button
-        onClick={() => {
-          fetchInfo(siteIdInput).then((result) => {
-            // console.log("fetchInfo: ", result);
-            props.setInfo(result);
-          });
-          fetchData(siteIdInput).then((result) => {
-            // console.log("fetchData: ", result);
-            props.setData(result);
-          });
-        }}
-      >
-        <ListItemIcon>
-          <DomainIcon />
-        </ListItemIcon>
-        <ListItemText primary="Set Site ID" />
-      </ListItem>
-
       <ListItem>
         <TextField
           id="input-site-id"
@@ -270,6 +251,27 @@ export function MainListItems(props) {
           onChange={(event) => setSiteIdInput(event.target.value)}
           value={siteIdInput}
         />
+      </ListItem>
+
+      <ListItem>
+        <Button
+          variant="contained"
+          color="secondary"
+          fullWidth
+          onClick={() => {
+            fetchInfo(siteIdInput).then((result) => {
+              // console.log("fetchInfo: ", result);
+              props.setInfo(result);
+            });
+            fetchData(siteIdInput).then((result) => {
+              // console.log("fetchData: ", result);
+              props.setData(result);
+            });
+            localStorage.setItem("siteId", siteIdInput);
+          }}
+        >
+          Set Site ID
+        </Button>
       </ListItem>
     </div>
   );

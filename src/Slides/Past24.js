@@ -14,7 +14,8 @@ export default function Past24(props) {
   const theme = useTheme();
 
   let dataArray = props.data.energy.production.daily.values;
-  let yesterday = (dataArray[dataArray.length - 2].value / 1000).toFixed(2);
+  let yesterday =
+    Math.round((dataArray[dataArray.length - 2].value / 1000) * 100) / 100;
   // console.log("Data array: ", dataArray);
   // console.log("yesterday: ", yesterday);
 

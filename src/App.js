@@ -44,6 +44,10 @@ let lightTheme = createTheme({
   palette: {
     type: "light",
     primary: amber,
+    background: {
+      default: "#ffffff",
+      paper: "#fefefe",
+    },
   },
   typography: {
     fontFamily: "Sentinel, Theinhardt, Roboto",

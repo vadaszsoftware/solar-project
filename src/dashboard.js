@@ -44,6 +44,7 @@ import csLogoDark from "./images/cs_logo_darkmode.png";
 // the weather icons
 import clearDayLight from "./images/weather_icons/light_clear-day.png";
 import clearDayDark from "./images/weather_icons/dark_clear-day.png";
+import { fetchData, fetchInfo } from "./fetchData";
 
 // Energy conversion constants
 // https://www.epa.gov/energy/greenhouse-gases-equivalencies-calculator-calculations-and-references
@@ -183,6 +184,17 @@ export default function Dashboard(props) {
     icon: blankImg,
     calDays: null,
   });
+  // Set data/info on page load
+  useEffect(() => {
+    if (localStorage.getItem("siteId")) {
+      fetchInfo(localStorage.getItem("siteId")).then((result) => {
+        setInfo(result);
+      });
+      fetchData(localStorage.getItem("siteId")).then((result) => {
+        setData(result);
+      });
+    }
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);
