@@ -13,11 +13,14 @@ export default function Past24(props) {
   const classes = useStyles();
   const theme = useTheme();
 
-  let dataArray = props.data.energy.production.daily.values;
-  let yesterday =
-    Math.round((dataArray[dataArray.length - 2].value / 1000) * 100) / 100;
-  // console.log("Data array: ", dataArray);
-  // console.log("yesterday: ", yesterday);
+  let yesterday = 0;
+  if (props.data.energy) {
+    let dataArray = props.data.energy.production.daily.values;
+    yesterday =
+      Math.round((dataArray[dataArray.length - 2].value / 1000) * 100) / 100;
+    // console.log("Data array: ", dataArray);
+    // console.log("yesterday: ", yesterday);
+  }
 
   return (
     <div className={classes.slideContainer} align="center">

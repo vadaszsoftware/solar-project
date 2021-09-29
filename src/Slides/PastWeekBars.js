@@ -5,9 +5,6 @@ import { BarChart, XAxis, Bar, ResponsiveContainer, LabelList } from "recharts";
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(2),
-    width: 1000,
-    height: 600,
-    margin: "auto",
   },
 }));
 
@@ -23,8 +20,8 @@ export default function PastWeekBars(props) {
     return (
       <g>
         <text
-          x={x + 20}
-          y={505}
+          x={x + 17}
+          y={480}
           fill={theme.palette.text.primary}
           style={{
             fill: "black",
@@ -36,8 +33,8 @@ export default function PastWeekBars(props) {
           {value}
         </text>
         <text
-          x={x + 23}
-          y={525}
+          x={x + 20}
+          y={498}
           fill={theme.palette.text.primary}
           style={{
             fill: "black",
@@ -82,8 +79,8 @@ export default function PastWeekBars(props) {
 
   return (
     <div className={classes.slideContainer}>
-      <ResponsiveContainer width={680} height="100%">
-        <BarChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+      <ResponsiveContainer width="50%" height={550} minWidth={600}>
+        <BarChart data={data}>
           <XAxis
             dataKey="name"
             axisLine={false}
@@ -95,7 +92,12 @@ export default function PastWeekBars(props) {
             }}
           />
           {/* <Tooltip /> */}
-          <Bar dataKey="kWh" fill={theme.palette.primary.main} radius={50}>
+          <Bar
+            dataKey="kWh"
+            fill={theme.palette.primary.main}
+            radius={50}
+            barSize={70}
+          >
             <LabelList dataKey="kWh" content={customLabelList} />
           </Bar>
         </BarChart>

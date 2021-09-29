@@ -21,11 +21,7 @@ import {
   Link,
 } from "@material-ui/core";
 
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import PauseIcon from "@material-ui/icons/Pause";
-
+import { fetchData, fetchInfo } from "./fetchData";
 import { MainListItems } from "./listItems";
 import Home from "./Slides/Home";
 import ProviderSummary from "./Slides/ProviderSummary";
@@ -38,13 +34,21 @@ import PastWeekGas from "./Slides/PastWeekGas";
 import PastMonthBars from "./Slides/PastMonthBars";
 import TreesPlanted from "./Slides/TreesPlanted";
 
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import PauseIcon from "@material-ui/icons/Pause";
+
 import blankImg from "./images/blank.png";
 import csLogoLight from "./images/cs_logo_lightmode.png";
 import csLogoDark from "./images/cs_logo_darkmode.png";
+import lightningSymbol from "./images/lightning_lightmode.png";
+import calIcon from "./images/calendar_darkmode.png";
+import gascanIcon from "./images/gascan.png";
+import leafIcon from "./images/leaf.png";
 // the weather icons
 import clearDayLight from "./images/weather_icons/light_clear-day.png";
 import clearDayDark from "./images/weather_icons/dark_clear-day.png";
-import { fetchData, fetchInfo } from "./fetchData";
 
 // Energy conversion constants
 // https://www.epa.gov/energy/greenhouse-gases-equivalencies-calculator-calculations-and-references
@@ -155,6 +159,98 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function handleChangeAppbar(slide, setAppbarTitle, data) {
+  // console.log("slide: ", slide);
+  let offset;
+  let offsetMonth;
+  if (data.energy) {
+    let dataArray = data.energy.production.daily.values;
+    let pastWeek = dataArray
+      .slice(dataArray.length - 8, dataArray.length - 1)
+      .map((day) => {
+        return day.value / 1000;
+      });
+    let totalkwh = pastWeek.reduce((prevDay, currentDay) => {
+      return prevDay + currentDay;
+    });
+    // console.log("total kwh: ", totalkwh);
+    offset = Math.round(
+      (energyConv.CO2_OFFSET_PER_KWH * totalkwh) /
+        energyConv.CO2_ADDED_PER_GASOLINE_GAL
+    );
+    let pastMonth = dataArray.map((day) => {
+      return day.value / 1000;
+    });
+    let totalkwhMonth = pastMonth.reduce((prevDay, currentDay) => {
+      return prevDay + currentDay;
+    });
+    // console.log("total kwh: ", totalkwh);
+    offsetMonth = Math.round(
+      (energyConv.CO2_OFFSET_PER_KWH * totalkwhMonth) /
+        energyConv.CO2_ADDED_PER_GASOLINE_GAL
+    );
+    // console.log("offset: ", offset);
+  }
+
+  switch (slide) {
+    case "/Power":
+      setAppbarTitle({
+        title: "Current Power Production",
+        subtitle: "",
+        icon: lightningSymbol,
+        calDays: null,
+      });
+      break;
+    case "/Past24":
+      setAppbarTitle({
+        title: "24hr solar generation",
+        subtitle: "",
+        icon: lightningSymbol,
+        calDays: null,
+      });
+      break;
+    case "/PastWeekBars":
+      setAppbarTitle({
+        title: "Solar Energy Produced",
+        subtitle: `We offset ${offset} gallons of gasoline over the last 7 days`,
+        icon: calIcon,
+        calDays: 7,
+      });
+      break;
+    case "/PastWeekGas":
+      setAppbarTitle({
+        title: "",
+        subtitle: "",
+        icon: gascanIcon,
+        calDays: null,
+      });
+      break;
+    case "/PastMonthBars":
+      setAppbarTitle({
+        title: "Solar Energy Produced",
+        subtitle: `We offset ${offsetMonth} gallons of gasoline over the last 30 days`,
+        icon: calIcon,
+        calDays: 30,
+      });
+      break;
+    case "/TreesPlanted":
+      setAppbarTitle({
+        title: "Equivalent Trees Planted",
+        subtitle: "",
+        icon: leafIcon,
+        calDays: null,
+      });
+      break;
+    default:
+      setAppbarTitle({
+        title: "",
+        subtitle: "",
+        icon: blankImg,
+        calDays: null,
+      });
+  }
+}
+
 const slideNav = [
   "/",
   "/ProviderSummary",
@@ -168,7 +264,6 @@ const slideNav = [
   "/TreesPlanted",
 ];
 let slideNavCounter = 0;
-
 const SLIDE_CHANGE_TIMER = 5;
 
 export default function Dashboard(props) {
@@ -188,10 +283,10 @@ export default function Dashboard(props) {
   useEffect(() => {
     if (localStorage.getItem("siteId")) {
       fetchInfo(localStorage.getItem("siteId")).then((result) => {
-        setInfo(result);
+        if (result.length > 0) setInfo(result);
       });
       fetchData(localStorage.getItem("siteId")).then((result) => {
-        setData(result);
+        if (result.length > 0) setData(result);
       });
     }
   }, []);
@@ -216,6 +311,7 @@ export default function Dashboard(props) {
     // console.log("change slide to: ", slideNav[slideNavCounter]);
     setNextSlide(slideNav[slideNavCounter]);
     setChangeSlide(true);
+    handleChangeAppbar(slideNav[slideNavCounter], setAppbarTitle, data);
   }
   useEffect(() => {
     setChangeSlide(false);
@@ -330,6 +426,8 @@ export default function Dashboard(props) {
               setAppbarTitle={setAppbarTitle}
               setInfo={setInfo}
               setData={setData}
+              data={data}
+              info={info}
             />
           </List>
         </Drawer>
