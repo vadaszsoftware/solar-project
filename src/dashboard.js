@@ -15,10 +15,11 @@ import {
   List,
   Typography,
   Divider,
-  IconButton,
   Container,
   Grid,
   Link,
+  Button,
+  ListItem,
 } from "@material-ui/core";
 
 import { fetchData, fetchInfo } from "./fetchData";
@@ -34,8 +35,6 @@ import PastWeekGas from "./Slides/PastWeekGas";
 import PastMonthBars from "./Slides/PastMonthBars";
 import TreesPlanted from "./Slides/TreesPlanted";
 
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 
@@ -49,6 +48,7 @@ import leafIcon from "./images/leaf.png";
 // the weather icons
 import clearDayLight from "./images/weather_icons/light_clear-day.png";
 import clearDayDark from "./images/weather_icons/dark_clear-day.png";
+import { Menu } from "@material-ui/icons";
 
 // Energy conversion constants
 // https://www.epa.gov/energy/greenhouse-gases-equivalencies-calculator-calculations-and-references
@@ -74,14 +74,14 @@ function Copyright() {
   );
 }
 
-const drawerWidth = 240;
+// let drawerWidth = 0;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    // display: "flex",
   },
   toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+    // paddingRight: 24, // keep right padding when drawer closed
   },
   toolbarIcon: {
     display: "flex",
@@ -91,71 +91,38 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  menuButtonHidden: {
-    display: "none",
+    // marginLeft: drawerWidth,
   },
   title: {
     flexGrow: 1,
   },
-  drawerPaper: {
-    position: "relative",
-    whiteSpace: "nowrap",
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: "hidden",
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9),
-    },
-  },
-  drawerCloseButtonHidden: {
-    display: "none",
-  },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: "100vh",
-    overflow: "auto",
+    // marginLeft: drawerWidth,
+    // height: "100vh",
+    // overflow: "auto",
   },
   container: {
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
   },
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
   dateFooter: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
     padding: theme.spacing(2),
+  },
+  circleButton: {
+    borderRadius: "50%",
+    paddingLeft: 0,
+    paddingRight: 0,
+    marginRight: 5,
+    minWidth: 50,
+    maxWidth: 50,
+    minHeight: 50,
+    maxHeight: 50,
+  },
+  dialogueButton: {
+    margin: 15,
   },
 }));
 
@@ -270,7 +237,6 @@ export default function Dashboard(props) {
   const classes = useStyles();
   const [info, setInfo] = useState({});
   const [data, setData] = useState({});
-  const [open, setOpen] = React.useState(true);
   const [nextSlide, setNextSlide] = useState("/Home");
   const [changeSlide, setChangeSlide] = useState(false);
   const [appbarTitle, setAppbarTitle] = useState({
@@ -281,24 +247,42 @@ export default function Dashboard(props) {
   });
   // Set data/info on page load
   useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
     if (localStorage.getItem("siteId")) {
       fetchInfo(localStorage.getItem("siteId")).then((result) => {
-        if (result.length > 0) setInfo(result);
+        // console.log("result: ", result.capacity);
+        if (result.capacity) setInfo(result);
       });
       fetchData(localStorage.getItem("siteId")).then((result) => {
-        if (result.length > 0) setData(result);
+        // console.log("result: ", result.energy);
+        if (result.energy) setData(result);
       });
     }
   }, []);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
+  // Show Menu Button
+  const [showMenuButton, setShowMenuButton] = useState(false);
+  const handleMouseMove = () => {
+    // console.log("show");
+    window.removeEventListener("mousemove", handleMouseMove);
+    setShowMenuButton(true);
+    setTimeout(() => {
+      // console.log("hide");
+      setShowMenuButton(false);
+      window.addEventListener("mousemove", handleMouseMove);
+    }, 5000);
   };
 
-  // Presentation Timer Code
+  // Open/Close Menu
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const handleDrawerOpen = () => {
+    setDrawerOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setDrawerOpen(false);
+  };
+
+  // Presentation Timer
   const [seconds, setSeconds] = useState(0);
   const [slideshowActive, setSlideshowActive] = useState(false);
   function toggleSlideshow() {
@@ -330,39 +314,114 @@ export default function Dashboard(props) {
     return () => clearInterval(interval);
   }, [slideshowActive, seconds]);
 
-  // function uuidv4() {
-  //   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-  //     /[xy]/g,
-  //     function (c) {
-  //       var r = (Math.random() * 16) | 0,
-  //         v = c == "x" ? r : (r & 0x3) | 0x8;
-  //       return v.toString(16);
-  //     }
-  //   );
-  // }
+  // Full Screen
+  function toggleFullScreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
+  // console.log("is fullscreen: ", document.fullscreenElement != null);
 
   return (
     <div className={classes.root}>
       <Router>
+        {/* {document.fullscreenElement != null ? null : ( */}
+        <Drawer open={drawerOpen}>
+          {/* <div className={classes.toolbarIcon}>
+            <IconButton
+              onClick={handleDrawerClose}
+              className={clsx(!open && classes.drawerCloseButtonHidden)}
+            >
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider /> */}
+          <List>
+            <MainListItems
+              setTheme={props.setTheme}
+              theme={props.theme}
+              darkModeIcon={props.darkModeIcon}
+              setAppbarTitle={setAppbarTitle}
+              setInfo={setInfo}
+              setData={setData}
+              data={data}
+              info={info}
+            />
+          </List>
+          <Divider />
+          <List>
+            <ListItem>
+              <Button
+                variant="contained"
+                fullWidth
+                color="primary"
+                onClick={handleDrawerClose}
+              >
+                Close Menu
+              </Button>
+            </ListItem>
+            <ListItem>
+              <Button
+                variant="contained"
+                fullWidth
+                color="primary"
+                onClick={toggleFullScreen}
+              >
+                Fullscreen
+              </Button>
+            </ListItem>
+            <ListItem>
+              <Button
+                className={classes.circleButton}
+                variant="contained"
+                color="secondary"
+                onClick={() => {
+                  toggleSlideshow();
+                }}
+              >
+                {slideshowActive ? (
+                  <PauseIcon fontSize="large" />
+                ) : (
+                  <PlayArrowIcon fontSize="large" />
+                )}
+                {seconds}
+              </Button>
+              <Button
+                className={classes.circleButton}
+                variant="contained"
+                color="secondary"
+              >
+                <PlayArrowIcon fontSize="large" />
+              </Button>
+            </ListItem>
+            <ListItem></ListItem>
+          </List>
+        </Drawer>
+        {/* )} */}
+
         <AppBar
           // position="absolute"
-          className={clsx(classes.appBar, open && classes.appBarShift)}
+          className={clsx(classes.appBar)}
           color="transparent"
           elevation={0}
         >
           <Toolbar className={classes.toolbar}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              className={clsx(
-                classes.menuButton,
-                open && classes.menuButtonHidden
-              )}
-            >
-              <ChevronRightIcon />
-            </IconButton>
+            {/* <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                className={clsx(
+                  classes.menuButton,
+                  open && classes.menuButtonHidden
+                )}
+              >
+                <ChevronRightIcon />
+              </IconButton> */}
             <img
               alt="Cherry Street Energy logo"
               src={props.theme ? csLogoLight : csLogoDark}
@@ -401,36 +460,6 @@ export default function Dashboard(props) {
             {/* <img alt="App Bar Icon" src={appbarTitle.icon} /> */}
           </Toolbar>
         </AppBar>
-
-        <Drawer
-          variant="permanent"
-          classes={{
-            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-          }}
-          open={open}
-        >
-          <div className={classes.toolbarIcon}>
-            <IconButton
-              onClick={handleDrawerClose}
-              className={clsx(!open && classes.drawerCloseButtonHidden)}
-            >
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            <MainListItems
-              setTheme={props.setTheme}
-              theme={props.theme}
-              darkModeIcon={props.darkModeIcon}
-              setAppbarTitle={setAppbarTitle}
-              setInfo={setInfo}
-              setData={setData}
-              data={data}
-              info={info}
-            />
-          </List>
-        </Drawer>
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
@@ -477,70 +506,80 @@ export default function Dashboard(props) {
               </Route>
             </Switch>
             {changeSlide ? <Redirect to={nextSlide} /> : ""}
+          </Container>
 
-            <div className={classes.dateFooter}>
-              <Grid container>
-                <Grid item xs={6} md={6} lg={6}>
-                  <Typography
-                    variant="h5"
-                    style={{ fontFamily: "Theinhardt, Roboto" }}
-                  >
-                    {new Date().toLocaleDateString("en-US", {
-                      // weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </Typography>
-                  <Typography
-                    variant="h5"
-                    style={{ fontFamily: "Theinhardt, Roboto" }}
-                  >
-                    {new Date()
-                      .toLocaleTimeString("en-US", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })
-                      .toLocaleLowerCase()}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} md={6} lg={6} align="right">
-                  <Typography
-                    variant="h3"
-                    style={{ fontFamily: "Theinhardt, Roboto" }}
-                  >
-                    <img
-                      alt="Weather Icon"
-                      src={props.theme ? clearDayLight : clearDayDark}
-                    />{" "}
-                    {data.meteo
-                      ? Math.round((data.meteo.temperature.value * 9) / 5 + 32)
-                      : ""}
-                    &deg;
-                  </Typography>
-                </Grid>
+          <div className={classes.dateFooter}>
+            <Grid container>
+              <Grid item xs={6} md={6} lg={6}>
+                <Typography
+                  variant="h5"
+                  style={{ fontFamily: "Theinhardt, Roboto" }}
+                >
+                  {new Date().toLocaleDateString("en-US", {
+                    // weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  style={{ fontFamily: "Theinhardt, Roboto" }}
+                >
+                  {new Date()
+                    .toLocaleTimeString("en-US", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
+                    .toLocaleLowerCase()}
+                </Typography>
               </Grid>
-            </div>
+              <Grid item xs={6} md={6} lg={6} align="right">
+                <Typography
+                  variant="h3"
+                  style={{ fontFamily: "Theinhardt, Roboto" }}
+                >
+                  <img
+                    alt="Weather Icon"
+                    src={props.theme ? clearDayLight : clearDayDark}
+                  />{" "}
+                  {data.meteo
+                    ? Math.round((data.meteo.temperature.value * 9) / 5 + 32)
+                    : ""}
+                  &deg;
+                </Typography>
+              </Grid>
+            </Grid>
+          </div>
 
-            <Box
-              onClick={() => {
-                toggleSlideshow();
-              }}
-            >
-              <br />
-              {slideshowActive ? (
-                <PauseIcon fontSize="large" />
-              ) : (
-                <PlayArrowIcon fontSize="large" />
-              )}
-            </Box>
-            <Box>{seconds}</Box>
-
+          <Container>
             <Box pt={4}>
               <br />
               <Copyright />
             </Box>
           </Container>
+
+          {showMenuButton ? (
+            <Box
+              style={{
+                margin: 0,
+                top: "auto",
+                right: 20,
+                bottom: 20,
+                left: "auto",
+                position: "fixed",
+              }}
+            >
+              <Button
+                className={classes.circleButton}
+                variant="contained"
+                color="secondary"
+                onClick={handleDrawerOpen}
+              >
+                <Menu />
+              </Button>
+            </Box>
+          ) : null}
         </main>
       </Router>
     </div>

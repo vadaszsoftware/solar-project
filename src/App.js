@@ -85,8 +85,9 @@ darkTheme = responsiveFontSizes(darkTheme);
 
 function App() {
   const [theme, setTheme] = useState(true);
-  let darkModeIcon = !theme ? <Brightness7Icon /> : <Brightness3Icon />; // Icons imported from `@material-ui/icons`
+  let darkModeIcon = !theme ? <Brightness7Icon /> : <Brightness3Icon />;
   let appliedTheme = createTheme(theme ? lightTheme : darkTheme);
+
   return (
     <ThemeProvider theme={appliedTheme}>
       <CssBaseline />

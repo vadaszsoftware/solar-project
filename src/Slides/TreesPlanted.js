@@ -9,17 +9,9 @@ const useStyles = makeStyles((theme) => ({
   portfolioText: {
     fontFamily: "Theinhardt, Roboto",
   },
-  circleContainer: {
-    borderColor: theme.palette.primary.main,
-    border: 6,
-    display: "inline-block",
-    height: 300,
-    width: 300,
-    lineHeight: 300,
-    borderRadius: "50%",
-    paddingTop: 5,
-  },
 }));
+
+const circleSize = 250;
 
 export default function TreesPlanted(props) {
   const classes = useStyles();
@@ -64,15 +56,15 @@ export default function TreesPlanted(props) {
         borderColor={theme.palette.primary.main}
         border={6}
         display="inline-block"
-        height={325}
-        width={325}
-        lineHeight={325}
+        height={circleSize}
+        width={circleSize}
+        lineHeight={circleSize}
         borderRadius="50%"
-        paddingTop={10}
+        paddingTop={8}
         marginLeft={3}
         marginRight={3}
       >
-        <Typography variant="h1" className={classes.portfolioText}>
+        <Typography variant="h2" className={classes.portfolioText}>
           {treeCalc("week")}
         </Typography>
         <Typography variant="h5" className={classes.portfolioText}>
@@ -84,15 +76,15 @@ export default function TreesPlanted(props) {
         borderColor={theme.palette.primary.main}
         border={6}
         display="inline-block"
-        height={325}
-        width={325}
-        lineHeight={325}
+        height={circleSize}
+        width={circleSize}
+        lineHeight={circleSize}
         borderRadius="50%"
-        paddingTop={10}
+        paddingTop={8}
         marginLeft={3}
         marginRight={3}
       >
-        <Typography variant="h1" className={classes.portfolioText}>
+        <Typography variant="h2" className={classes.portfolioText}>
           {treeCalc("month")}
         </Typography>
         <Typography variant="h5" className={classes.portfolioText}>
@@ -104,15 +96,15 @@ export default function TreesPlanted(props) {
         borderColor={theme.palette.primary.main}
         border={6}
         display="inline-block"
-        height={325}
-        width={325}
-        lineHeight={325}
+        height={circleSize}
+        width={circleSize}
+        lineHeight={circleSize}
         borderRadius="50%"
-        paddingTop={10}
+        paddingTop={8}
         marginLeft={3}
         marginRight={3}
       >
-        <Typography variant="h1" className={classes.portfolioText}>
+        <Typography variant="h2" className={classes.portfolioText}>
           {treeCalc("allTime")} k
         </Typography>
         <Typography variant="h5" className={classes.portfolioText}>
