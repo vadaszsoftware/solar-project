@@ -6,7 +6,8 @@ import {
   Bar,
   ResponsiveContainer,
   LabelList,
-  Legend,
+  Cell,
+  YAxis,
 } from "recharts";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,47 +21,55 @@ export default function PastMonthBars(props) {
   const theme = useTheme();
 
   // Custom labels for Bar Chart
-  const customLabelList = (props) => {
-    // console.log("custom label list data: ", data);
-    const { x, y, value } = props;
-    // console.log(props);
-    return (
-      <g>
-        <text
-          textAnchor="middle"
-          scaleToFit={true}
-          x={x}
-          y={y}
-          fill={theme.palette.text.primary}
-          style={{
-            fontFamily: "Theinhardt, Roboto",
-          }}
-        >
-          {value}
-        </text>
-        <text
-          x={x}
-          y={y + 15}
-          fill={theme.palette.text.primary}
-          style={{
-            fontFamily: "Theinhardt, Roboto",
-          }}
-        >
-          kWh
-        </text>
-      </g>
-    );
-  };
+  // const customLabelList = (props) => {
+  //   // console.log("custom label list data: ", data);
+  //   const { x, y, value } = props;
+  //   // console.log(props);
+  //   return (
+  //     <g>
+  //       <text
+  //         textAnchor="middle"
+  //         scaleToFit={true}
+  //         x={x}
+  //         y={y}
+  //         fill={theme.palette.text.primary}
+  //         style={{
+  //           fontFamily: "Theinhardt, Roboto",
+  //         }}
+  //       >
+  //         {value}
+  //       </text>
+  //       <text
+  //         x={x}
+  //         y={y + 15}
+  //         fill={theme.palette.text.primary}
+  //         style={{
+  //           fontFamily: "Theinhardt, Roboto",
+  //         }}
+  //       >
+  //         kWh
+  //       </text>
+  //     </g>
+  //   );
+  // };
 
   // default data
   let data = [];
-  let dataMaxValue;
-  let dataCurrentValue;
+  let dataMaxValue = 0;
+  let dataCurrentValue = 0;
   // data from API
   if (props.data.energy) {
     let dataArray = props.data.energy.production.daily.values;
-    dataCurrentValue = dataArray[dataArray.length - 1];
-    console.log("current value: ", dataCurrentValue.value / 1000);
+    dataCurrentValue = Math.round(dataArray[dataArray.length - 1].value / 1000);
+    dataMaxValue = Math.round(
+      dataArray.reduce((prev, current) => {
+        // console.log("prev: ", prev.value);
+        // console.log("current: ", current.value);
+        if (prev.value > current.value) return prev;
+        else return current;
+      }).value / 1000
+    );
+    // console.log("current value: ", dataCurrentValue.value / 1000);
     data = dataArray.map((day) => {
       // console.log(
       //   "DATE: ",
@@ -88,7 +97,7 @@ export default function PastMonthBars(props) {
 
   return (
     <div className={classes.slideContainer}>
-      <ResponsiveContainer width="100%" height={500}>
+      <ResponsiveContainer width="100%" height={400}>
         <BarChart data={data}>
           <XAxis
             dataKey="name"
@@ -99,7 +108,9 @@ export default function PastMonthBars(props) {
               fontWeight: "bold",
               fontFamily: "Theinhardt, Roboto",
             }}
+            height={25}
           />
+          <YAxis hide padding={{ top: 15 }} />
           <Bar
             dataKey="kWh"
             fill={theme.palette.primary.main}
@@ -110,15 +121,26 @@ export default function PastMonthBars(props) {
               dataKey="kWh"
               position="top"
               style={{
+                fill: theme.palette.text.primary,
                 fontFamily: "Theinhardt, Roboto",
+                fontWeight: "bold",
               }}
               formatter={(value) => {
-                // console.log(value);
-                // if ()
-                return value;
+                // console.log("value: ", value);
+                // console.log("dataMaxValue: ", dataMaxValue);
+                if (value === dataMaxValue || value === dataCurrentValue)
+                  return `${value} kWh`;
+                else return "";
               }}
               // content={customLabelList}
             />
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={`rgba(255,193,7, ${index / 30 + 0.3})`}
+                maxBarSize={50}
+              />
+            ))}
           </Bar>
           {/* <Legend iconType="circle" /> */}
         </BarChart>

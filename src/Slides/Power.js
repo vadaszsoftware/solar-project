@@ -16,6 +16,7 @@ import lightningSymbol from "../images/lightning_lightmode.png";
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(2),
+    paddingTop: 60,
   },
 }));
 
@@ -30,7 +31,11 @@ const customLegend = (props) => {
             <Typography
               key={`text-${index}`}
               variant="h3"
-              style={{ fontFamily: "Theinhardt, Roboto", color: grey[500] }}
+              style={{
+                fontFamily: "Theinhardt, Roboto",
+                color: grey[500],
+                marginTop: -66,
+              }}
             >
               <img
                 key={`img-${index}`}
@@ -63,13 +68,12 @@ export default function Power(props) {
       return (
         <g>
           <text
-            x={cx - 90}
-            y={cy + 20}
+            x={cx - 80}
+            y={cy}
             fill={theme.palette.primary.main}
             style={{
               fontFamily: "Theinhardt, Roboto",
-              fontSize: 95,
-              fontWeight: 400,
+              fontSize: 85,
             }}
           >
             {Math.round(
@@ -79,12 +83,12 @@ export default function Power(props) {
             %
           </text>
           <text
-            x={cx - 75}
-            y={cy + 55}
+            x={cx - 80}
+            y={cy + 40}
             fill={theme.palette.text.primary}
             style={{
               fontFamily: "Theinhardt, Roboto",
-              fontSize: 30,
+              fontSize: 27,
             }}
           >
             of peak power
@@ -116,11 +120,11 @@ export default function Power(props) {
   return (
     <React.Fragment>
       <div className={classes.slideContainer}>
-        <ResponsiveContainer width="100%" height={580}>
+        <ResponsiveContainer width="100%" height={420}>
           <RadialBarChart
             data={data}
-            innerRadius={110}
-            outerRadius={260}
+            innerRadius={100}
+            outerRadius={250}
             startAngle={90}
             endAngle={450}
           >

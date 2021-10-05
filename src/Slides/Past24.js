@@ -28,11 +28,11 @@ export default function Past24(props) {
         borderColor={theme.palette.primary.main}
         border={7}
         display="block"
-        height={500}
-        width={500}
-        lineHeight={500}
+        height={450}
+        width={450}
+        lineHeight={450}
         borderRadius="50%"
-        paddingTop={15}
+        paddingTop={12}
       >
         <Typography variant="h1">
           {yesterday} <span style={{ fontSize: 50 }}>kWh</span>

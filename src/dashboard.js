@@ -565,7 +565,16 @@ export default function Dashboard(props) {
             {changeSlide ? <Redirect to={nextSlide} /> : ""}
           </Container>
 
-          <div className={classes.dateFooter}>
+          <div
+            className={classes.dateFooter}
+            style={{
+              margin: 0,
+              top: "auto",
+              bottom: 0,
+              position: "fixed",
+              width: "100%",
+            }}
+          >
             <Grid container>
               <Grid item xs={6} md={6} lg={6}>
                 <Typography
@@ -615,14 +624,12 @@ export default function Dashboard(props) {
                 </Typography>
               </Grid>
             </Grid>
-          </div>
 
-          <Container>
-            <Box pt={4}>
+            <Box pt={4} padding={0}>
               <br />
               <Copyright />
             </Box>
-          </Container>
+          </div>
 
           {showMenuButton ? (
             <Box

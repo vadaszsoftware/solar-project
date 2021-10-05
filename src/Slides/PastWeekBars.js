@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { BarChart, XAxis, Bar, LabelList } from "recharts";
+import { BarChart, XAxis, Bar, LabelList, Cell, YAxis } from "recharts";
 
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
@@ -21,7 +21,7 @@ export default function PastWeekBars(props) {
       <g>
         <text
           x={x + 17}
-          y={480}
+          y={370}
           fill={theme.palette.text.primary}
           style={{
             fontFamily: "Theinhardt, Roboto",
@@ -33,7 +33,7 @@ export default function PastWeekBars(props) {
         </text>
         <text
           x={x + 20}
-          y={498}
+          y={388}
           fill={theme.palette.text.primary}
           style={{
             fontFamily: "Theinhardt, Roboto",
@@ -77,7 +77,7 @@ export default function PastWeekBars(props) {
 
   return (
     <div className={classes.slideContainer} align="center">
-      <BarChart data={data} height={550} minWidth={600} width={700} margin={0}>
+      <BarChart data={data} height={450} minWidth={600} width={700}>
         <XAxis
           dataKey="name"
           axisLine={false}
@@ -88,6 +88,7 @@ export default function PastWeekBars(props) {
             fontFamily: "Theinhardt, Roboto",
           }}
         />
+        <YAxis hide padding={{ top: -150 }} />
         <Bar
           dataKey="kWh"
           fill={theme.palette.primary.main}
@@ -95,6 +96,13 @@ export default function PastWeekBars(props) {
           barSize={70}
         >
           <LabelList dataKey="kWh" content={customLabelList} />
+          {data.map((entry, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={`rgba(255,193,7, ${index / 7 + 0.3})`}
+              barSize={70}
+            />
+          ))}
         </Bar>
       </BarChart>
     </div>
