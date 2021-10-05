@@ -24,7 +24,6 @@ export default function PastWeekBars(props) {
           y={480}
           fill={theme.palette.text.primary}
           style={{
-            fill: "black",
             fontFamily: "Theinhardt, Roboto",
             fontSize: 30,
             fontWeight: 500,
@@ -37,7 +36,6 @@ export default function PastWeekBars(props) {
           y={498}
           fill={theme.palette.text.primary}
           style={{
-            fill: "black",
             fontFamily: "Theinhardt, Roboto",
             fontSize: 18,
           }}
@@ -90,7 +88,6 @@ export default function PastWeekBars(props) {
             fontFamily: "Theinhardt, Roboto",
           }}
         />
-        {/* <Tooltip /> */}
         <Bar
           dataKey="kWh"
           fill={theme.palette.primary.main}

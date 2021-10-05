@@ -37,6 +37,7 @@ import TreesPlanted from "./Slides/TreesPlanted";
 
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
+import { Menu } from "@material-ui/icons";
 
 import blankImg from "./images/blank.png";
 import csLogoLight from "./images/cs_logo_lightmode.png";
@@ -45,10 +46,24 @@ import lightningSymbol from "./images/lightning_lightmode.png";
 import calIcon from "./images/calendar_darkmode.png";
 import gascanIcon from "./images/gascan.png";
 import leafIcon from "./images/leaf.png";
+
 // the weather icons
-import clearDayLight from "./images/weather_icons/light_clear-day.png";
-import clearDayDark from "./images/weather_icons/dark_clear-day.png";
-import { Menu } from "@material-ui/icons";
+import weatherClearDay from "./images/made_weather_icons/clear_day.png";
+import weatherClearNight from "./images/made_weather_icons/clear_night.png";
+import weatherRainDay from "./images/made_weather_icons/rain_day.png";
+import weatherRainNight from "./images/made_weather_icons/rain_night.png";
+import weatherSnowDay from "./images/made_weather_icons/snow_day.png";
+import weatherSnowNight from "./images/made_weather_icons/snow_night.png";
+import weatherSleetDay from "./images/made_weather_icons/sleet_day.png";
+import weatherSleetNight from "./images/made_weather_icons/sleet_night.png";
+import weatherWindDay from "./images/made_weather_icons/wind_day.png";
+import weatherWindNight from "./images/made_weather_icons/wind_night.png";
+import weatherFogDay from "./images/made_weather_icons/fog_day.png";
+import weatherFogNight from "./images/made_weather_icons/fog_night.png";
+import weatherCloudyDay from "./images/made_weather_icons/cloudy_day.png";
+import weatherCloudyNight from "./images/made_weather_icons/cloudy_night.png";
+import weatherPartlyCloudyDay from "./images/made_weather_icons/partly_cloudy_day.png";
+import weatherPartlyCloudyNight from "./images/made_weather_icons/partly_cloudy_night.png";
 
 // Energy conversion constants
 // https://www.epa.gov/energy/greenhouse-gases-equivalencies-calculator-calculations-and-references
@@ -326,11 +341,58 @@ export default function Dashboard(props) {
   }
   // console.log("is fullscreen: ", document.fullscreenElement != null);
 
+  const WeatherIcon = () => {
+    let icon = weatherClearDay;
+    if (data.meteo) {
+      switch (data.meteo.icon.value) {
+        case "clear-day":
+          icon = weatherClearDay;
+          break;
+        case "clear-night":
+          icon = weatherClearNight;
+          break;
+        case "rain":
+          if (data.time.percentOfDay != null) icon = weatherRainDay;
+          else icon = weatherRainNight;
+          break;
+        case "snow":
+          if (data.time.percentOfDay != null) icon = weatherSnowDay;
+          else icon = weatherSnowNight;
+          break;
+        case "sleet":
+          if (data.time.percentOfDay != null) icon = weatherSleetDay;
+          else icon = weatherSleetNight;
+          break;
+        case "wind":
+          if (data.time.percentOfDay != null) icon = weatherWindDay;
+          else icon = weatherWindNight;
+          break;
+        case "fog":
+          if (data.time.percentOfDay != null) icon = weatherFogDay;
+          else icon = weatherFogNight;
+          break;
+        case "cloudy":
+          if (data.time.percentOfDay != null) icon = weatherCloudyDay;
+          else icon = weatherCloudyNight;
+          break;
+        case "partly-cloudy-day":
+          icon = weatherPartlyCloudyDay;
+          break;
+        case "partly-cloudy-night":
+          icon = weatherPartlyCloudyNight;
+          break;
+        default:
+          icon = weatherClearDay;
+      }
+    }
+    return <img alt="Weather Icon" src={icon} width="60vw" height="60vh" />;
+  };
+
   return (
     <div className={classes.root}>
       <Router>
         {/* {document.fullscreenElement != null ? null : ( */}
-        <Drawer open={drawerOpen}>
+        <Drawer open={drawerOpen} onClose={(ev, reason) => handleDrawerClose()}>
           {/* <div className={classes.toolbarIcon}>
             <IconButton
               onClick={handleDrawerClose}
@@ -369,7 +431,10 @@ export default function Dashboard(props) {
                 variant="contained"
                 fullWidth
                 color="primary"
-                onClick={toggleFullScreen}
+                onClick={() => {
+                  toggleFullScreen();
+                  handleDrawerClose();
+                }}
               >
                 Fullscreen
               </Button>
@@ -390,15 +455,7 @@ export default function Dashboard(props) {
                 )}
                 {seconds}
               </Button>
-              <Button
-                className={classes.circleButton}
-                variant="contained"
-                color="secondary"
-              >
-                <PlayArrowIcon fontSize="large" />
-              </Button>
             </ListItem>
-            <ListItem></ListItem>
           </List>
         </Drawer>
         {/* )} */}
@@ -534,15 +591,23 @@ export default function Dashboard(props) {
                     .toLocaleLowerCase()}
                 </Typography>
               </Grid>
-              <Grid item xs={6} md={6} lg={6} align="right">
+              <Grid
+                item
+                xs={6}
+                md={6}
+                lg={6}
+                style={{
+                  display: "flex",
+                  justifyContent: "right",
+                  alignItems: "center",
+                  alignContent: "center",
+                }}
+              >
+                <WeatherIcon />
                 <Typography
                   variant="h3"
                   style={{ fontFamily: "Theinhardt, Roboto" }}
                 >
-                  <img
-                    alt="Weather Icon"
-                    src={props.theme ? clearDayLight : clearDayDark}
-                  />{" "}
                   {data.meteo
                     ? Math.round((data.meteo.temperature.value * 9) / 5 + 32)
                     : ""}
