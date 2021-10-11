@@ -65,7 +65,7 @@ export function MainListItems(props) {
         <ListItemIcon>
           <BusinessIcon />
         </ListItemIcon>
-        <ListItemText primary="ProviderSummary" />
+        <ListItemText primary="Solar Portfolio" />
       </ListItem>
 
       <ListItem
@@ -84,7 +84,7 @@ export function MainListItems(props) {
         <ListItemIcon>
           <WbSunnyIcon />
         </ListItemIcon>
-        <ListItemText primary="Sunlight" />
+        <ListItemText primary="Current Sunlight" />
       </ListItem>
 
       <ListItem
@@ -93,7 +93,7 @@ export function MainListItems(props) {
         to="/Power"
         onClick={() => {
           props.setAppbarTitle({
-            title: "Current Power Production",
+            title: "Current Solar Production",
             subtitle: "",
             icon: lightningSymbol,
             calDays: null,
@@ -103,27 +103,29 @@ export function MainListItems(props) {
         <ListItemIcon>
           <FlashOnIcon />
         </ListItemIcon>
-        <ListItemText primary="Power" />
+        <ListItemText primary="Current Solar Production" />
       </ListItem>
 
-      <ListItem
-        button
-        component={RouterLink}
-        to="/Usage"
-        onClick={() => {
-          props.setAppbarTitle({
-            title: "",
-            subtitle: "",
-            icon: blankImg,
-            calDays: null,
-          });
-        }}
-      >
-        <ListItemIcon>
-          <Brightness6Icon />
-        </ListItemIcon>
-        <ListItemText primary="Usage" />
-      </ListItem>
+      {props.data.consumption ? (
+        <ListItem
+          button
+          component={RouterLink}
+          to="/Usage"
+          onClick={() => {
+            props.setAppbarTitle({
+              title: "",
+              subtitle: "",
+              icon: blankImg,
+              calDays: null,
+            });
+          }}
+        >
+          <ListItemIcon>
+            <Brightness6Icon />
+          </ListItemIcon>
+          <ListItemText primary="Current Solar Offset" />
+        </ListItem>
+      ) : null}
 
       <ListItem
         button
@@ -131,7 +133,7 @@ export function MainListItems(props) {
         to="/Past24"
         onClick={() => {
           props.setAppbarTitle({
-            title: "24hr solar generation",
+            title: "24-Hour Solar Generation",
             subtitle: "",
             icon: lightningSymbol,
             calDays: null,
@@ -141,7 +143,7 @@ export function MainListItems(props) {
         <ListItemIcon>
           <HistoryIcon />
         </ListItemIcon>
-        <ListItemText primary="Past24" />
+        <ListItemText primary="24-Hour Solar Generation" />
       </ListItem>
 
       <ListItem
@@ -160,7 +162,7 @@ export function MainListItems(props) {
         <ListItemIcon>
           <EqualizerIcon />
         </ListItemIcon>
-        <ListItemText primary="PastWeekBars" />
+        <ListItemText primary="7-Day Solar Generation" />
       </ListItem>
 
       <ListItem
@@ -179,7 +181,7 @@ export function MainListItems(props) {
         <ListItemIcon>
           <LocalGasStationIcon />
         </ListItemIcon>
-        <ListItemText primary="PastWeekGas" />
+        <ListItemText primary="7-Day Carbon Offset" />
       </ListItem>
 
       <ListItem
@@ -198,7 +200,7 @@ export function MainListItems(props) {
         <ListItemIcon>
           <EqualizerIcon />
         </ListItemIcon>
-        <ListItemText primary="PastMonthBars" />
+        <ListItemText primary="30-Day Solar Generation" />
       </ListItem>
 
       <ListItem
@@ -217,7 +219,7 @@ export function MainListItems(props) {
         <ListItemIcon>
           <NatureIcon />
         </ListItemIcon>
-        <ListItemText primary="TreesPlanted" />
+        <ListItemText primary="Equivalent Trees Planted" />
       </ListItem>
 
       {/* <ListItem button component={RouterLink} to="/Charts">

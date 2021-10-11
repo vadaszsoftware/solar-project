@@ -88,7 +88,7 @@ export default function PastWeekBars(props) {
             fontFamily: "Theinhardt, Roboto",
           }}
         />
-        <YAxis hide padding={{ top: -150 }} />
+        <YAxis hide padding={{ top: 0 }} />
         <Bar
           dataKey="kWh"
           fill={theme.palette.primary.main}

@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Box, Container } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
@@ -51,7 +51,7 @@ export default function TreesPlanted(props) {
   };
 
   return (
-    <div className={classes.slideContainer} align="center">
+    <Container className={classes.slideContainer} align="center">
       <Box
         borderColor={theme.palette.primary.main}
         border={6}
@@ -111,6 +111,6 @@ export default function TreesPlanted(props) {
           All Time
         </Typography>
       </Box>
-    </div>
+    </Container>
   );
 }

@@ -113,10 +113,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
-    flexGrow: 1,
-    // marginLeft: drawerWidth,
-    // height: "100vh",
-    // overflow: "auto",
+    flex: 1,
   },
   container: {
     paddingTop: theme.spacing(2),
@@ -238,7 +235,7 @@ const slideNav = [
   "/ProviderSummary",
   "/Sunlight",
   "/Power",
-  "/Usage",
+  // "/Usage",
   "/Past24",
   "/PastWeekBars",
   "/PastWeekGas",
@@ -453,7 +450,7 @@ export default function Dashboard(props) {
                 ) : (
                   <PlayArrowIcon fontSize="large" />
                 )}
-                {seconds}
+                {/* {seconds} */}
               </Button>
             </ListItem>
           </List>
@@ -613,6 +610,7 @@ export default function Dashboard(props) {
                 }}
               >
                 <WeatherIcon />
+                &nbsp; &nbsp; &nbsp; &nbsp;
                 <Typography
                   variant="h3"
                   style={{ fontFamily: "Theinhardt, Roboto" }}
