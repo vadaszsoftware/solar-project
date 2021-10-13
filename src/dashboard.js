@@ -106,7 +106,8 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
   },
   appBar: {
-    // marginLeft: drawerWidth,
+    marginTop: 20,
+    marginLeft: 30,
   },
   title: {
     flexGrow: 1,
@@ -257,7 +258,7 @@ export default function Dashboard(props) {
     icon: blankImg,
     calDays: null,
   });
-  // Set data/info on page load
+  // On page load
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
     if (localStorage.getItem("siteId")) {
@@ -267,7 +268,12 @@ export default function Dashboard(props) {
       });
       fetchData(localStorage.getItem("siteId")).then((result) => {
         // console.log("result: ", result.energy);
-        if (result.energy) setData(result);
+        if (result.energy) {
+          setData(result);
+          result.time.percentOfDay == null
+            ? props.setTheme(false)
+            : props.setTheme(true);
+        }
       });
     }
   }, []);
@@ -296,7 +302,7 @@ export default function Dashboard(props) {
 
   // Presentation Timer
   const [seconds, setSeconds] = useState(0);
-  const [slideshowActive, setSlideshowActive] = useState(false);
+  const [slideshowActive, setSlideshowActive] = useState(true);
   function toggleSlideshow() {
     setSlideshowActive(!slideshowActive);
   }
@@ -440,7 +446,7 @@ export default function Dashboard(props) {
               <Button
                 className={classes.circleButton}
                 variant="contained"
-                color="secondary"
+                color="primary"
                 onClick={() => {
                   toggleSlideshow();
                 }}
@@ -517,7 +523,13 @@ export default function Dashboard(props) {
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Container className={classes.container} maxWidth="xl">
+          <Container
+            className={classes.container}
+            maxWidth="xl"
+            style={{
+              alignItems: "center",
+            }}
+          >
             <Switch>
               <Route path="/ProviderSummary">
                 <ProviderSummary info={info} />
@@ -643,7 +655,7 @@ export default function Dashboard(props) {
               <Button
                 className={classes.circleButton}
                 variant="contained"
-                color="secondary"
+                color="primary"
                 onClick={handleDrawerOpen}
               >
                 <Menu />

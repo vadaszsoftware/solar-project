@@ -27,7 +27,7 @@ import leafIcon from "./images/leaf.png";
 import { fetchData, fetchInfo } from "./fetchData";
 
 export function MainListItems(props) {
-  const [siteIdInput, setSiteIdInput] = useState("DhHCwgUy");
+  const [siteIdInput, setSiteIdInput] = useState("");
   return (
     <div>
       <ListItem
@@ -258,7 +258,7 @@ export function MainListItems(props) {
       <ListItem>
         <Button
           variant="contained"
-          color="secondary"
+          color="primary"
           fullWidth
           onClick={() => {
             fetchInfo(siteIdInput).then((result) => {
