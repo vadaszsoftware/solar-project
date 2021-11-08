@@ -18,29 +18,20 @@ import EqualizerIcon from "@material-ui/icons/Equalizer";
 import LocalGasStationIcon from "@material-ui/icons/LocalGasStation";
 import NatureIcon from "@material-ui/icons/Nature";
 
-import blankImg from "./images/blank.png";
-import lightningSymbol from "./images/lightning_lightmode.png";
-import calIcon from "./images/calendar_darkmode.png";
-import gascanIcon from "./images/gascan.png";
-import leafIcon from "./images/leaf.png";
-
 import { fetchData, fetchInfo } from "./fetchData";
 
 export function MainListItems(props) {
   const [siteIdInput, setSiteIdInput] = useState("");
+  const { slide, setAppbarSpacer, setAppbarTitle, data, handleChangeAppbar } =
+    props;
   return (
     <div>
       <ListItem
         button
         component={RouterLink}
-        to="/Home"
+        to="/"
         onClick={() => {
-          props.setAppbarTitle({
-            title: "",
-            subtitle: "",
-            icon: blankImg,
-            calDays: null,
-          });
+          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
         }}
       >
         <ListItemIcon>
@@ -54,12 +45,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/ProviderSummary"
         onClick={() => {
-          props.setAppbarTitle({
-            title: "",
-            subtitle: "",
-            icon: blankImg,
-            calDays: null,
-          });
+          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
         }}
       >
         <ListItemIcon>
@@ -73,12 +59,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/Sunlight"
         onClick={() => {
-          props.setAppbarTitle({
-            title: "",
-            subtitle: "",
-            icon: blankImg,
-            calDays: null,
-          });
+          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
         }}
       >
         <ListItemIcon>
@@ -92,12 +73,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/Power"
         onClick={() => {
-          props.setAppbarTitle({
-            title: "Current Solar Production",
-            subtitle: "",
-            icon: lightningSymbol,
-            calDays: null,
-          });
+          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
         }}
       >
         <ListItemIcon>
@@ -112,12 +88,7 @@ export function MainListItems(props) {
           component={RouterLink}
           to="/Usage"
           onClick={() => {
-            props.setAppbarTitle({
-              title: "",
-              subtitle: "",
-              icon: blankImg,
-              calDays: null,
-            });
+            handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
           }}
         >
           <ListItemIcon>
@@ -132,12 +103,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/Past24"
         onClick={() => {
-          props.setAppbarTitle({
-            title: "24-Hour Solar Generation",
-            subtitle: "",
-            icon: lightningSymbol,
-            calDays: null,
-          });
+          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
         }}
       >
         <ListItemIcon>
@@ -151,12 +117,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/PastWeekBars"
         onClick={() => {
-          props.setAppbarTitle({
-            title: "Solar Energy Produced",
-            subtitle: "We offset 124 gallons of gasoline over the last 7 days",
-            icon: calIcon,
-            calDays: 7,
-          });
+          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
         }}
       >
         <ListItemIcon>
@@ -170,12 +131,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/PastWeekGas"
         onClick={() => {
-          props.setAppbarTitle({
-            title: "",
-            subtitle: "",
-            icon: gascanIcon,
-            calDays: null,
-          });
+          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
         }}
       >
         <ListItemIcon>
@@ -189,12 +145,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/PastMonthBars"
         onClick={() => {
-          props.setAppbarTitle({
-            title: "Solar Energy Produced",
-            subtitle: "We offset 124 gallons of gasoline over the last 7 days",
-            icon: calIcon,
-            calDays: 30,
-          });
+          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
         }}
       >
         <ListItemIcon>
@@ -208,12 +159,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/TreesPlanted"
         onClick={() => {
-          props.setAppbarTitle({
-            title: "Equivalent Trees Planted",
-            subtitle: "",
-            icon: leafIcon,
-            calDays: null,
-          });
+          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
         }}
       >
         <ListItemIcon>

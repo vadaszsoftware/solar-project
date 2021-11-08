@@ -9,6 +9,31 @@ const useStyles = makeStyles((theme) => ({
   portfolioText: {
     fontFamily: "Theinhardt, Roboto",
   },
+  [theme.breakpoints.down("xl")]: {
+    spacer: {
+      height: "24vh",
+    },
+  },
+  [theme.breakpoints.down("lg")]: {
+    spacer: {
+      height: "18vh",
+    },
+  },
+  [theme.breakpoints.down("md")]: {
+    spacer: {
+      height: "18vh",
+    },
+  },
+  [theme.breakpoints.down("sm")]: {
+    spacer: {
+      height: "6vh",
+    },
+  },
+  [theme.breakpoints.down("xs")]: {
+    spacer: {
+      height: "0vh",
+    },
+  },
 }));
 
 const circleSize = 250;
@@ -52,6 +77,7 @@ export default function TreesPlanted(props) {
 
   return (
     <Container className={classes.slideContainer} align="center">
+      <div className={classes.spacer} />
       <Box
         borderColor={theme.palette.primary.main}
         border={6}

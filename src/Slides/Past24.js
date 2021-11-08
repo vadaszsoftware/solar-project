@@ -5,7 +5,31 @@ import { Box, Typography } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(2),
-    marginTop: theme.spacing(4),
+  },
+  [theme.breakpoints.down("xl")]: {
+    spacer: {
+      height: "18vh",
+    },
+  },
+  [theme.breakpoints.down("lg")]: {
+    spacer: {
+      height: "18vh",
+    },
+  },
+  [theme.breakpoints.down("md")]: {
+    spacer: {
+      height: "18vh",
+    },
+  },
+  [theme.breakpoints.down("sm")]: {
+    spacer: {
+      height: "16vh",
+    },
+  },
+  [theme.breakpoints.down("xs")]: {
+    spacer: {
+      height: "16vh",
+    },
   },
 }));
 
@@ -24,6 +48,7 @@ export default function Past24(props) {
 
   return (
     <div className={classes.slideContainer} align="center">
+      <div className={classes.spacer} />
       <Box
         borderColor={theme.palette.primary.main}
         border={7}

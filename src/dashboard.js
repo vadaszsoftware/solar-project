@@ -112,7 +112,6 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  appBarSpacer: theme.mixins.toolbar,
   content: {
     flex: 1,
   },
@@ -139,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function handleChangeAppbar(slide, setAppbarTitle, data) {
+function handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data) {
   // console.log("slide: ", slide);
   let offset;
   let offsetMonth;
@@ -173,6 +172,15 @@ function handleChangeAppbar(slide, setAppbarTitle, data) {
   }
 
   switch (slide) {
+    case "/ProviderSummary":
+      setAppbarTitle({
+        title: "",
+        subtitle: "",
+        icon: blankImg,
+        calDays: null,
+      });
+      // setAppbarSpacer("10vh");
+      break;
     case "/Power":
       setAppbarTitle({
         title: "Current Power Production",
@@ -180,6 +188,7 @@ function handleChangeAppbar(slide, setAppbarTitle, data) {
         icon: lightningSymbol,
         calDays: null,
       });
+      // setAppbarSpacer("10vh");
       break;
     case "/Past24":
       setAppbarTitle({
@@ -188,6 +197,7 @@ function handleChangeAppbar(slide, setAppbarTitle, data) {
         icon: lightningSymbol,
         calDays: null,
       });
+      // setAppbarSpacer("10vh");
       break;
     case "/PastWeekBars":
       setAppbarTitle({
@@ -196,6 +206,7 @@ function handleChangeAppbar(slide, setAppbarTitle, data) {
         icon: calIcon,
         calDays: 7,
       });
+      // setAppbarSpacer("10vh");
       break;
     case "/PastWeekGas":
       setAppbarTitle({
@@ -204,6 +215,7 @@ function handleChangeAppbar(slide, setAppbarTitle, data) {
         icon: gascanIcon,
         calDays: null,
       });
+      // setAppbarSpacer("10vh");
       break;
     case "/PastMonthBars":
       setAppbarTitle({
@@ -212,6 +224,7 @@ function handleChangeAppbar(slide, setAppbarTitle, data) {
         icon: calIcon,
         calDays: 30,
       });
+      // setAppbarSpacer("10vh");
       break;
     case "/TreesPlanted":
       setAppbarTitle({
@@ -220,6 +233,7 @@ function handleChangeAppbar(slide, setAppbarTitle, data) {
         icon: leafIcon,
         calDays: null,
       });
+      // setAppbarSpacer("15vh");
       break;
     default:
       setAppbarTitle({
@@ -228,9 +242,22 @@ function handleChangeAppbar(slide, setAppbarTitle, data) {
         icon: blankImg,
         calDays: null,
       });
+    // setAppbarSpacer("10vh");
   }
 }
 
+const slidesObject = [
+  { key: 0, nav: "/", title: "Home" },
+  { key: 1, nav: "/ProviderSummary", title: "Solar Portfolio" },
+  { key: 2, nav: "/Sunlight", title: "Current Sunlight" },
+  { key: 3, nav: "/Power", title: "Current Solar Production" },
+  // {key: 4, nav: "/Usage", title: "Usage"},
+  { key: 5, nav: "/Past24", title: "24-Hour Solar Generation" },
+  { key: 6, nav: "/PastWeekBars", title: "7-Day Solar Generation" },
+  { key: 7, nav: "/PastWeekGas", title: "7-Day Carbon Offset" },
+  { key: 8, nav: "/PastMonthBars", title: "30-Day Solar Generation" },
+  { key: 9, nav: "/TreesPlanted", title: "Equivalent Trees Planted" },
+];
 const slideNav = [
   "/",
   "/ProviderSummary",
@@ -258,6 +285,7 @@ export default function Dashboard(props) {
     icon: blankImg,
     calDays: null,
   });
+  const [appbarSpacer, setAppbarSpacer] = useState("10vh");
   // On page load
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
@@ -313,7 +341,12 @@ export default function Dashboard(props) {
     // console.log("change slide to: ", slideNav[slideNavCounter]);
     setNextSlide(slideNav[slideNavCounter]);
     setChangeSlide(true);
-    handleChangeAppbar(slideNav[slideNavCounter], setAppbarTitle, data);
+    handleChangeAppbar(
+      slideNav[slideNavCounter],
+      setAppbarTitle,
+      setAppbarSpacer,
+      data
+    );
   }
   useEffect(() => {
     setChangeSlide(false);
@@ -411,10 +444,13 @@ export default function Dashboard(props) {
               theme={props.theme}
               darkModeIcon={props.darkModeIcon}
               setAppbarTitle={setAppbarTitle}
+              setAppbarSpacer={setAppbarSpacer}
               setInfo={setInfo}
               setData={setData}
               data={data}
               info={info}
+              handleChangeAppbar={handleChangeAppbar}
+              slide={slideNav[slideNavCounter]}
             />
           </List>
           <Divider />
@@ -522,14 +558,12 @@ export default function Dashboard(props) {
         </AppBar>
 
         <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Container
-            className={classes.container}
-            maxWidth="xl"
+          {/* <div
             style={{
-              alignItems: "center",
+              height: appbarSpacer,
             }}
-          >
+          /> */}
+          <Container className={classes.container} maxWidth="xl">
             <Switch>
               <Route path="/ProviderSummary">
                 <ProviderSummary info={info} />
@@ -585,7 +619,7 @@ export default function Dashboard(props) {
             }}
           >
             <Grid container>
-              <Grid item xs={6} md={6} lg={6}>
+              <Grid item xs={4} md={4} lg={4}>
                 <Typography
                   variant="h5"
                   style={{ fontFamily: "Theinhardt, Roboto" }}
@@ -611,9 +645,25 @@ export default function Dashboard(props) {
               </Grid>
               <Grid
                 item
-                xs={6}
-                md={6}
-                lg={6}
+                xs={4}
+                md={4}
+                lg={4}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "bottom",
+                }}
+              >
+                <Box pt={4} padding={0}>
+                  <br />
+                  <Copyright />
+                </Box>
+              </Grid>
+              <Grid
+                item
+                xs={4}
+                md={4}
+                lg={4}
                 style={{
                   display: "flex",
                   justifyContent: "right",
@@ -634,11 +684,6 @@ export default function Dashboard(props) {
                 </Typography>
               </Grid>
             </Grid>
-
-            <Box pt={4} padding={0}>
-              <br />
-              <Copyright />
-            </Box>
           </div>
 
           {showMenuButton ? (

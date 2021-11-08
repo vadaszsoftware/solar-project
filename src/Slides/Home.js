@@ -6,6 +6,31 @@ const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(6),
   },
+  [theme.breakpoints.down("xl")]: {
+    spacer: {
+      height: "20vh",
+    },
+  },
+  [theme.breakpoints.down("lg")]: {
+    spacer: {
+      height: "18vh",
+    },
+  },
+  [theme.breakpoints.down("md")]: {
+    spacer: {
+      height: "16vh",
+    },
+  },
+  [theme.breakpoints.down("sm")]: {
+    spacer: {
+      height: "8vh",
+    },
+  },
+  [theme.breakpoints.down("xs")]: {
+    spacer: {
+      height: "6vh",
+    },
+  },
 }));
 
 export default function Home(props) {
@@ -13,8 +38,10 @@ export default function Home(props) {
 
   return (
     <div className={classes.slideContainer}>
+      <div className={classes.spacer} />
       <Typography variant="h1">
-        {props.info.name} is creating a brighter future through renewable energy.
+        {props.info.name} is creating a brighter future through renewable
+        energy.
       </Typography>
     </div>
   );

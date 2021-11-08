@@ -10,6 +10,31 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Theinhardt, Roboto",
     display: "inline",
   },
+  [theme.breakpoints.down("xl")]: {
+    spacer: {
+      height: "24vh",
+    },
+  },
+  [theme.breakpoints.down("lg")]: {
+    spacer: {
+      height: "22vh",
+    },
+  },
+  [theme.breakpoints.down("md")]: {
+    spacer: {
+      height: "22vh",
+    },
+  },
+  [theme.breakpoints.down("sm")]: {
+    spacer: {
+      height: "22vh",
+    },
+  },
+  [theme.breakpoints.down("xs")]: {
+    spacer: {
+      height: "20vh",
+    },
+  },
 }));
 
 export default function PastWeekGas(props) {
@@ -36,6 +61,7 @@ export default function PastWeekGas(props) {
 
   return (
     <div className={classes.slideContainer}>
+      <div className={classes.spacer} />
       <Typography variant="h1">
         In the last 7 days we’ve offset {offset} gal of gasoline.
       </Typography>

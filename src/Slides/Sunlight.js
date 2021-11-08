@@ -9,6 +9,31 @@ const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(4),
   },
+  [theme.breakpoints.down("xl")]: {
+    spacer: {
+      height: "22vh",
+    },
+  },
+  [theme.breakpoints.down("lg")]: {
+    spacer: {
+      height: "18vh",
+    },
+  },
+  [theme.breakpoints.down("md")]: {
+    spacer: {
+      height: "16vh",
+    },
+  },
+  [theme.breakpoints.down("sm")]: {
+    spacer: {
+      height: "8vh",
+    },
+  },
+  [theme.breakpoints.down("xs")]: {
+    spacer: {
+      height: "6vh",
+    },
+  },
 }));
 
 // Custom Slider bar
@@ -71,7 +96,8 @@ export default function Sunlight(props) {
   }
 
   return (
-    <React.Fragment>
+    <div>
+      <div className={classes.spacer} />
       <div className={classes.slideContainer}>{solarMessage}</div>
       <br />
       <div className={classes.slideContainer}>
@@ -83,6 +109,6 @@ export default function Sunlight(props) {
           valueLabelDisplay="on"
         />
       </div>
-    </React.Fragment>
+    </div>
   );
 }

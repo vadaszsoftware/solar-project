@@ -10,14 +10,40 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Theinhardt, Roboto",
     display: "inline",
   },
+  [theme.breakpoints.down("xl")]: {
+    spacer: {
+      height: "20vh",
+    },
+  },
+  [theme.breakpoints.down("lg")]: {
+    spacer: {
+      height: "18vh",
+    },
+  },
+  [theme.breakpoints.down("md")]: {
+    spacer: {
+      height: "16vh",
+    },
+  },
+  [theme.breakpoints.down("sm")]: {
+    spacer: {
+      height: "8vh",
+    },
+  },
+  [theme.breakpoints.down("xs")]: {
+    spacer: {
+      height: "6vh",
+    },
+  },
 }));
 
 export default function ProviderSummary(props) {
   const classes = useStyles();
-  const info = props.info;
+  const { info } = props;
 
   return (
-    <React.Fragment>
+    <div>
+      <div className={classes.spacer} />
       <div className={classes.slideContainer}>
         <Typography variant="h4">{info.name}'s Commitment:</Typography>
         <Typography variant="h1">100% clean energy by 2035.</Typography>
@@ -62,7 +88,7 @@ export default function ProviderSummary(props) {
           </Grid>
         </Grid>
       </div>
-    </React.Fragment>
+    </div>
   );
 }
 

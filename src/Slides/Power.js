@@ -16,7 +16,31 @@ import lightningSymbol from "../images/lightning_lightmode.png";
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(2),
-    paddingTop: 60,
+  },
+  [theme.breakpoints.down("xl")]: {
+    spacer: {
+      height: "22vh",
+    },
+  },
+  [theme.breakpoints.down("lg")]: {
+    spacer: {
+      height: "20vh",
+    },
+  },
+  [theme.breakpoints.down("md")]: {
+    spacer: {
+      height: "20vh",
+    },
+  },
+  [theme.breakpoints.down("sm")]: {
+    spacer: {
+      height: "20vh",
+    },
+  },
+  [theme.breakpoints.down("xs")]: {
+    spacer: {
+      height: "18vh",
+    },
   },
 }));
 
@@ -119,6 +143,7 @@ export default function Power(props) {
   // Radial Bar Chart
   return (
     <React.Fragment>
+      <div className={classes.spacer} />
       <div className={classes.slideContainer}>
         <ResponsiveContainer width="100%" height={420}>
           <RadialBarChart
@@ -128,7 +153,12 @@ export default function Power(props) {
             startAngle={90}
             endAngle={450}
           >
-            <RadialBar dataKey="value" cornerRadius="50%" background>
+            <RadialBar
+              dataKey="value"
+              cornerRadius="50%"
+              background
+              isAnimationActive={false}
+            >
               {data.map((entry, index) => {
                 // console.log(entry);
                 if (entry.name === "Power") {

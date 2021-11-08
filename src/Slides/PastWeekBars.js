@@ -6,6 +6,31 @@ const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(2),
   },
+  [theme.breakpoints.down("xl")]: {
+    spacer: {
+      height: "14vh",
+    },
+  },
+  [theme.breakpoints.down("lg")]: {
+    spacer: {
+      height: "10vh",
+    },
+  },
+  [theme.breakpoints.down("md")]: {
+    spacer: {
+      height: "10vh",
+    },
+  },
+  [theme.breakpoints.down("sm")]: {
+    spacer: {
+      height: "14vh",
+    },
+  },
+  [theme.breakpoints.down("xs")]: {
+    spacer: {
+      height: "18vh",
+    },
+  },
 }));
 
 export default function PastWeekBars(props) {
@@ -77,6 +102,7 @@ export default function PastWeekBars(props) {
 
   return (
     <div className={classes.slideContainer} align="center">
+      <div className={classes.spacer} />
       <BarChart data={data} height={450} minWidth={600} width={700}>
         <XAxis
           dataKey="name"

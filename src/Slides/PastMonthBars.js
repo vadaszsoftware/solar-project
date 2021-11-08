@@ -14,6 +14,31 @@ const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(2),
   },
+  [theme.breakpoints.down("xl")]: {
+    spacer: {
+      height: "22vh",
+    },
+  },
+  [theme.breakpoints.down("lg")]: {
+    spacer: {
+      height: "18vh",
+    },
+  },
+  [theme.breakpoints.down("md")]: {
+    spacer: {
+      height: "18vh",
+    },
+  },
+  [theme.breakpoints.down("sm")]: {
+    spacer: {
+      height: "16vh",
+    },
+  },
+  [theme.breakpoints.down("xs")]: {
+    spacer: {
+      height: "16vh",
+    },
+  },
 }));
 
 export default function PastMonthBars(props) {
@@ -97,6 +122,7 @@ export default function PastMonthBars(props) {
 
   return (
     <div className={classes.slideContainer}>
+      <div className={classes.spacer} />
       <ResponsiveContainer width="100%" height={400}>
         <BarChart data={data}>
           <XAxis
