@@ -18,7 +18,7 @@ import EqualizerIcon from "@material-ui/icons/Equalizer";
 import LocalGasStationIcon from "@material-ui/icons/LocalGasStation";
 import NatureIcon from "@material-ui/icons/Nature";
 
-import { fetchData, fetchInfo } from "./fetchData";
+import { fetchData, fetchInfo, fetchOrgInfo } from "./fetchData";
 
 export function MainListItems(props) {
   const [siteIdInput, setSiteIdInput] = useState("");
@@ -214,6 +214,10 @@ export function MainListItems(props) {
             fetchData(siteIdInput).then((result) => {
               // console.log("fetchData: ", result);
               props.setData(result);
+            });
+            fetchOrgInfo(siteIdInput).then((result) => {
+              // console.log("fetchOrgData: ", result);
+              props.setOrgData(result);
             });
             localStorage.setItem("siteId", siteIdInput);
           }}

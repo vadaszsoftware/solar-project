@@ -22,7 +22,7 @@ import {
   ListItem,
 } from "@material-ui/core";
 
-import { fetchData, fetchInfo } from "./fetchData";
+import { fetchData, fetchInfo, fetchOrgInfo } from "./fetchData";
 import { MainListItems } from "./listItems";
 import Home from "./Slides/Home";
 import ProviderSummary from "./Slides/ProviderSummary";
@@ -277,6 +277,7 @@ export default function Dashboard(props) {
   const classes = useStyles();
   const [info, setInfo] = useState({});
   const [data, setData] = useState({});
+  const [orgData, setOrgData] = useState({});
   const [nextSlide, setNextSlide] = useState("/Home");
   const [changeSlide, setChangeSlide] = useState(false);
   const [appbarTitle, setAppbarTitle] = useState({
@@ -290,11 +291,12 @@ export default function Dashboard(props) {
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
     if (localStorage.getItem("siteId")) {
-      fetchInfo(localStorage.getItem("siteId")).then((result) => {
+      let siteIdFromStorage = localStorage.getItem("siteId");
+      fetchInfo(siteIdFromStorage).then((result) => {
         // console.log("result: ", result.capacity);
         if (result.capacity) setInfo(result);
       });
-      fetchData(localStorage.getItem("siteId")).then((result) => {
+      fetchData(siteIdFromStorage).then((result) => {
         // console.log("result: ", result.energy);
         if (result.energy) {
           setData(result);
@@ -302,6 +304,10 @@ export default function Dashboard(props) {
             ? props.setTheme(false)
             : props.setTheme(true);
         }
+      });
+      fetchOrgInfo(siteIdFromStorage).then((result) => {
+        // console.log("result: ", result);
+        setOrgData(result);
       });
     }
   }, []);
@@ -447,6 +453,7 @@ export default function Dashboard(props) {
               setAppbarSpacer={setAppbarSpacer}
               setInfo={setInfo}
               setData={setData}
+              setOrgData={setOrgData}
               data={data}
               info={info}
               handleChangeAppbar={handleChangeAppbar}
@@ -566,7 +573,7 @@ export default function Dashboard(props) {
           <Container className={classes.container} maxWidth="xl">
             <Switch>
               <Route path="/ProviderSummary">
-                <ProviderSummary info={info} />
+                <ProviderSummary info={info} orgData={orgData} />
               </Route>
 
               <Route path="/Sunlight">

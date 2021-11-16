@@ -35,13 +35,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home(props) {
   const classes = useStyles();
+  let name = "";
+  if (props.info.name) {
+    name = props.info.name.substring(7);
+  }
 
   return (
     <div className={classes.slideContainer}>
       <div className={classes.spacer} />
       <Typography variant="h1">
-        {props.info.name} is creating a brighter future through renewable
-        energy.
+        {name} is creating a brighter future through renewable energy.
       </Typography>
     </div>
   );

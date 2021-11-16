@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down("md")]: {
     spacer: {
-      height: "16vh",
+      height: "12vh",
     },
   },
   [theme.breakpoints.down("sm")]: {
@@ -39,26 +39,29 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProviderSummary(props) {
   const classes = useStyles();
-  const { info } = props;
+  const { info, orgData } = props;
+  // console.log("orgData: ", orgData);
 
   return (
     <div>
       <div className={classes.spacer} />
       <div className={classes.slideContainer}>
-        <Typography variant="h4">{info.name}'s Commitment:</Typography>
+        <Typography variant="h4">{orgData.orgName}'s Commitment:</Typography>
         <Typography variant="h1">100% clean energy by 2035.</Typography>
       </div>
       <br />
       <div className={classes.slideContainer}>
         <Grid container>
           <Grid item xs={12} md={12} lg={12}>
-            <Typography variant="h4">{info.name}'s Solar Portfolio:</Typography>
+            <Typography variant="h4">
+              {orgData.orgName}'s Solar Portfolio:
+            </Typography>
           </Grid>
         </Grid>
         <Grid container>
-          <Grid item xs={4} md={4} lg={4}>
+          <Grid item xs={6} md={6} lg={6}>
             <Typography variant="h1" className={classes.portfolioText}>
-              {info.capacity / 1000}
+              {orgData.totalPower / 1000}
             </Typography>
             <Typography variant="h3" className={classes.portfolioText}>
               kW
@@ -68,18 +71,18 @@ export default function ProviderSummary(props) {
               Solar Capacity
             </Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4}>
+          {/* <Grid item xs={4} md={4} lg={4}>
             <Typography variant="h1" className={classes.portfolioText}>
-              15K
+              ~15K
             </Typography>
             <br />
             <Typography variant="h4" className={classes.portfolioText}>
               Solar Panels
             </Typography>
-          </Grid>
-          <Grid item xs={4} md={4} lg={4}>
+          </Grid> */}
+          <Grid item xs={6} md={6} lg={6}>
             <Typography variant="h1" className={classes.portfolioText}>
-              16
+              {orgData.totalSites}
             </Typography>
             <br />
             <Typography variant="h4" className={classes.portfolioText}>
