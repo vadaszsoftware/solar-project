@@ -9,7 +9,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness3Icon from "@material-ui/icons/Brightness3";
 import sentinelLight from "./fonts/Sentinel-Light.ttf";
-import theinhardtLight from "./fonts/Sentinel-Light.ttf";
+import theinhardtLight from "./fonts/theinhardt-light-webfont.ttf";
 import { amber } from "@material-ui/core/colors";
 
 const sentinel = {
@@ -18,9 +18,7 @@ const sentinel = {
   fontDisplay: "swap",
   fontWeight: 400,
   src: `
-    local('Sentinel'),
-    local('Sentinel-Light'),
-    url(${sentinelLight}) format('ttf')
+    url(${sentinelLight}) format('truetype')
   `,
   unicodeRange:
     "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF",
@@ -32,9 +30,7 @@ const theinhardt = {
   fontDisplay: "swap",
   fontWeight: 400,
   src: `
-    local('Theinhardt'),
-    local('Theinhardt-Light'),
-    url(${theinhardtLight}) format('ttf')
+    url(${theinhardtLight}) format('truetype')
   `,
   unicodeRange:
     "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF",
