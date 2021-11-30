@@ -41,16 +41,22 @@ export default function PastWeekBars(props) {
   const customLabelList = (props) => {
     // console.log("custom label list data: ", data);
     const { x, value } = props;
-    // console.log(props);
+    // console.log(value);
+    let xOffset = 17;
+    let xFontSize = 30;
+    if (value.toString().length > 2) {
+      xOffset = 15;
+      xFontSize = 25;
+    }
     return (
       <g>
         <text
-          x={x + 17}
+          x={x + xOffset}
           y={370}
           fill={theme.palette.text.primary}
           style={{
             fontFamily: "Theinhardt, Roboto",
-            fontSize: 30,
+            fontSize: xFontSize,
             fontWeight: 500,
           }}
         >

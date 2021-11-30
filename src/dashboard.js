@@ -138,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data) {
+function handleChangeAppbar(slide, setAppbarTitle, data) {
   // console.log("slide: ", slide);
   let offset;
   let offsetMonth;
@@ -347,12 +347,7 @@ export default function Dashboard(props) {
     // console.log("change slide to: ", slideNav[slideNavCounter]);
     setNextSlide(slideNav[slideNavCounter]);
     setChangeSlide(true);
-    handleChangeAppbar(
-      slideNav[slideNavCounter],
-      setAppbarTitle,
-      setAppbarSpacer,
-      data
-    );
+    handleChangeAppbar(slideNav[slideNavCounter], setAppbarTitle, data);
   }
   useEffect(() => {
     setChangeSlide(false);
@@ -449,15 +444,15 @@ export default function Dashboard(props) {
               setTheme={props.setTheme}
               theme={props.theme}
               darkModeIcon={props.darkModeIcon}
+              handleChangeAppbar={handleChangeAppbar}
               setAppbarTitle={setAppbarTitle}
-              setAppbarSpacer={setAppbarSpacer}
+              slideNav={slideNav}
+              slideNavCounter={slideNavCounter}
               setInfo={setInfo}
               setData={setData}
               setOrgData={setOrgData}
               data={data}
               info={info}
-              handleChangeAppbar={handleChangeAppbar}
-              slide={slideNav[slideNavCounter]}
             />
           </List>
           <Divider />

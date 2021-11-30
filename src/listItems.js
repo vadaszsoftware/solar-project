@@ -22,8 +22,13 @@ import { fetchData, fetchInfo, fetchOrgInfo } from "./fetchData";
 
 export function MainListItems(props) {
   const [siteIdInput, setSiteIdInput] = useState("");
-  const { slide, setAppbarSpacer, setAppbarTitle, data, handleChangeAppbar } =
-    props;
+  const {
+    slideNav,
+    slideNavCounter,
+    setAppbarTitle,
+    data,
+    handleChangeAppbar,
+  } = props;
   return (
     <div>
       <ListItem
@@ -31,7 +36,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/"
         onClick={() => {
-          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
+          handleChangeAppbar("/", setAppbarTitle, data);
         }}
       >
         <ListItemIcon>
@@ -45,7 +50,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/ProviderSummary"
         onClick={() => {
-          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
+          handleChangeAppbar("/ProviderSummary", setAppbarTitle, data);
         }}
       >
         <ListItemIcon>
@@ -59,7 +64,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/Sunlight"
         onClick={() => {
-          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
+          handleChangeAppbar("/Sunlight", setAppbarTitle, data);
         }}
       >
         <ListItemIcon>
@@ -73,7 +78,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/Power"
         onClick={() => {
-          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
+          handleChangeAppbar("/Power", setAppbarTitle, data);
         }}
       >
         <ListItemIcon>
@@ -88,7 +93,7 @@ export function MainListItems(props) {
           component={RouterLink}
           to="/Usage"
           onClick={() => {
-            handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
+            handleChangeAppbar("/Usage", setAppbarTitle, data);
           }}
         >
           <ListItemIcon>
@@ -103,7 +108,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/Past24"
         onClick={() => {
-          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
+          handleChangeAppbar("/Past24", setAppbarTitle, data);
         }}
       >
         <ListItemIcon>
@@ -117,7 +122,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/PastWeekBars"
         onClick={() => {
-          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
+          handleChangeAppbar("/PastWeekBars", setAppbarTitle, data);
         }}
       >
         <ListItemIcon>
@@ -131,7 +136,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/PastWeekGas"
         onClick={() => {
-          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
+          handleChangeAppbar("/PastWeekGas", setAppbarTitle, data);
         }}
       >
         <ListItemIcon>
@@ -145,7 +150,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/PastMonthBars"
         onClick={() => {
-          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
+          handleChangeAppbar("/PastMonthBars", setAppbarTitle, data);
         }}
       >
         <ListItemIcon>
@@ -159,7 +164,7 @@ export function MainListItems(props) {
         component={RouterLink}
         to="/TreesPlanted"
         onClick={() => {
-          handleChangeAppbar(slide, setAppbarTitle, setAppbarSpacer, data);
+          handleChangeAppbar("/TreesPlanted", setAppbarTitle, data);
         }}
       >
         <ListItemIcon>

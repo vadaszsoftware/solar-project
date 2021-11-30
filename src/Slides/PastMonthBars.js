@@ -101,9 +101,10 @@ export default function PastMonthBars(props) {
       //   new Date(`${day.date.year}-${day.date.month}-${day.date.day}`).getDate()
       // );
       return {
-        name: new Date(
-          `${day.date.year}-${day.date.month}-${day.date.day}`
-        ).getDate(),
+        // name: new Date(
+        //   `${day.date.year}-${day.date.month}-${day.date.day}`
+        // ).getDate(),
+        name: day.date.day,
         kWh: Math.round(day.value / 1000),
       };
     });

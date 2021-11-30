@@ -15,7 +15,7 @@ export async function fetchData(siteId) {
       return response.json();
     })
     .then((result) => {
-      // console.log("data: ", result);
+      console.log("data: ", result);
       retVal = result;
     });
   return retVal;
