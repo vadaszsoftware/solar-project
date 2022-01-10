@@ -32,7 +32,7 @@ export async function fetchInfo(siteId) {
       return response.json();
     })
     .then((result) => {
-      // console.log("info: ", result);
+      console.log("info: ", result);
       retVal = result;
     });
   return retVal;
@@ -42,6 +42,7 @@ export async function fetchOrgInfo(incomingSiteId) {
   let retVal = {
     totalSites: 0,
     totalPower: 0,
+    goal: "",
   };
   // let incomingSiteId = "9Qn92P6P";
   let orgSiteIds = [];
@@ -56,6 +57,7 @@ export async function fetchOrgInfo(incomingSiteId) {
     if (siteIdMatch.length > 0) {
       orgSiteIds = org.sites.map((i) => i.siteId);
       retVal.orgName = org.name;
+      retVal.goal = org.goal;
     }
   });
   // console.log("orgSiteIds: ", orgSiteIds);
@@ -76,6 +78,6 @@ export async function fetchOrgInfo(incomingSiteId) {
     });
   }
 
-  // console.log("return value: ", retVal);
+  console.log("orgData: ", retVal);
   return retVal;
 }

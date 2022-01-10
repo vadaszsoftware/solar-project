@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProviderSummary(props) {
   const classes = useStyles();
-  const { info, orgData } = props;
+  const { orgData } = props;
   // console.log("orgData: ", orgData);
 
   return (
@@ -47,7 +47,7 @@ export default function ProviderSummary(props) {
       <div className={classes.spacer} />
       <div className={classes.slideContainer}>
         <Typography variant="h4">{orgData.orgName}'s Commitment:</Typography>
-        <Typography variant="h1">100% clean energy by 2035.</Typography>
+        <Typography variant="h1">{orgData.goal}</Typography>
       </div>
       <br />
       <div className={classes.slideContainer}>
@@ -61,7 +61,7 @@ export default function ProviderSummary(props) {
         <Grid container>
           <Grid item xs={6} md={6} lg={6}>
             <Typography variant="h1" className={classes.portfolioText}>
-              {orgData.totalPower / 1000}
+              {Math.round(orgData.totalPower / 1000).toLocaleString("en-US")}
             </Typography>
             <Typography variant="h3" className={classes.portfolioText}>
               kW

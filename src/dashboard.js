@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
   Redirect,
+  useHistory,
 } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -183,7 +184,7 @@ function handleChangeAppbar(slide, setAppbarTitle, data) {
       break;
     case "/Power":
       setAppbarTitle({
-        title: "Current Power Production",
+        title: "Current Solar Production",
         subtitle: "",
         icon: lightningSymbol,
         calDays: null,
@@ -192,7 +193,7 @@ function handleChangeAppbar(slide, setAppbarTitle, data) {
       break;
     case "/Past24":
       setAppbarTitle({
-        title: "24hr solar generation",
+        title: "1-Day Solar Generation",
         subtitle: "",
         icon: lightningSymbol,
         calDays: null,
@@ -201,7 +202,7 @@ function handleChangeAppbar(slide, setAppbarTitle, data) {
       break;
     case "/PastWeekBars":
       setAppbarTitle({
-        title: "Solar Energy Produced",
+        title: "7-Day Solar Generation",
         subtitle: `We offset ${offset} gallons of gasoline over the last 7 days`,
         icon: calIcon,
         calDays: 7,
@@ -271,13 +272,43 @@ const slideNav = [
   "/TreesPlanted",
 ];
 let slideNavCounter = 0;
-const SLIDE_CHANGE_TIMER = 5;
+const SLIDE_CHANGE_TIMER = 10;
 
 export default function Dashboard(props) {
   const classes = useStyles();
-  const [info, setInfo] = useState({});
-  const [data, setData] = useState({});
-  const [orgData, setOrgData] = useState({});
+  const [info, setInfo] = useState({
+    capacity: 0,
+    location: {
+      address1: "",
+      city: "",
+      country: "",
+      latitude: 0,
+      longitude: 0,
+      state: "",
+      timezone: "",
+      zip: "",
+    },
+    name: "",
+  });
+  const [data, setData] = useState({
+    energy: {
+      production: {},
+    },
+    meteo: {
+      cloudCover: {},
+      icon: {},
+      temperature: {},
+    },
+    power: {
+      production: {},
+    },
+    time: {},
+  });
+  const [orgData, setOrgData] = useState({
+    totalSites: 0,
+    totalPower: 0,
+    orgName: "",
+  });
   const [nextSlide, setNextSlide] = useState("/Home");
   const [changeSlide, setChangeSlide] = useState(false);
   const [appbarTitle, setAppbarTitle] = useState({
@@ -286,31 +317,46 @@ export default function Dashboard(props) {
     icon: blankImg,
     calDays: null,
   });
-  const [appbarSpacer, setAppbarSpacer] = useState("10vh");
+  const [navHome, setNavHome] = useState(false);
+  const [isNightOrRaining, setIsNightOrRaining] = useState(false);
+  const [siteId, setSiteId] = useState("");
+  // const [appbarSpacer, setAppbarSpacer] = useState("10vh");
+
   // On page load
   useEffect(() => {
+    setNavHome(true);
     window.addEventListener("mousemove", handleMouseMove);
     if (localStorage.getItem("siteId")) {
       let siteIdFromStorage = localStorage.getItem("siteId");
-      fetchInfo(siteIdFromStorage).then((result) => {
-        // console.log("result: ", result.capacity);
-        if (result.capacity) setInfo(result);
-      });
-      fetchData(siteIdFromStorage).then((result) => {
-        // console.log("result: ", result.energy);
-        if (result.energy) {
-          setData(result);
-          result.time.percentOfDay == null
-            ? props.setTheme(false)
-            : props.setTheme(true);
-        }
-      });
-      fetchOrgInfo(siteIdFromStorage).then((result) => {
-        // console.log("result: ", result);
-        setOrgData(result);
-      });
+      setSiteId(siteIdFromStorage);
+      refreshData(siteIdFromStorage);
     }
   }, []);
+
+  // Refresh data from wattch
+  function refreshData(siteId) {
+    fetchInfo(siteId).then((result) => {
+      // console.log("result: ", result.capacity);
+      if (result.capacity) setInfo(result);
+    });
+    fetchData(siteId).then((result) => {
+      // console.log("result: ", result.energy);
+      if (result.energy) {
+        setData(result);
+        if (result.time.percentOfDay == null) {
+          props.setTheme(false);
+          setIsNightOrRaining(true);
+        } else {
+          props.setTheme(true);
+        }
+        result.meteo.icon.value == "rain" && setIsNightOrRaining(true);
+      }
+    });
+    fetchOrgInfo(siteId).then((result) => {
+      // console.log("result: ", result);
+      setOrgData(result);
+    });
+  }
 
   // Show Menu Button
   const [showMenuButton, setShowMenuButton] = useState(false);
@@ -341,9 +387,19 @@ export default function Dashboard(props) {
     setSlideshowActive(!slideshowActive);
   }
   function handleChangeSlide() {
-    slideNavCounter === slideNav.length - 1
-      ? (slideNavCounter = 0)
-      : slideNavCounter++;
+    if (slideNavCounter === slideNav.length - 1) {
+      slideNavCounter = 0;
+      refreshData(siteId);
+    } else {
+      slideNavCounter++;
+      // if night or raining, skip Sunlight and Power slides
+      if (
+        isNightOrRaining &&
+        (slideNavCounter === 2 || slideNavCounter === 3)
+      ) {
+        slideNavCounter = 4;
+      }
+    }
     // console.log("change slide to: ", slideNav[slideNavCounter]);
     setNextSlide(slideNav[slideNavCounter]);
     setChangeSlide(true);
@@ -453,6 +509,8 @@ export default function Dashboard(props) {
               setOrgData={setOrgData}
               data={data}
               info={info}
+              setSlideshowActive={setSlideshowActive}
+              isNightOrRaining={isNightOrRaining}
             />
           </List>
           <Divider />
@@ -502,12 +560,33 @@ export default function Dashboard(props) {
         {/* )} */}
 
         <AppBar
+          position="absolute"
+          className={clsx(classes.appBar)}
+          color="transparent"
+          elevation={0}
+          style={{
+            zIndex: -1,
+          }}
+        >
+          <Toolbar className={classes.toolbar}>
+            <img
+              alt="Cherry Street Energy logo"
+              src={props.theme ? csLogoLight : csLogoDark}
+              position="absolute"
+            ></img>
+          </Toolbar>
+        </AppBar>
+
+        <AppBar
           // position="absolute"
           className={clsx(classes.appBar)}
           color="transparent"
           elevation={0}
+          style={{
+            zIndex: -1,
+          }}
         >
-          <Toolbar className={classes.toolbar}>
+          <Toolbar className={classes.toolbar} align="center">
             {/* <IconButton
                 edge="start"
                 color="inherit"
@@ -520,24 +599,20 @@ export default function Dashboard(props) {
               >
                 <ChevronRightIcon />
               </IconButton> */}
-            <img
-              alt="Cherry Street Energy logo"
-              src={props.theme ? csLogoLight : csLogoDark}
-            ></img>
             <Typography
               // component="h1"
               variant="h2"
               color="inherit"
               noWrap
               className={classes.title}
-              align="center"
             >
               {appbarTitle.title}
-              <Typography variant="h5" noWrap>
+              <Typography variant="h5" noWrap align="center">
                 {appbarTitle.subtitle}
               </Typography>
             </Typography>
-            <div
+
+            {/* <div
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -554,7 +629,7 @@ export default function Dashboard(props) {
               }}
             >
               {appbarTitle.calDays}
-            </div>
+            </div> */}
             {/* <img alt="App Bar Icon" src={appbarTitle.icon} /> */}
           </Toolbar>
         </AppBar>
@@ -604,10 +679,11 @@ export default function Dashboard(props) {
               </Route>
 
               <Route path="/">
-                <Home info={info} />
+                <Home info={info} orgData={orgData} />
               </Route>
             </Switch>
             {changeSlide ? <Redirect to={nextSlide} /> : ""}
+            {navHome ? <Redirect to={"/home"} /> : ""}
           </Container>
 
           <div
@@ -620,7 +696,7 @@ export default function Dashboard(props) {
               width: "100%",
             }}
           >
-            <Grid container>
+            <Grid container style={{ marginBottom: 10 }}>
               <Grid item xs={4} md={4} lg={4}>
                 <Typography
                   variant="h5"
@@ -656,8 +732,16 @@ export default function Dashboard(props) {
                   alignItems: "bottom",
                 }}
               >
-                <Box pt={4} padding={0}>
-                  <br />
+                <Box pt={4}>
+                  <Typography
+                    variant="h5"
+                    align="center"
+                    style={{
+                      fontFamily: "Theinhardt, Roboto",
+                    }}
+                  >
+                    {info.name && info.name.substring(7)} Solar
+                  </Typography>
                   <Copyright />
                 </Box>
               </Grid>
@@ -692,11 +776,12 @@ export default function Dashboard(props) {
             <Box
               style={{
                 margin: 0,
-                top: "auto",
+                bottom: "auto",
                 right: 20,
-                bottom: 20,
+                top: 20,
                 left: "auto",
                 position: "fixed",
+                zIndex: 10,
               }}
             >
               <Button

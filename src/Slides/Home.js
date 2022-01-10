@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Home(props) {
   const classes = useStyles();
   let name = "";
-  if (props.info.name) {
-    name = props.info.name.substring(7);
+  if (props.orgData.orgName) {
+    name = props.orgData.orgName;
   }
 
   return (

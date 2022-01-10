@@ -4,44 +4,47 @@ import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
-    padding: theme.spacing(4),
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
+    position: "absolute",
+    top: "35%",
   },
   portfolioText: {
     fontFamily: "Theinhardt, Roboto",
     display: "inline",
   },
-  [theme.breakpoints.down("xl")]: {
-    spacer: {
-      height: "24vh",
-    },
-  },
-  [theme.breakpoints.down("lg")]: {
-    spacer: {
-      height: "22vh",
-    },
-  },
-  [theme.breakpoints.down("md")]: {
-    spacer: {
-      height: "22vh",
-    },
-  },
-  [theme.breakpoints.down("sm")]: {
-    spacer: {
-      height: "22vh",
-    },
-  },
-  [theme.breakpoints.down("xs")]: {
-    spacer: {
-      height: "20vh",
-    },
-  },
+  // [theme.breakpoints.down("xl")]: {
+  //   spacer: {
+  //     height: "26vh",
+  //   },
+  // },
+  // [theme.breakpoints.down("lg")]: {
+  //   spacer: {
+  //     height: "22vh",
+  //   },
+  // },
+  // [theme.breakpoints.down("md")]: {
+  //   spacer: {
+  //     height: "22vh",
+  //   },
+  // },
+  // [theme.breakpoints.down("sm")]: {
+  //   spacer: {
+  //     height: "22vh",
+  //   },
+  // },
+  // [theme.breakpoints.down("xs")]: {
+  //   spacer: {
+  //     height: "20vh",
+  //   },
+  // },
 }));
 
 export default function PastWeekGas(props) {
   const classes = useStyles();
   let offset = 0;
 
-  if (props.data.energy) {
+  if (props.data.energy.production.daily) {
     let dataArray = props.data.energy.production.daily.values;
     let pastWeek = dataArray
       .slice(dataArray.length - 8, dataArray.length - 1)
@@ -63,7 +66,7 @@ export default function PastWeekGas(props) {
     <div className={classes.slideContainer}>
       <div className={classes.spacer} />
       <Typography variant="h1">
-        In the last 7 days we’ve offset {offset} gal of gasoline.
+        In the last 7 days we’ve offset {offset} gallons of gasoline.
       </Typography>
     </div>
   );

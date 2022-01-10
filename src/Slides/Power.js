@@ -68,7 +68,7 @@ const customLegend = (props) => {
                 width="18"
                 height="36"
               />{" "}
-              {entry.payload.value} w
+              {Math.round(entry.payload.value)} kW
             </Typography>
           );
         } else {
@@ -89,10 +89,20 @@ export default function Power(props) {
     const { cx, cy, value, name } = props;
 
     if (name === "Power") {
+      const percentOfCapacity = Math.round(
+        (value / data.find((i) => i.name === "Total Potential").value) * 100
+      );
+      let percentAlign = 90;
+      // console.log(percentOfCapacity);
+      if (percentOfCapacity < 10) {
+        percentAlign = 62;
+      } else if (percentOfCapacity > 99) {
+        percentAlign = 115;
+      }
       return (
         <g>
           <text
-            x={cx - 80}
+            x={cx - percentAlign}
             y={cy}
             fill={theme.palette.primary.main}
             style={{
@@ -100,11 +110,7 @@ export default function Power(props) {
               fontSize: 85,
             }}
           >
-            {Math.round(
-              (value / data.find((i) => i.name === "Total Potential").value) *
-                100
-            )}
-            %
+            {percentOfCapacity}%
           </text>
           <text
             x={cx - 80}
@@ -126,17 +132,22 @@ export default function Power(props) {
 
   // default data
   let data = [
-    { name: "Total Potential", value: 10000 },
-    { name: "Power", value: 8000 },
+    { name: "Total Potential", value: Math.round(10000 / 1000) },
+    { name: "Power", value: Math.round(0 / 1000) },
   ];
   // data from API
   if (props.data.power) {
     data = [
       {
         name: "Total Potential",
-        value: props.info.capacity - props.data.power.production.value,
+        value: Math.round(
+          (props.info.capacity - props.data.power.production.value) / 1000
+        ),
       },
-      { name: "Power", value: props.data.power.production.value },
+      {
+        name: "Power",
+        value: Math.round(props.data.power.production.value / 1000),
+      },
     ];
   }
 

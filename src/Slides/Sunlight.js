@@ -100,7 +100,7 @@ export default function Sunlight(props) {
       <div className={classes.spacer} />
       <div className={classes.slideContainer}>{solarMessage}</div>
       <br />
-      <div className={classes.slideContainer}>
+      <div className={classes.slideContainer} align="center">
         <SunlightSlider
           ThumbComponent={SunThumb}
           value={
@@ -108,6 +108,9 @@ export default function Sunlight(props) {
           }
           valueLabelDisplay="on"
         />
+        <br />
+        <br />
+        Current Sunlight
       </div>
     </div>
   );

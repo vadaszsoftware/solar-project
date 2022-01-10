@@ -43,20 +43,21 @@ export default function TreesPlanted(props) {
   const theme = useTheme();
 
   const treeCalc = (timeFrame) => {
-    if (props.data.energy) {
+    if (props.data.energy.production.daily) {
       let dataArray = props.data.energy.production.daily.values;
       let totalkwh;
       if (timeFrame === "week") {
         totalkwh = dataArray.slice(dataArray.length - 8, dataArray.length - 1);
       } else if (timeFrame === "month") {
-        totalkwh = dataArray;
+        totalkwh = dataArray.slice(0, 29);
+        // console.log(totalkwh);
       } else if (timeFrame === "allTime") {
         totalkwh = props.data.energy.production.allTime.value;
-        return (
+        return Math.round(
           (props.energyConv.CO2_OFFSET_PER_KWH * totalkwh) /
-          props.energyConv.CO2_OFFSET_PER_TREE /
-          1000
-        ).toFixed(1);
+            props.energyConv.CO2_OFFSET_PER_TREE /
+            1000
+        ).toLocaleString("en-US");
       } else {
         return 0;
       }
@@ -71,7 +72,9 @@ export default function TreesPlanted(props) {
       return (
         (props.energyConv.CO2_OFFSET_PER_KWH * totalkwh) /
         props.energyConv.CO2_OFFSET_PER_TREE
-      ).toFixed(1);
+      )
+        .toFixed(1)
+        .toLocaleString("en-US");
     }
   };
 
@@ -94,7 +97,7 @@ export default function TreesPlanted(props) {
           {treeCalc("week")}
         </Typography>
         <Typography variant="h5" className={classes.portfolioText}>
-          Last 7 days
+          Last 7 Days
         </Typography>
       </Box>
 
@@ -114,7 +117,7 @@ export default function TreesPlanted(props) {
           {treeCalc("month")}
         </Typography>
         <Typography variant="h5" className={classes.portfolioText}>
-          Last 30 days
+          Last 30 Days
         </Typography>
       </Box>
 
@@ -131,7 +134,7 @@ export default function TreesPlanted(props) {
         marginRight={3}
       >
         <Typography variant="h2" className={classes.portfolioText}>
-          {treeCalc("allTime")} k
+          {treeCalc("allTime")} K
         </Typography>
         <Typography variant="h5" className={classes.portfolioText}>
           All Time

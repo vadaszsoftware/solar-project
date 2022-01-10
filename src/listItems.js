@@ -37,6 +37,7 @@ export function MainListItems(props) {
         to="/"
         onClick={() => {
           handleChangeAppbar("/", setAppbarTitle, data);
+          props.setSlideshowActive(false);
         }}
       >
         <ListItemIcon>
@@ -51,6 +52,7 @@ export function MainListItems(props) {
         to="/ProviderSummary"
         onClick={() => {
           handleChangeAppbar("/ProviderSummary", setAppbarTitle, data);
+          props.setSlideshowActive(false);
         }}
       >
         <ListItemIcon>
@@ -59,33 +61,39 @@ export function MainListItems(props) {
         <ListItemText primary="Solar Portfolio" />
       </ListItem>
 
-      <ListItem
-        button
-        component={RouterLink}
-        to="/Sunlight"
-        onClick={() => {
-          handleChangeAppbar("/Sunlight", setAppbarTitle, data);
-        }}
-      >
-        <ListItemIcon>
-          <WbSunnyIcon />
-        </ListItemIcon>
-        <ListItemText primary="Current Sunlight" />
-      </ListItem>
+      {!props.isNightOrRaining ? (
+        <ListItem
+          button
+          component={RouterLink}
+          to="/Sunlight"
+          onClick={() => {
+            handleChangeAppbar("/Sunlight", setAppbarTitle, data);
+            props.setSlideshowActive(false);
+          }}
+        >
+          <ListItemIcon>
+            <WbSunnyIcon />
+          </ListItemIcon>
+          <ListItemText primary="Current Sunlight" />
+        </ListItem>
+      ) : null}
 
-      <ListItem
-        button
-        component={RouterLink}
-        to="/Power"
-        onClick={() => {
-          handleChangeAppbar("/Power", setAppbarTitle, data);
-        }}
-      >
-        <ListItemIcon>
-          <FlashOnIcon />
-        </ListItemIcon>
-        <ListItemText primary="Current Solar Production" />
-      </ListItem>
+      {!props.isNightOrRaining ? (
+        <ListItem
+          button
+          component={RouterLink}
+          to="/Power"
+          onClick={() => {
+            handleChangeAppbar("/Power", setAppbarTitle, data);
+            props.setSlideshowActive(false);
+          }}
+        >
+          <ListItemIcon>
+            <FlashOnIcon />
+          </ListItemIcon>
+          <ListItemText primary="Current Solar Production" />
+        </ListItem>
+      ) : null}
 
       {props.data.consumption ? (
         <ListItem
@@ -94,6 +102,7 @@ export function MainListItems(props) {
           to="/Usage"
           onClick={() => {
             handleChangeAppbar("/Usage", setAppbarTitle, data);
+            props.setSlideshowActive(false);
           }}
         >
           <ListItemIcon>
@@ -109,12 +118,13 @@ export function MainListItems(props) {
         to="/Past24"
         onClick={() => {
           handleChangeAppbar("/Past24", setAppbarTitle, data);
+          props.setSlideshowActive(false);
         }}
       >
         <ListItemIcon>
           <HistoryIcon />
         </ListItemIcon>
-        <ListItemText primary="24-Hour Solar Generation" />
+        <ListItemText primary="1-Day Solar Generation" />
       </ListItem>
 
       <ListItem
@@ -123,6 +133,7 @@ export function MainListItems(props) {
         to="/PastWeekBars"
         onClick={() => {
           handleChangeAppbar("/PastWeekBars", setAppbarTitle, data);
+          props.setSlideshowActive(false);
         }}
       >
         <ListItemIcon>
@@ -137,6 +148,7 @@ export function MainListItems(props) {
         to="/PastWeekGas"
         onClick={() => {
           handleChangeAppbar("/PastWeekGas", setAppbarTitle, data);
+          props.setSlideshowActive(false);
         }}
       >
         <ListItemIcon>
@@ -151,6 +163,7 @@ export function MainListItems(props) {
         to="/PastMonthBars"
         onClick={() => {
           handleChangeAppbar("/PastMonthBars", setAppbarTitle, data);
+          props.setSlideshowActive(false);
         }}
       >
         <ListItemIcon>
@@ -165,6 +178,7 @@ export function MainListItems(props) {
         to="/TreesPlanted"
         onClick={() => {
           handleChangeAppbar("/TreesPlanted", setAppbarTitle, data);
+          props.setSlideshowActive(false);
         }}
       >
         <ListItemIcon>

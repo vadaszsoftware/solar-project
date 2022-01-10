@@ -3,6 +3,7 @@ export const allSitesDb = [
     id: 1,
     name: "City of Atlanta",
     abbr: "COA",
+    goal: "100% clean energy by 2035.",
     sites: [
       {
         name: "CT Martin Rec Center",
@@ -228,6 +229,7 @@ export const allSitesDb = [
     id: 11,
     name: "Emory University",
     abbr: "EMU",
+    goal: "100% clean energy by 2035.",
     sites: [
       {
         name: "1599 Clifton Roof",

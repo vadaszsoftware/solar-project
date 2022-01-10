@@ -5,6 +5,7 @@ import { BarChart, XAxis, Bar, LabelList, Cell, YAxis } from "recharts";
 const useStyles = makeStyles((theme) => ({
   slideContainer: {
     padding: theme.spacing(2),
+    paddingTop: "5vh",
   },
   [theme.breakpoints.down("xl")]: {
     spacer: {
@@ -39,20 +40,30 @@ export default function PastWeekBars(props) {
 
   // Custom labels for Bar Chart
   const customLabelList = (props) => {
-    // console.log("custom label list data: ", data);
+    // console.log("custom label list data: ", props);
     const { x, value } = props;
     // console.log(value);
     let xOffset = 17;
     let xFontSize = 30;
-    if (value.toString().length > 2) {
-      xOffset = 15;
-      xFontSize = 25;
+    if (value >= 100) {
+      xOffset = 12;
+      xFontSize = 26;
+    } else if (value >= 10) {
+      xOffset = 17;
+      xFontSize = 30;
+    } else {
+      xOffset = 27;
+      xFontSize = 30;
+    }
+    let yOffset = 0;
+    if (value <= 50) {
+      yOffset = 0;
     }
     return (
       <g>
         <text
           x={x + xOffset}
-          y={370}
+          y={370 + yOffset}
           fill={theme.palette.text.primary}
           style={{
             fontFamily: "Theinhardt, Roboto",
@@ -64,7 +75,7 @@ export default function PastWeekBars(props) {
         </text>
         <text
           x={x + 20}
-          y={388}
+          y={388 + yOffset}
           fill={theme.palette.text.primary}
           style={{
             fontFamily: "Theinhardt, Roboto",
@@ -80,7 +91,7 @@ export default function PastWeekBars(props) {
   // default data
   let data = [];
   // data from API
-  if (props.data.energy) {
+  if (props.data.energy.production.daily) {
     let dataArray = props.data.energy.production.daily.values;
     data = dataArray
       .slice(dataArray.length - 8, dataArray.length - 1)

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down("xl")]: {
     spacer: {
-      height: "22vh",
+      height: "24vh",
     },
   },
   [theme.breakpoints.down("lg")]: {
@@ -83,8 +83,11 @@ export default function PastMonthBars(props) {
   let dataMaxValue = 0;
   let dataCurrentValue = 0;
   // data from API
-  if (props.data.energy) {
-    let dataArray = props.data.energy.production.daily.values;
+  if (props.data.energy.production.daily) {
+    let dataArray = props.data.energy.production.daily.values.slice(
+      0,
+      props.data.energy.production.daily.values.length - 1
+    );
     dataCurrentValue = Math.round(dataArray[dataArray.length - 1].value / 1000);
     dataMaxValue = Math.round(
       dataArray.reduce((prev, current) => {
@@ -135,9 +138,9 @@ export default function PastMonthBars(props) {
               fontWeight: "bold",
               fontFamily: "Theinhardt, Roboto",
             }}
-            height={25}
+            height={15}
           />
-          <YAxis hide padding={{ top: 15 }} />
+          <YAxis hide padding={{ top: 50 }} />
           <Bar
             dataKey="kWh"
             fill={theme.palette.primary.main}
@@ -155,8 +158,9 @@ export default function PastMonthBars(props) {
               formatter={(value) => {
                 // console.log("value: ", value);
                 // console.log("dataMaxValue: ", dataMaxValue);
-                if (value === dataMaxValue || value === dataCurrentValue)
-                  return `${value} kWh`;
+                if (value === dataMaxValue) return `High Value ${value} kWh`;
+                else if (value === dataCurrentValue)
+                  return `Current Value ${value} kWh`;
                 else return "";
               }}
               // content={customLabelList}

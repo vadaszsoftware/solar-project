@@ -38,7 +38,7 @@ export default function Past24(props) {
   const theme = useTheme();
 
   let yesterday = 0;
-  if (props.data.energy) {
+  if (props.data.energy.production.daily) {
     let dataArray = props.data.energy.production.daily.values;
     yesterday =
       Math.round((dataArray[dataArray.length - 2].value / 1000) * 100) / 100;
@@ -69,8 +69,8 @@ export default function Past24(props) {
             marginTop: 16,
           }}
         >
-          In the last 24 hours we <br />
-          have generated {yesterday} kWh
+          Yesterday we <br />
+          generated {yesterday} kWh
         </Typography>
       </Box>
     </div>
