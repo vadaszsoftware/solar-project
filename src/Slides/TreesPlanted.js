@@ -78,6 +78,8 @@ export default function TreesPlanted(props) {
     }
   };
 
+  let allTimeTrees = treeCalc("allTime");
+
   return (
     <Container className={classes.slideContainer} align="center">
       <div className={classes.spacer} />
@@ -133,9 +135,19 @@ export default function TreesPlanted(props) {
         marginLeft={3}
         marginRight={3}
       >
-        <Typography variant="h2" className={classes.portfolioText}>
-          {treeCalc("allTime")} K
-        </Typography>
+        {allTimeTrees.length > 4 ? (
+          <Typography
+            variant="h2"
+            className={classes.portfolioText}
+            style={{ fontSize: 57 }}
+          >
+            {allTimeTrees}K
+          </Typography>
+        ) : (
+          <Typography variant="h2" className={classes.portfolioText}>
+            {allTimeTrees} K
+          </Typography>
+        )}
         <Typography variant="h5" className={classes.portfolioText}>
           All Time
         </Typography>

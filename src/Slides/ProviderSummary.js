@@ -45,10 +45,15 @@ export default function ProviderSummary(props) {
   return (
     <div>
       <div className={classes.spacer} />
-      <div className={classes.slideContainer}>
-        <Typography variant="h4">{orgData.orgName}'s Commitment:</Typography>
-        <Typography variant="h1">{orgData.goal}</Typography>
-      </div>
+      {orgData.goal ? (
+        <div className={classes.slideContainer}>
+          <Typography variant="h4">{orgData.orgName}'s Commitment:</Typography>
+          <Typography variant="h1">{orgData.goal}</Typography>
+        </div>
+      ) : (
+        ""
+      )}
+
       <br />
       <div className={classes.slideContainer}>
         <Grid container>

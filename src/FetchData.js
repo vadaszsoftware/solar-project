@@ -62,7 +62,7 @@ export async function fetchOrgInfo(incomingSiteId) {
   });
   // console.log("orgSiteIds: ", orgSiteIds);
   if (orgSiteIds.length > 0) {
-    retVal.totalSites = orgSiteIds.length;
+    retVal.totalSites = 0;
     await orgSiteIds.forEach(async (siteId) => {
       // console.log("trying this siteId: ", siteId);
       await fetch(`https://kiosk.wattch.io/api/${siteId}/info`)
@@ -72,8 +72,13 @@ export async function fetchOrgInfo(incomingSiteId) {
           return await response.json();
         })
         .then(async (result) => {
-          if (!isNaN(result.capacity))
+          // console.log(result);
+          if (result.status === "ENERGIZED") {
+            await retVal.totalSites++;
+          }
+          if (!isNaN(result.capacity)) {
             retVal.totalPower += await result.capacity;
+          }
         });
     });
   }

@@ -81,14 +81,21 @@ export default function PastMonthBars(props) {
   // default data
   let data = [];
   let dataMaxValue = 0;
-  let dataCurrentValue = 0;
+  let dataMinValue = 0;
   // data from API
   if (props.data.energy.production.daily) {
     let dataArray = props.data.energy.production.daily.values.slice(
       0,
       props.data.energy.production.daily.values.length - 1
     );
-    dataCurrentValue = Math.round(dataArray[dataArray.length - 1].value / 1000);
+    dataMinValue = Math.round(
+      dataArray.reduce((prev, current) => {
+        // console.log("prev: ", prev.value);
+        // console.log("current: ", current.value);
+        if (prev.value < current.value) return prev;
+        else return current;
+      }).value / 1000
+    );
     dataMaxValue = Math.round(
       dataArray.reduce((prev, current) => {
         // console.log("prev: ", prev.value);
@@ -97,7 +104,7 @@ export default function PastMonthBars(props) {
         else return current;
       }).value / 1000
     );
-    // console.log("current value: ", dataCurrentValue.value / 1000);
+    // console.log("dataMinValue value: ", dataMinValue);
     data = dataArray.map((day) => {
       // console.log(
       //   "DATE: ",
@@ -159,8 +166,8 @@ export default function PastMonthBars(props) {
                 // console.log("value: ", value);
                 // console.log("dataMaxValue: ", dataMaxValue);
                 if (value === dataMaxValue) return `High Value ${value} kWh`;
-                else if (value === dataCurrentValue)
-                  return `Current Value ${value} kWh`;
+                else if (value === dataMinValue)
+                  return `Low Value ${value} kWh`;
                 else return "";
               }}
               // content={customLabelList}

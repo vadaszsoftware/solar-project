@@ -45,7 +45,10 @@ export default function PastWeekBars(props) {
     // console.log(value);
     let xOffset = 17;
     let xFontSize = 30;
-    if (value >= 100) {
+    if (value >= 1000) {
+      xOffset = 4;
+      xFontSize = 26;
+    } else if (value >= 100) {
       xOffset = 12;
       xFontSize = 26;
     } else if (value >= 10) {

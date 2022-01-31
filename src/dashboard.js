@@ -343,13 +343,13 @@ export default function Dashboard(props) {
       // console.log("result: ", result.energy);
       if (result.energy) {
         setData(result);
-        if (result.time.percentOfDay == null) {
+        if (result.time.percentOfDay === null) {
           props.setTheme(false);
           setIsNightOrRaining(true);
         } else {
           props.setTheme(true);
         }
-        result.meteo.icon.value == "rain" && setIsNightOrRaining(true);
+        result.meteo.icon.value === "rain" && setIsNightOrRaining(true);
       }
     });
     fetchOrgInfo(siteId).then((result) => {

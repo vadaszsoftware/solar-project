@@ -68,7 +68,7 @@ const customLegend = (props) => {
                 width="18"
                 height="36"
               />{" "}
-              {Math.round(entry.payload.value)} kW
+              {Math.round(entry.payload.value / 1000)} kW
             </Typography>
           );
         } else {
@@ -140,16 +140,17 @@ export default function Power(props) {
     data = [
       {
         name: "Total Potential",
-        value: Math.round(
-          (props.info.capacity - props.data.power.production.value) / 1000
-        ),
+        value: props.info.capacity,
       },
       {
         name: "Power",
-        value: Math.round(props.data.power.production.value / 1000),
+        value: props.data.power.production.value,
       },
     ];
   }
+  // Math.round(props.info.capacity / 1000)
+
+  // console.log(data);
 
   // Radial Bar Chart
   return (

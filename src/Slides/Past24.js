@@ -60,7 +60,7 @@ export default function Past24(props) {
         paddingTop={12}
       >
         <Typography variant="h1">
-          {yesterday} <span style={{ fontSize: 50 }}>kWh</span>
+          {Math.round(yesterday)} <span style={{ fontSize: 50 }}>kWh</span>
         </Typography>
         <Typography
           variant="h4"
