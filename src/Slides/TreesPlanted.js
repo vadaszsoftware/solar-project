@@ -52,23 +52,26 @@ export default function TreesPlanted(props) {
         totalkwh = dataArray.slice(0, 29);
         // console.log(totalkwh);
       } else if (timeFrame === "allTime") {
-        totalkwh = props.data.energy.production.allTime.value;
+        // returns early
+        totalkwh = props.data.energy.production.allTime.value / 1000;
         return Math.round(
           (props.energyConv.CO2_OFFSET_PER_KWH * totalkwh) /
-            props.energyConv.CO2_OFFSET_PER_TREE /
-            1000
+            props.energyConv.CO2_OFFSET_PER_TREE
         ).toLocaleString("en-US");
       } else {
         return 0;
       }
 
+      // for week and month only
       totalkwh = totalkwh
         .map((day) => {
-          return day.value / 1000;
+          return day.value;
         })
         .reduce((prevDay, currentDay) => {
           return prevDay + currentDay;
         });
+      totalkwh = totalkwh / 1000;
+      // console.log(totalkwh);
       return (
         (props.energyConv.CO2_OFFSET_PER_KWH * totalkwh) /
         props.energyConv.CO2_OFFSET_PER_TREE
@@ -135,7 +138,7 @@ export default function TreesPlanted(props) {
         marginLeft={3}
         marginRight={3}
       >
-        {allTimeTrees.length > 4 ? (
+        {allTimeTrees && allTimeTrees.length > 4 ? (
           <Typography
             variant="h2"
             className={classes.portfolioText}

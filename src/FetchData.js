@@ -32,6 +32,7 @@ export async function fetchInfo(siteId) {
       return response.json();
     })
     .then((result) => {
+      result.siteId = siteId;
       console.log("info: ", result);
       retVal = result;
     });

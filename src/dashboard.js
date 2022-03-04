@@ -4,7 +4,7 @@ import {
   Switch,
   Route,
   Redirect,
-  useHistory,
+  useParams,
 } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -321,16 +321,27 @@ export default function Dashboard(props) {
   const [isNightOrRaining, setIsNightOrRaining] = useState(false);
   const [siteId, setSiteId] = useState("");
   // const [appbarSpacer, setAppbarSpacer] = useState("10vh");
+  let { id } = useParams();
 
   // On page load
   useEffect(() => {
-    setNavHome(true);
-    window.addEventListener("mousemove", handleMouseMove);
-    if (localStorage.getItem("siteId")) {
+    // console.log("url id: ", id);
+    let checklist = slideNav.map((slide) => slide.substring(1));
+    if (id.length > 5 && !checklist.includes(id)) {
+      console.log("Site ID from URL");
+      setSiteId(id);
+      refreshData(id);
+      localStorage.setItem("siteId", id);
+    } else if (localStorage.getItem("siteId")) {
+      console.log("Site ID from localstorage");
       let siteIdFromStorage = localStorage.getItem("siteId");
       setSiteId(siteIdFromStorage);
       refreshData(siteIdFromStorage);
+    } else {
+      console.log("No Site ID Found!");
     }
+    window.addEventListener("mousemove", handleMouseMove);
+    setNavHome(true);
   }, []);
 
   // Refresh data from wattch

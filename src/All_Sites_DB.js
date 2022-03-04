@@ -26,11 +26,6 @@ export const allSitesDb = [
         siteNum: "004",
       },
       {
-        name: "Rosel Fann Rec Center",
-        siteId: "RPiDemie",
-        siteNum: "006",
-      },
-      {
         name: "Grove Park Rec Center",
         siteId: "bFamWjU8",
         siteNum: "007",
@@ -95,6 +90,11 @@ export const allSitesDb = [
         siteId: "ycqY9U8n",
         siteNum: "058",
       },
+      {
+        name: "Rosel Fann Rec Center",
+        siteId: "J2G5eS2S",
+        siteNum: "096",
+      },
     ],
   },
   {
@@ -121,6 +121,11 @@ export const allSitesDb = [
         name: "Tax Commissioner",
         siteId: "GHrPNomn",
         siteNum: "049",
+      },
+      {
+        name: "Juvenile Justice",
+        siteId: "w7roVDZR",
+        siteNum: "090",
       },
     ],
   },

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Dashboard from "./dashboard";
 import {
   responsiveFontSizes,
@@ -87,11 +88,20 @@ function App() {
   return (
     <ThemeProvider theme={appliedTheme}>
       <CssBaseline />
-      <Dashboard
-        setTheme={setTheme}
-        theme={theme}
-        darkModeIcon={darkModeIcon}
-      />
+      <Router>
+        <Switch>
+          <Route
+            path="/:id"
+            children={
+              <Dashboard
+                setTheme={setTheme}
+                theme={theme}
+                darkModeIcon={darkModeIcon}
+              />
+            }
+          />
+        </Switch>
+      </Router>
     </ThemeProvider>
   );
 }

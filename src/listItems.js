@@ -34,7 +34,7 @@ export function MainListItems(props) {
       <ListItem
         button
         component={RouterLink}
-        to="/"
+        to="/:siteId"
         onClick={() => {
           handleChangeAppbar("/", setAppbarTitle, data);
           props.setSlideshowActive(false);

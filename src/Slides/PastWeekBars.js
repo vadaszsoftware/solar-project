@@ -41,8 +41,7 @@ export default function PastWeekBars(props) {
   // Custom labels for Bar Chart
   const customLabelList = (props) => {
     // console.log("custom label list data: ", props);
-    const { x, value } = props;
-    // console.log(value);
+    const { x, value, height } = props;
     let xOffset = 17;
     let xFontSize = 30;
     if (value >= 1000) {
@@ -61,6 +60,9 @@ export default function PastWeekBars(props) {
     let yOffset = 0;
     if (value <= 50) {
       yOffset = 0;
+    }
+    if (height < 100) {
+      yOffset = -(height * 0.75);
     }
     return (
       <g>
