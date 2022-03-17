@@ -65,6 +65,7 @@ import weatherCloudyDay from "./images/made_weather_icons/cloudy_day.png";
 import weatherCloudyNight from "./images/made_weather_icons/cloudy_night.png";
 import weatherPartlyCloudyDay from "./images/made_weather_icons/partly_cloudy_day.png";
 import weatherPartlyCloudyNight from "./images/made_weather_icons/partly_cloudy_night.png";
+import { Prompt } from "react-router-dom";
 
 // Energy conversion constants
 // https://www.epa.gov/energy/greenhouse-gases-equivalencies-calculator-calculations-and-references
@@ -143,7 +144,7 @@ function handleChangeAppbar(slide, setAppbarTitle, data) {
   // console.log("slide: ", slide);
   let offset;
   let offsetMonth;
-  if (data.energy) {
+  if (data.energy && data.message !== "Not Found") {
     let dataArray = data.energy.production.daily.values;
     let pastWeek = dataArray
       .slice(dataArray.length - 8, dataArray.length - 1)
@@ -325,20 +326,28 @@ export default function Dashboard(props) {
 
   // On page load
   useEffect(() => {
-    // console.log("url id: ", id);
+    console.log("url id: ", id);
     let checklist = slideNav.map((slide) => slide.substring(1));
     if (id.length > 5 && !checklist.includes(id)) {
-      console.log("Site ID from URL");
+      console.log("Site ID from URL: ", id);
       setSiteId(id);
       refreshData(id);
       localStorage.setItem("siteId", id);
-    } else if (localStorage.getItem("siteId")) {
-      console.log("Site ID from localstorage");
+    } else if (
+      localStorage.getItem("siteId") &&
+      localStorage.getItem("siteId").length > 5 &&
+      localStorage.getItem("siteId") !== ":siteId"
+    ) {
       let siteIdFromStorage = localStorage.getItem("siteId");
+      console.log("Site ID from localstorage: ", siteIdFromStorage);
       setSiteId(siteIdFromStorage);
       refreshData(siteIdFromStorage);
     } else {
       console.log("No Site ID Found!");
+      toggleSlideshow();
+      alert(
+        "No Site ID, input Site ID in Menu or URL (e.g. solardashboard.com/siteid)"
+      );
     }
     window.addEventListener("mousemove", handleMouseMove);
     setNavHome(true);
@@ -346,6 +355,7 @@ export default function Dashboard(props) {
 
   // Refresh data from wattch
   function refreshData(siteId) {
+    setIsNightOrRaining(false);
     fetchInfo(siteId).then((result) => {
       // console.log("result: ", result.capacity);
       if (result.capacity) setInfo(result);
@@ -356,11 +366,11 @@ export default function Dashboard(props) {
         setData(result);
         if (result.time.percentOfDay === null) {
           props.setTheme(false);
-          setIsNightOrRaining(true);
+          // setIsNightOrRaining(true);
         } else {
           props.setTheme(true);
         }
-        result.meteo.icon.value === "rain" && setIsNightOrRaining(true);
+        // result.meteo.icon.value === "rain" && setIsNightOrRaining(true);
       }
     });
     fetchOrgInfo(siteId).then((result) => {
