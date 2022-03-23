@@ -594,6 +594,7 @@ export default function Dashboard(props) {
               alt="Cherry Street Energy logo"
               src={props.theme ? csLogoLight : csLogoDark}
               position="absolute"
+              height={70}
             ></img>
           </Toolbar>
         </AppBar>
