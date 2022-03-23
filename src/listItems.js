@@ -19,6 +19,7 @@ import LocalGasStationIcon from "@material-ui/icons/LocalGasStation";
 import NatureIcon from "@material-ui/icons/Nature";
 
 import { fetchData, fetchInfo, fetchOrgInfo } from "./fetchData";
+import { Apartment } from "@material-ui/icons";
 
 export function MainListItems(props) {
   const [siteIdInput, setSiteIdInput] = useState("");
@@ -209,6 +210,13 @@ export function MainListItems(props) {
       >
         <ListItemIcon>{props.darkModeIcon}</ListItemIcon>
         <ListItemText primary={props.theme ? "Dark Theme" : "Light Theme"} />
+      </ListItem>
+
+      <ListItem>
+        <ListItemIcon>
+          <Apartment />
+        </ListItemIcon>
+        <ListItemText primary={"Site ID: " + props.info.siteId} />
       </ListItem>
 
       <ListItem>
