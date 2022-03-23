@@ -346,7 +346,7 @@ export default function Dashboard(props) {
       console.log("No Site ID Found!");
       toggleSlideshow();
       alert(
-        "No Site ID, input Site ID in Menu or URL (e.g. solardashboard.com/siteid)"
+        "No Site ID, input Site ID in Menu or URL (e.g. cherrystreetenergydashboard.com/siteid)"
       );
     }
     window.addEventListener("mousemove", handleMouseMove);
