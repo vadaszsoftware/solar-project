@@ -328,7 +328,7 @@ export default function Dashboard(props) {
   useEffect(() => {
     console.log("url id: ", id);
     let checklist = slideNav.map((slide) => slide.substring(1));
-    if (id.length > 5 && !checklist.includes(id)) {
+    if (id && id.length > 5 && !checklist.includes(id)) {
       console.log("Site ID from URL: ", id);
       setSiteId(id);
       refreshData(id);

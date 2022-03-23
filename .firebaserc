@@ -1,5 +1,15 @@
 {
   "projects": {
-    "default": "solar-project-8cf57"
+    "default": "solar-project-8cf57",
+    "prod": "customer-facing-dashboards"
+  },
+  "targets": {
+    "solar-project-8cf57": {
+      "hosting": {
+        "solar-dashboard": [
+          "customer-facing-dashboards"
+        ]
+      }
+    }
   }
 }

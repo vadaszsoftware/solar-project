@@ -84,6 +84,7 @@ function App() {
   const [theme, setTheme] = useState(true);
   let darkModeIcon = !theme ? <Brightness7Icon /> : <Brightness3Icon />;
   let appliedTheme = createTheme(theme ? lightTheme : darkTheme);
+  console.log("on page load");
 
   return (
     <ThemeProvider theme={appliedTheme}>
@@ -92,6 +93,16 @@ function App() {
         <Switch>
           <Route
             path="/:id"
+            children={
+              <Dashboard
+                setTheme={setTheme}
+                theme={theme}
+                darkModeIcon={darkModeIcon}
+              />
+            }
+          />
+          <Route
+            path="/"
             children={
               <Dashboard
                 setTheme={setTheme}
