@@ -7,6 +7,7 @@ import {
   Divider,
   TextField,
   Button,
+  Typography,
 } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import BusinessIcon from "@material-ui/icons/Business";
@@ -17,9 +18,10 @@ import HistoryIcon from "@material-ui/icons/History";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import LocalGasStationIcon from "@material-ui/icons/LocalGasStation";
 import NatureIcon from "@material-ui/icons/Nature";
+import { Apartment } from "@material-ui/icons";
 
 import { fetchData, fetchInfo, fetchOrgInfo } from "./fetchData";
-import { Apartment } from "@material-ui/icons";
+import { allSiteIds, allSitesDb } from "./All_Sites_DB";
 
 export function MainListItems(props) {
   const [siteIdInput, setSiteIdInput] = useState("");
@@ -223,10 +225,21 @@ export function MainListItems(props) {
         <TextField
           id="input-site-id"
           label="Enter Site ID"
-          onChange={(event) => setSiteIdInput(event.target.value)}
+          onChange={(event) => {
+            setSiteIdInput(event.target.value);
+            props.setSlideshowActive(false);
+          }}
           value={siteIdInput}
         />
       </ListItem>
+
+      {props.invalidSiteId && (
+        <ListItem>
+          <Typography display="block" color="error">
+            Invalid Site Id
+          </Typography>
+        </ListItem>
+      )}
 
       <ListItem>
         <Button
@@ -234,19 +247,35 @@ export function MainListItems(props) {
           color="primary"
           fullWidth
           onClick={() => {
-            fetchInfo(siteIdInput).then((result) => {
-              // console.log("fetchInfo: ", result);
-              props.setInfo(result);
-            });
-            fetchData(siteIdInput).then((result) => {
-              // console.log("fetchData: ", result);
-              props.setData(result);
-            });
-            fetchOrgInfo(siteIdInput).then((result) => {
-              // console.log("fetchOrgData: ", result);
-              props.setOrgData(result);
-            });
-            localStorage.setItem("siteId", siteIdInput);
+            // let allSiteIds = [];
+            // allSitesDb.forEach((i) => {
+            //   i.sites.forEach((n) => {
+            //     allSiteIds.push(n.siteId);
+            //   });
+            // });
+            // console.log("allSiteIds: ", allSiteIds);
+            if (allSiteIds.includes(siteIdInput)) {
+              props.setInvalidSiteId(false);
+              fetchInfo(siteIdInput).then((result) => {
+                // console.log("fetchInfo: ", result);
+                props.setInfo(result);
+              });
+              fetchData(siteIdInput).then((result) => {
+                // console.log("fetchData: ", result);
+                props.setData(result);
+              });
+              fetchOrgInfo(siteIdInput).then((result) => {
+                // console.log("fetchOrgData: ", result);
+                props.setOrgData(result);
+              });
+              localStorage.setItem("siteId", siteIdInput);
+            } else {
+              console.log(
+                "Site ID not found in local database. Invalid Site ID: ",
+                siteIdInput
+              );
+              props.setInvalidSiteId(true);
+            }
           }}
         >
           Set Site ID

@@ -321,6 +321,7 @@ export default function Dashboard(props) {
   const [navHome, setNavHome] = useState(false);
   const [isNightOrRaining, setIsNightOrRaining] = useState(false);
   const [siteId, setSiteId] = useState("");
+  const [invalidSiteId, setInvalidSiteId] = useState(false);
   // const [appbarSpacer, setAppbarSpacer] = useState("10vh");
   let { id } = useParams();
 
@@ -355,7 +356,12 @@ export default function Dashboard(props) {
 
   // Refresh data from wattch
   function refreshData(siteId) {
+    console.log("refreshing data...");
     setIsNightOrRaining(false);
+    fetchOrgInfo(siteId).then((result) => {
+      // console.log("result: ", result);
+      setOrgData(result);
+    });
     fetchInfo(siteId).then((result) => {
       // console.log("result: ", result.capacity);
       if (result.capacity) setInfo(result);
@@ -372,10 +378,6 @@ export default function Dashboard(props) {
         }
         // result.meteo.icon.value === "rain" && setIsNightOrRaining(true);
       }
-    });
-    fetchOrgInfo(siteId).then((result) => {
-      // console.log("result: ", result);
-      setOrgData(result);
     });
   }
 
@@ -408,10 +410,14 @@ export default function Dashboard(props) {
     setSlideshowActive(!slideshowActive);
   }
   function handleChangeSlide() {
+    console.log("slideNav.length: ", slideNav.length);
+    console.log("slideNavCounter: ", slideNavCounter);
     if (slideNavCounter === slideNav.length - 1) {
       slideNavCounter = 0;
-      refreshData(siteId);
     } else {
+      if (slideNavCounter === slideNav.length - 2) {
+        refreshData(siteId);
+      }
       slideNavCounter++;
       // if night or raining, skip Sunlight and Power slides
       if (
@@ -532,6 +538,8 @@ export default function Dashboard(props) {
               info={info}
               setSlideshowActive={setSlideshowActive}
               isNightOrRaining={isNightOrRaining}
+              setInvalidSiteId={setInvalidSiteId}
+              invalidSiteId={invalidSiteId}
             />
           </List>
           <Divider />
