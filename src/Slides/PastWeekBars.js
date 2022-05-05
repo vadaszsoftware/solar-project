@@ -102,8 +102,21 @@ export default function PastWeekBars(props) {
       .slice(dataArray.length - 8, dataArray.length - 1)
       .map((day) => {
         // console.log("before: ", day);
+        // console.log(
+        //   new Date(
+        //     `${day.date.year}-${day.date.month}-${day.date.day}`.replace(
+        //       /-/g,
+        //       "/"
+        //     )
+        //   )
+        // );
         return {
-          name: new Date(`${day.date.year}-${day.date.month}-${day.date.day}`)
+          name: new Date(
+            `${day.date.year}-${day.date.month}-${day.date.day}`.replace(
+              /-/g,
+              "/"
+            )
+          )
             .toString()
             .slice(0, 3),
           kWh: Math.round(day.value / 1000),

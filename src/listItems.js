@@ -213,6 +213,13 @@ export function MainListItems(props) {
         <ListItemIcon>{props.darkModeIcon}</ListItemIcon>
         <ListItemText primary={props.theme ? "Dark Theme" : "Light Theme"} />
       </ListItem>
+      
+      <ListItem>
+        <ListItemIcon>
+          <Apartment />
+        </ListItemIcon>
+        <ListItemText primary={"Site Version: " + props.info.siteId} />
+      </ListItem>
 
       <ListItem>
         <ListItemIcon>

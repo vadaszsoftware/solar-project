@@ -726,7 +726,15 @@ export default function Dashboard(props) {
               width: "100%",
             }}
           >
-            <Grid container style={{ marginBottom: 10 }}>
+            <Grid
+              container
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "bottom",
+                marginBottom: 10,
+              }}
+            >
               <Grid item xs={4} md={4} lg={4}>
                 <Typography
                   variant="h5"
@@ -783,8 +791,6 @@ export default function Dashboard(props) {
                 style={{
                   display: "flex",
                   justifyContent: "right",
-                  alignItems: "center",
-                  alignContent: "center",
                 }}
               >
                 <WeatherIcon />
