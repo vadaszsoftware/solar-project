@@ -18,7 +18,7 @@ import HistoryIcon from "@material-ui/icons/History";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import LocalGasStationIcon from "@material-ui/icons/LocalGasStation";
 import NatureIcon from "@material-ui/icons/Nature";
-import { Apartment } from "@material-ui/icons";
+import { Apartment, Update } from "@material-ui/icons";
 
 import { fetchData, fetchInfo, fetchOrgInfo } from "./fetchData";
 import { allSiteIds, allSitesDb } from "./All_Sites_DB";
@@ -213,12 +213,14 @@ export function MainListItems(props) {
         <ListItemIcon>{props.darkModeIcon}</ListItemIcon>
         <ListItemText primary={props.theme ? "Dark Theme" : "Light Theme"} />
       </ListItem>
-      
+
       <ListItem>
-        <ListItemIcon>
-          <Apartment />
+        <ListItemIcon onClick={() => window.location.reload(false)}>
+          <Update />
         </ListItemIcon>
-        <ListItemText primary={"Site Version: " + props.info.siteId} />
+        <ListItemText
+          primary={"App Version: " + process.env.REACT_APP_VERSION}
+        />
       </ListItem>
 
       <ListItem>

@@ -324,6 +324,7 @@ export default function Dashboard(props) {
   const [invalidSiteId, setInvalidSiteId] = useState(false);
   // const [appbarSpacer, setAppbarSpacer] = useState("10vh");
   let { id } = useParams();
+  const [fetchingData, setFetchingData] = useState(false);
 
   // On page load
   useEffect(() => {
@@ -355,18 +356,21 @@ export default function Dashboard(props) {
   }, []);
 
   // Refresh data from wattch
-  function refreshData(siteId) {
+  async function refreshData(siteId) {
     console.log("refreshing data...");
+    setSlideshowActive(false);
     setIsNightOrRaining(false);
-    fetchOrgInfo(siteId).then((result) => {
+    await fetchOrgInfo(siteId).then((result) => {
       // console.log("result: ", result);
       setOrgData(result);
+      console.log("fetchOrgInfo done");
     });
-    fetchInfo(siteId).then((result) => {
+    await fetchInfo(siteId).then((result) => {
       // console.log("result: ", result.capacity);
       if (result.capacity) setInfo(result);
+      console.log("fetchInfo done");
     });
-    fetchData(siteId).then((result) => {
+    await fetchData(siteId).then((result) => {
       // console.log("result: ", result.energy);
       if (result.energy) {
         setData(result);
@@ -378,7 +382,9 @@ export default function Dashboard(props) {
         }
         // result.meteo.icon.value === "rain" && setIsNightOrRaining(true);
       }
+      console.log("fetchData done");
     });
+    setSlideshowActive(true);
   }
 
   // Show Menu Button
@@ -410,8 +416,8 @@ export default function Dashboard(props) {
     setSlideshowActive(!slideshowActive);
   }
   function handleChangeSlide() {
-    console.log("slideNav.length: ", slideNav.length);
-    console.log("slideNavCounter: ", slideNavCounter);
+    // console.log("slideNav.length: ", slideNav.length);
+    // console.log("slideNavCounter: ", slideNavCounter);
     if (slideNavCounter === slideNav.length - 1) {
       slideNavCounter = 0;
     } else {

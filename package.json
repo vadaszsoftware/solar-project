@@ -1,6 +1,6 @@
 {
-  "name": "Solar Dashboard",
-  "version": "1.0.5",
+  "name": "solar-dashboard",
+  "version": "1.0.6",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.3",
