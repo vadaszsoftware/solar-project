@@ -412,9 +412,11 @@ export default function Dashboard(props) {
   // Presentation Timer
   const [seconds, setSeconds] = useState(0);
   const [slideshowActive, setSlideshowActive] = useState(true);
+
   function toggleSlideshow() {
     setSlideshowActive(!slideshowActive);
   }
+
   function handleChangeSlide() {
     // console.log("slideNav.length: ", slideNav.length);
     // console.log("slideNavCounter: ", slideNavCounter);
@@ -422,7 +424,9 @@ export default function Dashboard(props) {
       slideNavCounter = 0;
     } else {
       if (slideNavCounter === slideNav.length - 2) {
-        refreshData(siteId);
+        let siteIdFromStorage = localStorage.getItem("siteId");
+        setSiteId(siteIdFromStorage);
+        refreshData(siteIdFromStorage);
       }
       slideNavCounter++;
       // if night or raining, skip Sunlight and Power slides
@@ -438,6 +442,7 @@ export default function Dashboard(props) {
     setChangeSlide(true);
     handleChangeAppbar(slideNav[slideNavCounter], setAppbarTitle, data);
   }
+
   useEffect(() => {
     setChangeSlide(false);
     let interval = null;
